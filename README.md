@@ -1,7 +1,7 @@
 # ![Multipay Logo](https://docs.multinet.com.tr/multipay/theme/uploads/logo.png)
 
 [Download](https://cocoapods.org/pods/Multipay)
-[License](https://github.com/multinetinventiv/MultiPay-iOS-Sdk/blob/main/LICENSE)
+[License](https://github.com/multinetinventiv/MultiPay-iOS-Sdk/blob/master/LICENSE)
 
 ## Multipay SDK iOS
 
