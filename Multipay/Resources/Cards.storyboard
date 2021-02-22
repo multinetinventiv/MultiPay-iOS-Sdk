@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Add CardVC-->
+        <scene sceneID="F9d-mz-ozn">
+            <objects>
+                <viewController storyboardIdentifier="AddCardVC" id="R9B-0o-l4M" customClass="AddCardVC" customModule="Multipay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pzo-FG-vb7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="Lp3-HR-Kmb" userLabel="InputStackView">
+                                <rect key="frame" x="17" y="35" width="341" height="280"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ol9-eQ-6je" userLabel="kartNameTextView" customClass="InputTextView" customModule="Multipay" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="341" height="60"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="txtUsername">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="2tA-df-nDe"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Flp-iG-ltF" userLabel="kartNumberTextView" customClass="InputTextView" customModule="Multipay" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="73" width="341" height="60"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="txtUsername">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="cVC-30-acp"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DOL-WX-agJ" userLabel="cvvTextView" customClass="InputTextView" customModule="Multipay" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="146" width="341" height="60"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="txtUsername">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="SCm-Dy-Amh"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kartınızın arka yüzündeki 3 haneli CVV kodunu giriniz. Kartınızın CVV kodu yoksa, CVV kodu alanını boş bırakınız." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTj-fc-mee">
+                                        <rect key="frame" x="0.0" y="219" width="323.5" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="DOL-WX-agJ" firstAttribute="width" secondItem="Lp3-HR-Kmb" secondAttribute="width" id="4K1-AD-kEW"/>
+                                    <constraint firstItem="Flp-iG-ltF" firstAttribute="width" secondItem="Lp3-HR-Kmb" secondAttribute="width" id="BCU-Lp-qPP"/>
+                                    <constraint firstItem="Ol9-eQ-6je" firstAttribute="width" secondItem="Lp3-HR-Kmb" secondAttribute="width" id="gYD-jI-naJ"/>
+                                    <constraint firstAttribute="height" constant="280" id="kL6-1L-Qlz"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SQk-K4-DOn" userLabel="ContinueBtn">
+                                <rect key="frame" x="17" y="586" width="341" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="LfA-xb-VVR"/>
+                                </constraints>
+                                <state key="normal" title="Continue"/>
+                                <connections>
+                                    <action selector="continueBtnClicked:" destination="R9B-0o-l4M" eventType="touchUpInside" id="uxR-aX-sOK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="X2T-2O-NyR"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Lp3-HR-Kmb" firstAttribute="leading" secondItem="X2T-2O-NyR" secondAttribute="leading" constant="17" id="8tl-lN-99S"/>
+                            <constraint firstItem="X2T-2O-NyR" firstAttribute="trailing" secondItem="Lp3-HR-Kmb" secondAttribute="trailing" constant="17" id="Gcd-Xi-qt3"/>
+                            <constraint firstItem="SQk-K4-DOn" firstAttribute="centerX" secondItem="Lp3-HR-Kmb" secondAttribute="centerX" id="Jae-QR-sQr"/>
+                            <constraint firstItem="X2T-2O-NyR" firstAttribute="bottom" secondItem="SQk-K4-DOn" secondAttribute="bottom" constant="21" id="exE-8i-0q6"/>
+                            <constraint firstItem="Lp3-HR-Kmb" firstAttribute="top" secondItem="X2T-2O-NyR" secondAttribute="top" constant="35" id="oP9-of-EdA"/>
+                            <constraint firstItem="SQk-K4-DOn" firstAttribute="width" secondItem="Lp3-HR-Kmb" secondAttribute="width" id="oqr-Aj-iTu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cardNameTextView" destination="Ol9-eQ-6je" id="5tZ-9j-K9v"/>
+                        <outlet property="cardNumberTextView" destination="Flp-iG-ltF" id="Qn6-Xm-hbB"/>
+                        <outlet property="continueBtn" destination="SQk-K4-DOn" id="Xtd-FM-My5"/>
+                        <outlet property="cvvInfoLbl" destination="OTj-fc-mee" id="bsP-tl-2Yf"/>
+                        <outlet property="cvvTextView" destination="DOL-WX-agJ" id="Xho-Dt-KDT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sYG-wc-PqB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1078" y="-1814"/>
+        </scene>
+        <!--Wallet View Controller-->
+        <scene sceneID="J2Z-Te-Vm7">
+            <objects>
+                <viewController storyboardIdentifier="WalletVC" id="TzV-fO-aL8" customClass="WalletViewController" customModule="Multipay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DmE-QM-ay8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="240" verticalCompressionResistancePriority="1000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XqP-fE-tbm">
+                                <rect key="frame" x="17" y="35" width="341" height="81.5"/>
+                                <string key="text">Ödeme yapabileceğin cüzdanları listeledik. Ödeme yapmak istediğin cüzdanı seçerek, ödemeyi yapacağın uygulama ile eşleştirebilirsin.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1h0-GB-qNK">
+                                <rect key="frame" x="0.0" y="143.5" width="375" height="415.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WalletTableViewCell" rowHeight="116" id="QiY-UW-n60" customClass="WalletTableViewCell" customModule="Multipay" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="116"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QiY-UW-n60" id="gRU-OE-Re4">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="JWS-wj-xEl">
+                                                    <rect key="frame" x="85" y="16" width="219" height="85"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MultiNet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU0-dI-gFI">
+                                                            <rect key="frame" x="0.0" y="0.0" width="219" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3213  1234  1233  4123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4a8-Wf-mRk">
+                                                            <rect key="frame" x="0.0" y="21.5" width="219" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32,03 TL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="owb-Na-UgR">
+                                                            <rect key="frame" x="0.0" y="43" width="219" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Toplam Kullanılabilir bakiye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6W-xL-ShF">
+                                                            <rect key="frame" x="0.0" y="64.5" width="219" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WalletCard" translatesAutoresizingMaskIntoConstraints="NO" id="SLV-fI-7qP">
+                                                    <rect key="frame" x="16" y="16" width="58" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="3pD-0b-nK8"/>
+                                                        <constraint firstAttribute="width" constant="58" id="sw7-Xe-zQO"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIt-GF-27F" userLabel="RadioButton" customClass="RadioButton" customModule="Multipay" customModuleProvider="target">
+                                                    <rect key="frame" x="321" y="16" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="HX4-hI-izU"/>
+                                                        <constraint firstAttribute="height" constant="20" id="PCj-8u-4SG"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="rIt-GF-27F" secondAttribute="trailing" constant="18" id="6ZN-dQ-sCs"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="JWS-wj-xEl" secondAttribute="bottom" constant="1" id="K2b-e0-wU5"/>
+                                                <constraint firstItem="SLV-fI-7qP" firstAttribute="top" secondItem="gRU-OE-Re4" secondAttribute="top" constant="16" id="c4J-yX-Nx8"/>
+                                                <constraint firstItem="rIt-GF-27F" firstAttribute="top" secondItem="SLV-fI-7qP" secondAttribute="top" id="d6B-q3-8sV"/>
+                                                <constraint firstItem="JWS-wj-xEl" firstAttribute="leading" secondItem="SLV-fI-7qP" secondAttribute="trailing" constant="11" id="elO-RN-YJt"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="JWS-wj-xEl" secondAttribute="trailing" constant="55" id="jXs-pI-wGg"/>
+                                                <constraint firstItem="SLV-fI-7qP" firstAttribute="leading" secondItem="gRU-OE-Re4" secondAttribute="leading" constant="16" id="qaB-N3-Pdx"/>
+                                                <constraint firstAttribute="bottom" secondItem="JWS-wj-xEl" secondAttribute="bottom" priority="750" constant="15" id="uA5-hg-ASY"/>
+                                                <constraint firstItem="JWS-wj-xEl" firstAttribute="top" secondItem="SLV-fI-7qP" secondAttribute="top" id="uOD-5o-cxN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="balanceLbl" destination="owb-Na-UgR" id="Bqe-VS-Cc1"/>
+                                            <outlet property="cardImage" destination="SLV-fI-7qP" id="dez-qk-sim"/>
+                                            <outlet property="cardNameLbl" destination="SU0-dI-gFI" id="rkK-Cw-FbZ"/>
+                                            <outlet property="cardNumberLbl" destination="4a8-Wf-mRk" id="DPC-TX-VMc"/>
+                                            <outlet property="radioButton" destination="rIt-GF-27F" id="QRK-K9-eHp"/>
+                                            <outlet property="sumOfUsableBalanceLbl" destination="p6W-xL-ShF" id="fkV-6a-WMe"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="TzV-fO-aL8" id="BVr-70-zKd"/>
+                                    <outlet property="delegate" destination="TzV-fO-aL8" id="Wqb-LK-CoO"/>
+                                </connections>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="zpp-Sc-uRq">
+                                <rect key="frame" x="20" y="588" width="335" height="52"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5w-XY-6cu">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="Si2-uJ-jTB"/>
+                                        </constraints>
+                                        <state key="normal" title="Kart ekle"/>
+                                        <connections>
+                                            <action selector="addCardBtnClicked:" destination="TzV-fO-aL8" eventType="touchUpInside" id="LIX-jK-94O"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BND-x7-EON">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="oez-eH-DFh"/>
+                                        </constraints>
+                                        <state key="normal" title="Eşleştir"/>
+                                        <connections>
+                                            <action selector="eslestirBtnClicked:" destination="TzV-fO-aL8" eventType="touchUpInside" id="jfh-g9-AOK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ddi-7Y-KiY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="zpp-Sc-uRq" firstAttribute="leading" secondItem="ddi-7Y-KiY" secondAttribute="leading" constant="20" id="Ant-PW-yJL"/>
+                            <constraint firstItem="ddi-7Y-KiY" firstAttribute="trailing" secondItem="1h0-GB-qNK" secondAttribute="trailing" id="Gom-VB-otG"/>
+                            <constraint firstItem="XqP-fE-tbm" firstAttribute="centerX" secondItem="ddi-7Y-KiY" secondAttribute="centerX" id="RSN-k5-S3r"/>
+                            <constraint firstItem="ddi-7Y-KiY" firstAttribute="trailing" secondItem="zpp-Sc-uRq" secondAttribute="trailing" constant="20" id="TBu-oM-UfD"/>
+                            <constraint firstItem="1h0-GB-qNK" firstAttribute="centerX" secondItem="ddi-7Y-KiY" secondAttribute="centerX" id="d2Y-x9-WAx"/>
+                            <constraint firstItem="XqP-fE-tbm" firstAttribute="leading" secondItem="ddi-7Y-KiY" secondAttribute="leading" constant="17" id="dZi-5X-QFr"/>
+                            <constraint firstItem="1h0-GB-qNK" firstAttribute="leading" secondItem="ddi-7Y-KiY" secondAttribute="leading" id="i9V-tg-fFj"/>
+                            <constraint firstItem="zpp-Sc-uRq" firstAttribute="top" secondItem="1h0-GB-qNK" secondAttribute="bottom" constant="29" id="jJd-sX-hJ3"/>
+                            <constraint firstItem="XqP-fE-tbm" firstAttribute="top" secondItem="ddi-7Y-KiY" secondAttribute="top" constant="35" id="nb2-TM-9ZG"/>
+                            <constraint firstAttribute="trailing" secondItem="XqP-fE-tbm" secondAttribute="trailing" constant="17" id="pYp-gk-Et6"/>
+                            <constraint firstItem="1h0-GB-qNK" firstAttribute="top" secondItem="XqP-fE-tbm" secondAttribute="bottom" constant="27" id="qvS-Jv-38t"/>
+                            <constraint firstItem="ddi-7Y-KiY" firstAttribute="bottom" secondItem="zpp-Sc-uRq" secondAttribute="bottom" constant="27" id="zb3-eq-xoQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addCardBtn" destination="M5w-XY-6cu" id="1L2-5N-wTm"/>
+                        <outlet property="bottomButtonStackView" destination="zpp-Sc-uRq" id="DmF-9f-o25"/>
+                        <outlet property="cardList" destination="1h0-GB-qNK" id="3SU-4O-Rtv"/>
+                        <outlet property="eslestirBtn" destination="BND-x7-EON" id="lMJ-DQ-HKw"/>
+                        <outlet property="topInfoLbl" destination="XqP-fE-tbm" id="8m3-8e-zcl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e2f-FK-IIS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-82.400000000000006" y="-1823.8380809595203"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="WalletCard" width="58" height="40"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

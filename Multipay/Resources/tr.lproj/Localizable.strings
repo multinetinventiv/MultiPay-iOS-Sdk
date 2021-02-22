@@ -1,0 +1,113 @@
+"app_name" = "MultiPay SDK";
+
+/*SYSTEM*/
+"Error.1005" = "Bağlantı ayarlarınızı kontrol ediniz.";
+"Error.1001" = "Bağlantı zaman aşımına uğradı.";
+"Error.Http" = "Bağlantı başarısız.";
+"Error.System" = "Sistem Hatası";
+
+/*COMMON*/
+"Common.ContinueButton" = "DEVAM";
+"Common.SaveButton" = "KAYDET";
+"Common.CancelButton" = "İPTAL";
+"Common.CancelButton2" = "VAZGEÇ";
+"Common.ClearButton" = "SİL";
+"Common.OkButton" = "TAMAM";
+"Common.DoneButton" = "Tamam";
+"Common.SendButton" = "GÖNDER";
+"Common.OtherButton" = "Diğer";
+"Common.CloseButton" = "KAPAT";
+"Common.Succes" = "Başarılı";
+"Common.Info" = "Bilgi";
+"Common.Warning" = "Uyarı";
+"Common.WarningCaps" = "UYARI";
+"Common.Error" = "Hata";
+"Common.Error.Message" = "Hatalı alan %@";
+"Common.Retry" = "TEKRAR DENEYİN";
+"Common.Showcase.Button" = "DEVAM ET";
+"Common.AskNotification" = "Gönder";
+"Common.Settings" = "Ayarlar";
+"Common.Info.NoDataFound" = "Görüntülenecek kayıt bulunamadı";
+"Common.Info.NoDataFoundShort" = "Kayıt Bulunamadı";
+"api_error_connection_timeout" = "Lütfen internet bağlantınızı kontrol ediniz.";
+
+/*ALERT_VIEW*/
+"Alert.Continue" = "Devam";
+"Alert.Done" = "Tamam";
+"Alert.Cancel" = "Vazgeç";
+
+/*VALIDATION*/
+"validation_email_or_gsm" = "E-postanızın / GSM numaranızın geçerli olduğunu kontrol ediniz.";
+"validation_email" = "E-postanızın geçerli olduğunu kontrol ediniz.";
+"validation_password" = "Lütfen şifrenizi en az bir rakam ve bir harf içerecek şekilde, en az 8 karakter uzunluğunda giriniz.";
+"validation_gsm" = "Cep telefonu hatalıdır. Lütfen cep telefonu numaranızı başında sıfır olmadan ve 10 rakam uzunluğunda giriniz.";
+"validation_name" = "Lütfen adınızı kontrol ediniz.";
+"validation_surname" = "Lütfen soyadınızı kontrol ediniz.";
+"Validation.CardNumber" = "Lütfen kart numaranızı kontrol ediniz.";
+"Validation.TC" = "T.C. Kimlik numaranızı kontrol ediniz.";
+"Validation.Contract" = "Kullanıcı sözleşmesini onaylayınız.";
+"Validation.KVKK" = "KVKK sözleşmesini onaylayınız.";
+"Validation.OTP" = "Lütfen şifrenizi kontrol ediniz.";
+"Validation.Birthdate" = "Lütfen doğum tarihinizi kontrol ediniz.";
+"Validation.Amount" = "Lütfen tutar alanını kontrol ediniz.";
+"Validation.CVV" = "Lütfen CVV alanını kontrol ediniz.";
+"Validation.Expire" = "Lütfen son kullanma tarihini kontrol ediniz.";
+"Validation.Alias" = "Lütfen kart takma adınızı kontrol ediniz";
+
+/*LOGIN*/
+"Login.TopTitle" = "MultiPay ile Giriş Yap";
+"Login.InfoTitle" = "Ödeme Altyapımız Multinet |Up tarafından sağlanmaktadır ve işlem güvenliğiniz Multinet | Up güvencesi altındadır.";
+"login_email_or_gsm" = "E-POSTA veya CEP TELEFONU";
+"login_password" = "ŞİFRENİZ";
+"login_button" = "GİRİŞ YAP";
+"Login.Register" = "KAYIT OL";
+"login_forget_password_text" = "Şifrenizi unuttuysanız buraya <b>tıklayarak</b> tekrar şifre oluşturabilirsiniz.";
+"login_activation_text" = "Aktivasyon Koduyla Gir";
+
+/*REGISTER*/
+"Register.Header" = "ÜYE OL";
+"Register.Name" = "ADINIZ";
+"Register.Lastname" = "SOYADINIZ";
+"Register.Email" = "E-POSTA ADRESİNİZ";
+"Register.GSM" = "CEP TELEFONU NUMARANIZ";
+"Register.Password" = "ŞİFRENİZ";
+"Register.Contract" = "Kullanıcı Sözleşmesi";
+"Register.ContractText" = "MultiPay kullanıcı sözleşme koşullarını kabul ediyor ve onaylıyorum.";
+"Register.Facebook" = "BİLGİLERİMİ FACEBOOK'TAN AL";
+"Register.Inform.Header.Label" = "Bilgilendirme";
+"Register.Inform.Text.Label" = "MultiPay’in, kampanyaları tanıtma, hatırlatma ve bilgilendirme amaçlı SMS veya e-posta yolu ile benimle iletişime geçmesine izin veriyorum.";
+"Register.Kvkk.Header.Label" = "Aydınlatma Metni";
+"Register.Kvkk.Text.Label" = "Kişisel verilerin korunması kanunu kapsamında, Multinet Kurumsal Hizmetler A.Ş. tarafından yayınlanan 'Aydınlatma Metni'nindeki hüküm ve şartları kabul ediyorum.";
+"Register.PersonalInfoLabel.Text" = "Kişisel Bilgiler";
+"Register.SecurityInfoLabel.Text" = "Güvenlik Bilgileri";
+
+/*FORGOT PASSWORD*/
+"ForgotPassword.Header" = "ŞİFREMİ UNUTTUM";
+"ForgotPassword.Description" = "E-Posta adresinizi veya cep telefonunuzu girerek şifrenizi sıfırlama işlemine başlayabilirsiniz";
+"ForgotPassword.Error.EmailorGSM" = "E-postanızın / GSM numaranızın geçerli olduğunu kontrol ediniz.";
+"ForgotPassword.Button" = "ŞİFREMİ DEĞİŞTİR";
+
+/*OTP*/
+"otp_description" = "<b>%1$s</b> numaralı cep telefonuna SMS olarak gönderilen tek kullanımlık şifreyi girin.";
+"OTP.SMSCode" = "SMS Kod";
+"otp_remaining_time" = "%1$s saniye kaldı";
+"otp_resend" = "TEKRAR SMS GÖNDER";
+"OTP.ApproveLabel" = "ONAY KODU";
+"otp_navigation_title" = "Aktivasyon";
+
+/*SDK WALLET*/
+"wallet_description" = "Ödeme yapabileceğin cüzdanları listeledik. Ödeme yapmak istediğin cüzdanı seçerek, ödemeyi yapacağın uygulama ile eşleştirebilirsin.";
+"wallet_navigation_title" = "Lütfen Cüzdan Seçin";
+"wallet_match" = "EŞLEŞTİR";
+"wallet_add_wallet" = "KART EKLE";
+"wallet_item_balance_description" = "Toplam Kullanılabilir bakiye";
+"wallet_list_no_wallet" = "Henüz tanımlı bir kartınız bulunmamaktadır.";
+"Wallet.AddCard.CVVInfo" = "Kartınızın CVV numarasını giriniz";
+
+/*ADD CARD*/
+"add_card_navigation_title" = "MULTINET KART EKLE";
+"add_card_card_cvv" = "CVV";
+"add_card_button_continue" = "Devam";
+"add_card_card_number" = "KART NUMARANIZ";
+"add_card_card_alias" = "Multinet Kartım";
+"add_card_card_description" = "Kartınızın arka yüzündeki 3 haneli CVV kodunu giriniz. Kartınızın CVV kodu yoksa, CVV kodu alanını boş bırakınız.";
