@@ -283,7 +283,7 @@ public class Multipay {
     
     //MARK: PAYMENT Reversal
     
-    public class func callPaymentReversal(delegate:MultipayDelegate, paymentAppToken: String, languageCode: String = NSLocale.preferredLanguages[0], requestId: String, sign:String, merchantRefNo:String, terminalRefNo:String, rollbackReferenceNumber:String, reason:ReasonRollback, referenceNumberType: ReferenceNumberType, referenceNumber: String, obfuscationSalt: String, testMode: Bool = false)
+    public class func callPaymentReversal(delegate:MultipayDelegate, paymentAppToken: String, languageCode: String = NSLocale.preferredLanguages[0], requestId: String, sign:String, merchantRefNo:String, terminalRefNo:String, rollbackReferenceNumber:String, reason:ReferenceToRollbackModel.ReasonRollback, referenceNumberType: ReferenceToRollbackModel.ReferenceNumberType, referenceNumber: String, obfuscationSalt: String, testMode: Bool = false)
     {
         
         log.debug("callPaymentReversal is called")
@@ -313,7 +313,7 @@ public class Multipay {
         
         parameters[reasonKey] = reason.rawValue as AnyObject
         
-        parameters[referenceNumberTypeKey] = referenceNumberType.rawValue as AnyObject
+        parameters[ReferenceToRollbackModel.referenceNumberTypeKey] = referenceNumberType.rawValue as AnyObject
         
         parameters[referenceNumberKey] = referenceNumber as AnyObject
         

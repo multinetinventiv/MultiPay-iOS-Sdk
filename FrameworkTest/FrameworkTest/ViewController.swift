@@ -653,7 +653,7 @@ extension ViewController{
 
 extension ViewController{
     
-    func callPaymentReversal(reason:ReasonRollback){
+    func callPaymentReversal(reason:ReferenceToRollbackModel.ReasonRollback){
         
         let confirmPayment = getReversalPaymentDict(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test)
         
@@ -685,15 +685,15 @@ extension ViewController{
             
             let selectedSegmentIndex = self.reversalSegmentedControl.selectedSegmentIndex
             
-            let referenceNumberType = ReferenceNumberType(rawValue: selectedSegmentIndex)!
+            let referenceNumberType = ReferenceToRollbackModel.ReferenceNumberType(rawValue: selectedSegmentIndex)!
             
             var referenceNumber = UUID().uuidString.lowercased()
             
-            if selectedSegmentIndex == ReferenceNumberType.Client.rawValue, let lastTransferReferenceNumber = self.lastTransferReferenceNumber{
+            if selectedSegmentIndex == ReferenceToRollbackModel.ReferenceNumberType.Client.rawValue, let lastTransferReferenceNumber = self.lastTransferReferenceNumber{
                 referenceNumber = lastTransferReferenceNumber
             }
             
-            else if selectedSegmentIndex == ReferenceNumberType.Server.rawValue, let lastTransferServerReferenceNumber = self.lastTransferServerReferenceNumber{
+            else if selectedSegmentIndex == ReferenceToRollbackModel.ReferenceNumberType.Server.rawValue, let lastTransferServerReferenceNumber = self.lastTransferServerReferenceNumber{
                 referenceNumber = lastTransferServerReferenceNumber
             }
             
@@ -704,19 +704,19 @@ extension ViewController{
     
     @IBAction func reversalCancelClicked(_ sender: Any) {
         
-        callPaymentReversal(reason: ReasonRollback.Cancel)
+        callPaymentReversal(reason: ReferenceToRollbackModel.ReasonRollback.Cancel)
         
     }
     
     @IBAction func reversalClicked(_ sender: Any) {
         
-        callPaymentReversal(reason: ReasonRollback.Reversal)
+        callPaymentReversal(reason: ReferenceToRollbackModel.ReasonRollback.Reversal)
         
     }
     
     @IBAction func refundClicked(_ sender: Any) {
         
-        callPaymentReversal(reason: ReasonRollback.Refund)
+        callPaymentReversal(reason: ReferenceToRollbackModel.ReasonRollback.Refund)
         
     }
 }
