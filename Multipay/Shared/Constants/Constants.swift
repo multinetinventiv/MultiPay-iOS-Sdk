@@ -43,6 +43,8 @@ struct Constants {
     }
     
     struct Notifications {
+        
+        static let LocalizationsUpdated             = "LocalizationsUpdated"
     }
     
     struct CardSpending {

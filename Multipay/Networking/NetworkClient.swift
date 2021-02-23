@@ -119,6 +119,7 @@ struct NetworkClient {
     
     static func post(_ serviceName:String,
                      isSdkService: Bool = true,
+                     isForPoEditor: Bool = false,
                      parameters: [String : AnyObject],
                      isCancelable:Bool = true,
                      displayError: Bool = true,
@@ -131,9 +132,22 @@ struct NetworkClient {
     {
                
         //let converted = parameters.compactMapValues { $0 as? String }
-        let serviceParameter = parameters
+        var serviceParameter = parameters
         
-        let url = ServiceUrl.getURL(serviceName, isSdk: isSdkService)
+        var url = ServiceUrl.getURL(serviceName, isSdk: isSdkService)
+        
+        if !isForPoEditor{
+            url = ServiceUrl.getURL(serviceName, isSdk: isSdkService)
+        }
+
+        else{
+            url = "https://api.poeditor.com/v2/terms/list"
+            serviceParameter = [:]
+            serviceParameter["api_token"] = poApiToken as AnyObject
+            serviceParameter["id"] = multipaySdkId as AnyObject
+            serviceParameter["language"] = selectedLanguageCode as AnyObject
+        }
+
         
         if  (Config.isDebug) {
             print("\n\n****************SERVICE REQUEST START***************************\n\n")

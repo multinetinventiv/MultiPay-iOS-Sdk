@@ -3,20 +3,13 @@ import Foundation
 
 class Localization {
     
-    static fileprivate func getLocalizedStringFor(_ key: String?) -> String {
+    static fileprivate func getLocalizedStringFor(_ key: String?, comment: String = "") -> String {
         if key == nil || key == "" {
             return ""
         }
         
-        let bundleURL = Bundle(for: Localization.self).resourceURL?.appendingPathComponent("\(Strings.bundleName).bundle")
-        
-        guard let bundle =  Bundle(url: bundleURL!) else {
-            return ""
-        }
-        
-        return NSLocalizedString(key!, tableName: nil, bundle: bundle, value: "", comment: "")
+        return LocalizationManager.shared.localized(key!, comment: comment)
     }
-    
     
     static func getLocalizedString(_ key: String?, args: [AnyObject]? = nil) -> String {
         

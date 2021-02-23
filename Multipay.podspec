@@ -159,6 +159,8 @@ Pod::Spec.new do |s|
   s.dependency 'XCGLogger', '~> 7.0.0'
   s.dependency 'PopupDialog', '1.1.0'
   s.dependency 'Alamofire', '~> 5.2'
+  s.dependency 'SwiftDate', '~> 5.0'
+  
 
   s.swift_version = "5.0"
 

@@ -187,6 +187,11 @@ class LoginVC: BaseVC {
                               toolbarType:.next)
     }
     
+    override func updateLocalizationTexts() {
+        super.updateLocalizationTexts()
+        btnLogin.setTitle(Localization.LoginButton.local, for: UIControl.State())
+    }
+    
     //MARK: - UIButton Actions
     
     func  isValid() -> Bool {

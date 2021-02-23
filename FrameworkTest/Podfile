@@ -9,7 +9,7 @@ target 'FrameworkTest' do
   use_frameworks!
   
 	# To use pod from Cocoapods
-	 pod 'Multipay'
+	# pod 'Multipay'
 
 	# To use specific version
 	# pod 'Multipay', '~> 1.0.8'	
@@ -18,7 +18,7 @@ target 'FrameworkTest' do
 	# pod 'Multipay', :git => 'https://github.com/multinetinventiv/MultiPay-iOS-Sdk.git'
 
 	# To use in development mode
-	# pod 'Multipay', :path => '../'
+	 pod 'Multipay', :path => '../'
 
 
 	pod 'IQKeyboardManagerSwift'

@@ -122,6 +122,10 @@ class BaseVC: UIViewController {
         //appDelegate.window?.rootViewController  = UINavigationController(rootViewController: DashboardVC.instantiate())
     }
     
+    func updateLocalizationTexts(){
+        print("updateLocalizationTexts() did not overriden in \(self)")
+    }
+    
 }
 
 //MARK: - LifeCycle
@@ -129,6 +133,12 @@ extension BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.Notifications.LocalizationsUpdated), object: nil, queue: OperationQueue.main) {[weak self] (notification) in
+            self?.updateLocalizationTexts()
+        }
+
+        
         if #available(iOS 13.0, *), !ColorPalette.isDarkModeSupported {
             overrideUserInterfaceStyle = .light
         }

@@ -47,6 +47,7 @@ open class ServiceInvokerHandler {
     
     func post(_ serviceName: String,
               isSdkService: Bool = true,
+              isForPoEditor: Bool = false,
               parameters: [String: AnyObject],
               isCancelable:Bool,
               isSecure: Bool = false,
@@ -76,7 +77,7 @@ open class ServiceInvokerHandler {
             serviceParameters[requestIdKey] = requestId as AnyObject
         }
         
-        NetworkClient.post(serviceName, isSdkService: isSdkService, parameters: serviceParameters, displayError: false, isSecure: true, httpMethod: httpMethod, callback: callback, errorCallback: errorCallback)
+        NetworkClient.post(serviceName, isSdkService: isSdkService, isForPoEditor: isForPoEditor, parameters: serviceParameters, displayError: false, isSecure: true, httpMethod: httpMethod, callback: callback, errorCallback: errorCallback)
     }
     
 }
