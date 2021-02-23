@@ -12,8 +12,9 @@
 - [210] SDK Paylaşımı. [TFS-104394](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=104394)
 - [100] İyileştirme & Bug Fiks. [TFS-105935](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=105935)
 - [300] SDK Reversal. [TFS-103555](http://isttfs02:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=103555)
+- [400] SDK Paylaşımı. [TFS-107243](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=107243)
 
 # Changed
 
 # Fixed
-- Bugfixes
+
