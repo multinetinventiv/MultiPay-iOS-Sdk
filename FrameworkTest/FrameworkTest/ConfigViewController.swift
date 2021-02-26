@@ -61,6 +61,9 @@ class ConfigViewController: UIViewController {
         
         saveToPropertyList()
         
+        self.dismiss(animated: true) {
+        }
+        
     }
     
     @IBAction func kapatClicked(_ sender: Any) {

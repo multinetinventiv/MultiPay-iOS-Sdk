@@ -46,6 +46,8 @@ class ConfigCommonViewController: UIViewController {
     
     @IBAction func saveClicked(_ sender: Any) {
         saveToPropertyList()
+        self.dismiss(animated: true) {
+        }
     }
     
     @IBAction func kapatClicked(_ sender: Any) {

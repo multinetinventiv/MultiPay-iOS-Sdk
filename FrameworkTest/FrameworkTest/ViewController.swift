@@ -290,8 +290,6 @@ extension ViewController: MultipayDelegate {
                 Multipay.callSingleWallet(delegate: self, appToken: getAppToken(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, languageCode: "tr", referenceNumber: getReferenceNumber(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
             }
             
-            
-            
             self.reversalStackView.isHidden = false
             
             print("Payment is finished successfully")
@@ -309,6 +307,12 @@ extension ViewController: MultipayDelegate {
     
     
     func multipayPaymentDidFail(error: Error?) {
+        
+        if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
+            Multipay.callSingleWallet(delegate: self, appToken: getAppToken(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, languageCode: "tr", referenceNumber: getReferenceNumber(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
+        }
+        
+        self.reversalStackView.isHidden = false
         
         let alert = UIAlertController(title: "confirm payment request failed", message: error?.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -695,6 +699,10 @@ extension ViewController{
             
             else if selectedSegmentIndex == ReferenceToRollbackModel.ReferenceNumberType.Server.rawValue, let lastTransferServerReferenceNumber = self.lastTransferServerReferenceNumber{
                 referenceNumber = lastTransferServerReferenceNumber
+            }
+            
+            else if let lastTransferReferenceNumber = self.lastTransferReferenceNumber{
+                referenceNumber = lastTransferReferenceNumber
             }
             
             Multipay.callPaymentReversal(delegate: self, paymentAppToken: paymentAppToken, languageCode: "tr", requestId: requestId, sign: sign, merchantRefNo: merchantReferenceNumber, terminalRefNo: terminalReferenceNumber, rollbackReferenceNumber: rollbackReferenceNumber, reason: reason, referenceNumberType: referenceNumberType, referenceNumber: referenceNumber, obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
