@@ -97,11 +97,25 @@ extension ConfigViewController{
             break
         }
         
-        if  let path = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist"),
-            let xml = FileManager.default.contents(atPath: path)
-        {
-            print("xml: \(xml)")
+        let documentDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let documentFileURL = documentDirectoryURL.appendingPathComponent(apiFileNameStart + "-Configs.plist", isDirectory: false)
+        let filemanager = FileManager.default
+        
+        if filemanager.fileExists(atPath: documentFileURL.path), let xml = FileManager.default.contents(atPath: documentFileURL.path) {
+            
             return (try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil)) as? [String:AnyObject]
+        } else {
+            if let bundlePath = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist"), filemanager.fileExists(atPath: bundlePath), let xml = FileManager.default.contents(atPath: bundlePath) {
+                
+                do {
+                    try filemanager.copyItem(at: URL(fileURLWithPath: bundlePath), to: documentFileURL)
+                } catch {
+                    print(error)
+                }
+                
+                
+                return (try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil)) as? [String : AnyObject]
+            }
         }
         
         return nil
@@ -142,45 +156,38 @@ extension ConfigViewController{
             break
         }
         
-        let paths = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist")
-        let path = paths
-        let fileManager = FileManager.default
-        if (!(fileManager.fileExists(atPath: path!)))
-        {
-            do {
-                let bundlePath : NSString = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist")! as NSString
+        let documentDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let documentFileURL = documentDirectoryURL.appendingPathComponent(apiFileNameStart + "-Configs.plist", isDirectory: false)
+        let filemanager = FileManager.default
+        
+        if filemanager.fileExists(atPath: documentFileURL.path) {
+            let tempDict : NSMutableDictionary = NSMutableDictionary(contentsOfFile: documentFileURL.path)!
+            
+            let plistDict = tempDict["ConfirmPayment"] as? NSMutableDictionary
+            
+            if let plistDict = plistDict{
                 
-                try fileManager.copyItem(atPath: bundlePath as String, toPath: path!)
-            }catch {
-                print(error)
+                plistDict["saltKeyTest"] = saltKeyTxtField.text
+                
+                plistDict["productIdTest"] = productIdTxtField.text
+                
+                plistDict["transferReferenceNumberTest"] = transferRefNumTxtField.text
+                
+                plistDict["terminalReferenceNumberTest"] = terminalRefNumTxtField.text
+                
+                plistDict["merchantReferenceNumberTest"] = merchantRefNumTxtField.text
+                
+                plistDict["paymentAppTokenTest"] = paymentAppTokenTxtField.text
+                
+                plistDict["amount"] = amountTxtField.text
+                
+                plistDict["requestId"] = self.requestIdTxtField.text
+                
+                tempDict["ConfirmPayment"] = plistDict
             }
+            
+            tempDict.write(toFile: documentFileURL.path, atomically: true)
         }
-        let tempDict:NSMutableDictionary = NSMutableDictionary(contentsOfFile: path!)!
-        
-        let plistDict = tempDict["ConfirmPayment"] as? NSMutableDictionary
-        
-        if let plistDict = plistDict{
-            
-            plistDict["saltKeyTest"] = saltKeyTxtField.text
-            
-            plistDict["productIdTest"] = productIdTxtField.text
-            
-            plistDict["transferReferenceNumberTest"] = transferRefNumTxtField.text
-            
-            plistDict["terminalReferenceNumberTest"] = terminalRefNumTxtField.text
-            
-            plistDict["merchantReferenceNumberTest"] = merchantRefNumTxtField.text
-            
-            plistDict["paymentAppTokenTest"] = paymentAppTokenTxtField.text
-            
-            plistDict["amount"] = amountTxtField.text
-            
-            plistDict["requestId"] = self.requestIdTxtField.text
-            
-            tempDict["ConfirmPayment"] = plistDict
-        }
-        
-        tempDict.write(toFile: path!, atomically: true)
     }
     
 }
