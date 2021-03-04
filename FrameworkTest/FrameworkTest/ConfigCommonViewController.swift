@@ -59,37 +59,6 @@ class ConfigCommonViewController: UIViewController {
 
 extension ConfigCommonViewController{
     
-    func getPlist(apiType:APIType) -> [String:AnyObject]?
-    {
-        
-        var apiFileNameStart = ""
-        
-        switch apiType {
-        case .dev:
-            apiFileNameStart = "Dev"
-            break
-        case .test:
-            apiFileNameStart = "Test"
-            break
-        case .pilot:
-            apiFileNameStart = "Pilot"
-            break
-        case .prod:
-            apiFileNameStart = "Prod"
-            break
-       
-        }
-        
-        if  let path = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist"),
-            let xml = FileManager.default.contents(atPath: path)
-        {
-            print("xml: \(xml)")
-            return (try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil)) as? [String:AnyObject]
-        }
-        
-        return nil
-    }
-    
     func getConfirmPaymentDict(apiType:APIType) -> [String:AnyObject]?{
         
         if let plistDict = getPlist(apiType: apiType){
@@ -108,50 +77,22 @@ extension ConfigCommonViewController{
     //Operation Write, update and delete plist file
     func saveToPropertyList() {
         
-        let apiType:APIType = self.lastSelectedApiType!
+        let returnValues = getMutableDictionaryFromPlist(lastSelectedApiType: self.lastSelectedApiType ?? .test)
         
-        var apiFileNameStart = ""
+        let tempDict:NSMutableDictionary? = returnValues.mutDict
         
-        switch apiType {
-        case .dev:
-            apiFileNameStart = "Dev"
-            break
-        case .test:
-            apiFileNameStart = "Test"
-            break
-        case .pilot:
-            apiFileNameStart = "Pilot"
-            break
-        case .prod:
-            apiFileNameStart = "Prod"
-            break
+        if let tempDict = tempDict{
+            
+            tempDict["authenticationToken"] = authTokenTxtField.text
+            
+            tempDict["walletToken"] = walletTokenTxtField.text
+            
+            tempDict["referenceNumber"] = referenceNumberTxtField.text
+            
+            tempDict["appToken"] = appTokenTxtField.text
+            
+            tempDict.write(toFile: returnValues.url.path, atomically: true)
+            
         }
-        
-        let paths = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist")
-        let path = paths
-        let fileManager = FileManager.default
-        if (!(fileManager.fileExists(atPath: path!)))
-        {
-            do {
-                let bundlePath : NSString = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist")! as NSString
-                
-                try fileManager.copyItem(atPath: bundlePath as String, toPath: path!)
-            }catch {
-                print(error)
-            }
-        }
-        
-        let tempDict:NSMutableDictionary = NSMutableDictionary(contentsOfFile: path!)!
-        
-        tempDict["authenticationToken"] = authTokenTxtField.text
-        
-        tempDict["walletToken"] = walletTokenTxtField.text
-        
-        tempDict["referenceNumber"] = referenceNumberTxtField.text
-        
-        tempDict["appToken"] = appTokenTxtField.text
-        
-        tempDict.write(toFile: path!, atomically: true)
     }
-    
 }

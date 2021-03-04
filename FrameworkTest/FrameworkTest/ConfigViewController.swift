@@ -77,50 +77,6 @@ class ConfigViewController: UIViewController {
 
 extension ConfigViewController{
     
-    func getPlist(apiType:APIType) -> [String:AnyObject]?
-    {
-        
-        var apiFileNameStart = ""
-        
-        switch apiType {
-        case .dev:
-            apiFileNameStart = "Dev"
-            break
-        case .test:
-            apiFileNameStart = "Test"
-            break
-        case .pilot:
-            apiFileNameStart = "Pilot"
-            break
-        case .prod:
-            apiFileNameStart = "Prod"
-            break
-        }
-        
-        let documentDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let documentFileURL = documentDirectoryURL.appendingPathComponent(apiFileNameStart + "-Configs.plist", isDirectory: false)
-        let filemanager = FileManager.default
-        
-        if filemanager.fileExists(atPath: documentFileURL.path), let xml = FileManager.default.contents(atPath: documentFileURL.path) {
-            
-            return (try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil)) as? [String:AnyObject]
-        } else {
-            if let bundlePath = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist"), filemanager.fileExists(atPath: bundlePath), let xml = FileManager.default.contents(atPath: bundlePath) {
-                
-                do {
-                    try filemanager.copyItem(at: URL(fileURLWithPath: bundlePath), to: documentFileURL)
-                } catch {
-                    print(error)
-                }
-                
-                
-                return (try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil)) as? [String : AnyObject]
-            }
-        }
-        
-        return nil
-    }
-    
     func getConfirmPaymentDict(apiType:APIType) -> [String:AnyObject]?{
         
         if let plistDict = getPlist(apiType: apiType){
@@ -137,35 +93,13 @@ extension ConfigViewController{
     //Operation Write, update and delete plist file
     func saveToPropertyList() {
         
-        let apiType:APIType = self.lastSelectedApiType!
+        let returnValues = getMutableDictionaryFromPlist(lastSelectedApiType: self.lastSelectedApiType ?? .test)
         
-        var apiFileNameStart = ""
-        
-        switch apiType {
-        case .dev:
-            apiFileNameStart = "Dev"
-            break
-        case .test:
-            apiFileNameStart = "Test"
-            break
-        case .pilot:
-            apiFileNameStart = "Pilot"
-            break
-        case .prod:
-            apiFileNameStart = "Prod"
-            break
-        }
-        
-        let documentDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let documentFileURL = documentDirectoryURL.appendingPathComponent(apiFileNameStart + "-Configs.plist", isDirectory: false)
-        let filemanager = FileManager.default
-        
-        if filemanager.fileExists(atPath: documentFileURL.path) {
-            let tempDict : NSMutableDictionary = NSMutableDictionary(contentsOfFile: documentFileURL.path)!
+        let tempDict : NSMutableDictionary? = returnValues.mutDict
             
-            let plistDict = tempDict["ConfirmPayment"] as? NSMutableDictionary
+        let plistDict = tempDict?["ConfirmPayment"] as? NSMutableDictionary
             
-            if let plistDict = plistDict{
+        if let plistDict = plistDict{
                 
                 plistDict["saltKeyTest"] = saltKeyTxtField.text
                 
@@ -183,11 +117,12 @@ extension ConfigViewController{
                 
                 plistDict["requestId"] = self.requestIdTxtField.text
                 
-                tempDict["ConfirmPayment"] = plistDict
-            }
-            
-            tempDict.write(toFile: documentFileURL.path, atomically: true)
+                tempDict?["ConfirmPayment"] = plistDict
         }
+            
+        tempDict?.write(toFile: returnValues.url.path, atomically: true)
     }
+    
+    
     
 }

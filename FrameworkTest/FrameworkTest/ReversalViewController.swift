@@ -54,6 +54,9 @@ class ReversalConfigViewController: UIViewController {
     
     @IBAction func saveClicked(_ sender: Any) {
         saveToPropertyList()
+        
+        self.dismiss(animated: true) {
+        }
     }
     
     @IBAction func kapatClicked(_ sender: Any) {
@@ -63,35 +66,6 @@ class ReversalConfigViewController: UIViewController {
 }
 
 extension ReversalConfigViewController{
-    
-    func getPlist(apiType:APIType) -> [String:AnyObject]?
-    {
-        var apiFileNameStart = ""
-        
-        switch apiType {
-        case .dev:
-            apiFileNameStart = "Dev"
-            break
-        case .test:
-            apiFileNameStart = "Test"
-            break
-        case .pilot:
-            apiFileNameStart = "Pilot"
-            break
-        case .prod:
-            apiFileNameStart = "Prod"
-            break
-        }
-        
-        if  let path = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist"),
-            let xml = FileManager.default.contents(atPath: path)
-        {
-            print("xml: \(xml)")
-            return (try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil)) as? [String:AnyObject]
-        }
-        
-        return nil
-    }
     
     func getRollbackPaymentDict(apiType:APIType) -> [String:AnyObject]?{
         
@@ -109,41 +83,11 @@ extension ReversalConfigViewController{
     //Operation Write, update and delete plist file
     func saveToPropertyList() {
         
-        let apiType:APIType = self.lastSelectedApiType!
+        let returnValues = getMutableDictionaryFromPlist(lastSelectedApiType: self.lastSelectedApiType ?? .test)
         
-        var apiFileNameStart = ""
+        let tempDict: NSMutableDictionary? = returnValues.mutDict
         
-        switch apiType {
-        case .dev:
-            apiFileNameStart = "Dev"
-            break
-        case .test:
-            apiFileNameStart = "Test"
-            break
-        case .pilot:
-            apiFileNameStart = "Pilot"
-            break
-        case .prod:
-            apiFileNameStart = "Prod"
-            break
-        }
-        
-        let paths = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist")
-        let path = paths
-        let fileManager = FileManager.default
-        if (!(fileManager.fileExists(atPath: path!)))
-        {
-            do {
-                let bundlePath : NSString = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist")! as NSString
-                
-                try fileManager.copyItem(atPath: bundlePath as String, toPath: path!)
-            }catch {
-                print(error)
-            }
-        }
-        let tempDict:NSMutableDictionary = NSMutableDictionary(contentsOfFile: path!)!
-        
-        let plistDict = tempDict["RollbackPayment"] as? NSMutableDictionary
+        let plistDict = tempDict?["RollbackPayment"] as? NSMutableDictionary
         
         if let plistDict = plistDict{
             
@@ -157,9 +101,9 @@ extension ReversalConfigViewController{
             
             plistDict["requestId"] = self.requestIdTxtField.text
             
-            tempDict["RollbackPayment"] = plistDict
+            tempDict?["RollbackPayment"] = plistDict
         }
         
-        tempDict.write(toFile: path!, atomically: true)
+        tempDict?.write(toFile: returnValues.url.path, atomically: true)
     }
 }

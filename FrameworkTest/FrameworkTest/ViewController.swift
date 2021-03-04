@@ -29,6 +29,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var activityInd2: UIActivityIndicatorView!
     
     @IBOutlet weak var cardStack: UIStackView!
+    @IBOutlet weak var ödemeYapBtn: UIButton!
+    @IBOutlet weak var kartDegistirBtn: UIButton!
+    @IBOutlet weak var kartSilBtn: UIButton!
     
     @IBOutlet weak var reversalStackView: UIStackView!
     @IBOutlet weak var transferServerRefNoValue: UILabel!
@@ -128,7 +131,9 @@ extension ViewController{
         
         lastSelectedApiType = apiType
         
-        Multipay.start(vcToPresent: self, appToken: getAppToken(apiType: apiType), referenceNumber: getReferenceNumber(apiType: apiType), delegate: self, languageCode: "tr", apiType: apiType, testMode: testModeSwitch.isOn, walletToken: walletTokenSwitch.isOn ? (selectedWalletToken != nil) ? selectedWalletToken : getWalletToken(apiType: apiType) : nil, obfuscationSalt: getObfuscationSalt(apiType: apiType) ?? "")
+        let appDelegate = UIApplication.shared
+        
+        Multipay.start(vcToPresent: self.navigationController!.topViewController ?? self, appToken: getAppToken(apiType: apiType), referenceNumber: getReferenceNumber(apiType: apiType), delegate: self, languageCode: "tr", apiType: apiType, testMode: testModeSwitch.isOn, walletToken: walletTokenSwitch.isOn ? (selectedWalletToken != nil) ? selectedWalletToken : getWalletToken(apiType: apiType) : nil, obfuscationSalt: getObfuscationSalt(apiType: apiType) ?? "")
     }
 }
 
@@ -199,6 +204,9 @@ extension ViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.cardStack.layer.borderWidth = 1
+        self.cardStack.layer.borderColor = UIColor.black.cgColor
+        
         testModeSwitch.isOn = false
         
         if selectedWalletToken != nil, selectedWalletToken!.count > 0{
@@ -211,13 +219,22 @@ extension ViewController{
         if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
             Multipay.callSingleWallet(delegate: self, appToken: getAppToken(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, languageCode: "tr", referenceNumber: getReferenceNumber(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType!) ?? "", testMode: testModeSwitch.isOn)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.navigationController?.navigationBar.barTintColor = nil
+        self.navigationController?.navigationBar.tintColor = nil
+        self.navigationController?.navigationBar.backgroundColor = nil
         
     }
+    
 }
 
 extension ViewController{
     func changeVisibility(isHidden : Bool){
-        self.cardStack.isHidden = isHidden
+        //self.cardStack.isHidden = isHidden
         
         if self.lastTransferServerReferenceNumber != nil{
             self.reversalStackView.isHidden = isHidden
@@ -547,19 +564,6 @@ extension ViewController{
         self.lastTransferReferenceNumber = nil
     }
     
-    @IBAction func useDevEnvironmentClicked(_ sender: Any) {
-        openMultipay(apiType: .dev)
-    }
-    @IBAction func useTestEnvironmentClicked(_ sender: Any) {
-        openMultipay(apiType: .test)
-    }
-    @IBAction func usePilotEnvClicked(_ sender: Any) {
-        openMultipay(apiType: .pilot)
-    }
-    @IBAction func useProdEnvClicked(_ sender: Any) {
-        openMultipay(apiType: .prod)
-    }
-    
     @IBAction func configurePaymentParamClicked(_ sender: Any) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -726,6 +730,10 @@ extension ViewController{
         
         callPaymentReversal(reason: ReferenceToRollbackModel.ReasonRollback.Refund)
         
+    }
+    
+    @IBAction func kartDegistirClicked(_ sender: Any) {
+        self.openMultipay(apiType: lastSelectedApiType ?? .test)
     }
 }
 

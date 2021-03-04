@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initialViewController = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController")
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
 

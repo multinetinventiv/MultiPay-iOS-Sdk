@@ -14,6 +14,8 @@
 		564C3BF025BEEF9300196325 /* Prod-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 564C3BEF25BEEF9300196325 /* Prod-Configs.plist */; };
 		564C3C0525C0054700196325 /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564C3C0425C0054700196325 /* ConfigViewController.swift */; };
 		564C3C1A25C0390100196325 /* ConfigCommonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564C3C1925C0390000196325 /* ConfigCommonViewController.swift */; };
+		5665CD0B25F0CA6500491280 /* SelectEnvironmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5665CD0A25F0CA6500491280 /* SelectEnvironmentViewController.swift */; };
+		5665CD3325F0FD5100491280 /* PlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5665CD3225F0FD5100491280 /* PlistManager.swift */; };
 		567477C825DE92B700378C60 /* ReversalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567477C725DE92B700378C60 /* ReversalViewController.swift */; };
 		569066272500CDCC00BB5604 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569066262500CDCC00BB5604 /* AppDelegate.swift */; };
 		5690662B2500CDCC00BB5604 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5690662A2500CDCC00BB5604 /* ViewController.swift */; };
@@ -58,6 +60,8 @@
 		564C3BEF25BEEF9300196325 /* Prod-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Prod-Configs.plist"; sourceTree = "<group>"; };
 		564C3C0425C0054700196325 /* ConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
 		564C3C1925C0390000196325 /* ConfigCommonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigCommonViewController.swift; sourceTree = "<group>"; };
+		5665CD0A25F0CA6500491280 /* SelectEnvironmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEnvironmentViewController.swift; sourceTree = "<group>"; };
+		5665CD3225F0FD5100491280 /* PlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistManager.swift; sourceTree = "<group>"; };
 		567477C725DE92B700378C60 /* ReversalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversalViewController.swift; sourceTree = "<group>"; };
 		569066232500CDCC00BB5604 /* FrameworkTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameworkTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		569066262500CDCC00BB5604 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +102,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5665CD0925F0CA4200491280 /* SelectEnvironment */ = {
+			isa = PBXGroup;
+			children = (
+				5665CD0A25F0CA6500491280 /* SelectEnvironmentViewController.swift */,
+			);
+			path = SelectEnvironment;
+			sourceTree = "<group>";
+		};
 		5690661A2500CDCC00BB5604 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +133,7 @@
 		569066252500CDCC00BB5604 /* FrameworkTest */ = {
 			isa = PBXGroup;
 			children = (
+				5665CD0925F0CA4200491280 /* SelectEnvironment */,
 				56B2D6A4250A2B16001C5EF2 /* FrameworkTest.entitlements */,
 				569066262500CDCC00BB5604 /* AppDelegate.swift */,
 				564C3C0425C0054700196325 /* ConfigViewController.swift */,
@@ -136,6 +149,7 @@
 				564C3BED25BEEF8E00196325 /* Pilot-Configs.plist */,
 				564C3BEF25BEEF9300196325 /* Prod-Configs.plist */,
 				564C3B9025BB290700196325 /* String+Extension.swift */,
+				5665CD3225F0FD5100491280 /* PlistManager.swift */,
 			);
 			path = FrameworkTest;
 			sourceTree = "<group>";
@@ -343,8 +357,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5665CD0B25F0CA6500491280 /* SelectEnvironmentViewController.swift in Sources */,
 				5690662B2500CDCC00BB5604 /* ViewController.swift in Sources */,
 				564C3B9125BB290800196325 /* String+Extension.swift in Sources */,
+				5665CD3325F0FD5100491280 /* PlistManager.swift in Sources */,
 				564C3C0525C0054700196325 /* ConfigViewController.swift in Sources */,
 				564C3C1A25C0390100196325 /* ConfigCommonViewController.swift in Sources */,
 				567477C825DE92B700378C60 /* ReversalViewController.swift in Sources */,
