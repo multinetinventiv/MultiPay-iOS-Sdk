@@ -17,6 +17,7 @@
 # Changed
 
 - [200] Test SDK Düzenlemeleri & Git Repo. [TFS-103605](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=103605)
+- [800] PO Editör link(key) lerin düzenlenmesi [TFS-109848](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=109848)
 
 # Fixed
 
