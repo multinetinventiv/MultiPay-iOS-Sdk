@@ -169,7 +169,7 @@ class LoginVC: BaseVC {
         emailPhoneView.initView(placeholder:Localization.LoginEmailOrGSM.local,
                                 regex: Regex.kEmail,
                                 delegate:self,
-                                errorMessage:Localization.ValidationEmail.local,
+                                errorMessage:Localization.ValidationEmailOrGSM.local,
                                 inputFieldType:InputFieldType.inputEmailWithPhone,
                                 editionType:InputEditionType.inputEditionSdk,
                                 toolbarType:.next)
