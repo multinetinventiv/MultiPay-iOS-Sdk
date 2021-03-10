@@ -219,26 +219,26 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SIT-4G-aDu" userLabel="CardStack">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SIT-4G-aDu" userLabel="CardStack">
                                 <rect key="frame" x="19" y="377" width="337.5" height="120"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="aVG-VN-zUf" userLabel="KartBilgileriStack">
-                                        <rect key="frame" x="0.0" y="0.0" width="337.5" height="69"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="aVG-VN-zUf" userLabel="KartBilgileriStack">
+                                        <rect key="frame" x="0.0" y="0.0" width="337.5" height="61"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kart ismi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nWr-5Q-HTe">
-                                                <rect key="frame" x="5" y="0.0" width="327.5" height="19.5"/>
+                                                <rect key="frame" x="5" y="0.0" width="327.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0000 0000 0000 0000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CY8-bk-h5H">
-                                                <rect key="frame" x="5" y="24.5" width="327.5" height="20"/>
+                                                <rect key="frame" x="5" y="22" width="327.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 TL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ch-6V-5Se">
-                                                <rect key="frame" x="5" y="49.5" width="327.5" height="19.5"/>
+                                                <rect key="frame" x="5" y="44" width="327.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -250,17 +250,17 @@
                                             <constraint firstItem="nWr-5Q-HTe" firstAttribute="leading" secondItem="aVG-VN-zUf" secondAttribute="leading" constant="5" id="gkk-Q7-anT"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Kl3-aZ-cgl" userLabel="KartAksiyonlarıStack">
-                                        <rect key="frame" x="0.0" y="74" width="332.5" height="46"/>
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" distribution="equalSpacing" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Kl3-aZ-cgl" userLabel="KartAksiyonlarıStack">
+                                        <rect key="frame" x="0.0" y="75.5" width="332.5" height="44.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WalletCard" translatesAutoresizingMaskIntoConstraints="NO" id="MtW-uq-saa">
-                                                <rect key="frame" x="0.0" y="0.0" width="62.5" height="46"/>
+                                                <rect key="frame" x="0.0" y="2.5" width="58" height="40"/>
                                             </imageView>
                                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="REz-U5-W5m">
-                                                <rect key="frame" x="67.5" y="4.5" width="62.5" height="37"/>
+                                                <rect key="frame" x="74.5" y="4" width="37" height="37"/>
                                             </activityIndicatorView>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9W-OD-4bP" userLabel="Öde">
-                                                <rect key="frame" x="135" y="11" width="62.5" height="24"/>
+                                                <rect key="frame" x="128.5" y="10.5" width="59" height="24"/>
                                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="ÖDEME YAP">
@@ -271,7 +271,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MbG-yR-7X3" userLabel="Değiştir">
-                                                <rect key="frame" x="202.5" y="11" width="62.5" height="24"/>
+                                                <rect key="frame" x="204.5" y="10.5" width="63" height="24"/>
                                                 <color key="backgroundColor" systemColor="systemGrayColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                 <state key="normal" title="KART DEĞİŞTİR">
@@ -282,7 +282,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pep-vY-C5C">
-                                                <rect key="frame" x="270" y="11" width="62.5" height="24"/>
+                                                <rect key="frame" x="284.5" y="10.5" width="48" height="24"/>
                                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="KARTI SİL">
@@ -295,7 +295,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="Pep-vY-C5C" firstAttribute="height" secondItem="MbG-yR-7X3" secondAttribute="height" id="FQj-Lx-63S"/>
-                                            <constraint firstItem="MtW-uq-saa" firstAttribute="height" secondItem="Kl3-aZ-cgl" secondAttribute="height" id="f82-1j-34g"/>
+                                            <constraint firstItem="MtW-uq-saa" firstAttribute="height" secondItem="Kl3-aZ-cgl" secondAttribute="height" multiplier="0.9" id="f82-1j-34g"/>
                                             <constraint firstItem="MbG-yR-7X3" firstAttribute="height" secondItem="J9W-OD-4bP" secondAttribute="height" id="iKk-40-MTO"/>
                                             <constraint firstItem="MtW-uq-saa" firstAttribute="centerY" secondItem="Kl3-aZ-cgl" secondAttribute="centerY" id="soN-3K-byV"/>
                                         </constraints>
