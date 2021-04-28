@@ -12,7 +12,7 @@ struct Config {
         return (APIType(rawValue: API_TYPE) ?? APIType.prod)
     }()
     static let forcePathType: Bool      = IS_ENVIRONMENT_FORCED  // true oldugunda uygulama icerisinden ortam degisikligi yapilamaz
-    static let isDebug                  = false // Debug loglarını açar ve kullanıcı bilgilerini ilgili alanlara dolu getirir.
+    static let isDebug                  = true // Debug loglarını açar ve kullanıcı bilgilerini ilgili alanlara dolu getirir.
     
     // Testing local
     static let LOCAL                    = false //True olduğunda, servisleri localden çağırır.                        !! (Live için false)
