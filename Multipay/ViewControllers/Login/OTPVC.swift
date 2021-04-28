@@ -22,7 +22,7 @@ enum OTPCalledType {
 }
 
 
-@objc protocol OTPVCDelegate :AnyObject{
+@objc protocol OTPVCDelegate :class{
     
     func otpDidFinishSuccess(_ otpVC:OTPVC,result:[String:AnyObject]?)
     //func orderDidFinishFailed(orderVc:OrderSecureVC)
