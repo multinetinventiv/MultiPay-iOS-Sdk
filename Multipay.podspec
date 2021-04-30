@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "Multipay"
-  s.version      = "1.0.15"
+  s.version      = "1.0.16"
   s.summary      = "A framework of Multipay"
 
   # This description is used to generate tags and improve search results.
@@ -158,7 +158,8 @@ Pod::Spec.new do |s|
   s.dependency 'SwiftyJSON', '~> 4.0'
   s.dependency 'XCGLogger', '~> 7.0.0'
   s.dependency 'PopupDialog', '1.1.0'
-  s.dependency 'Alamofire', '~> 5.2'
+  
+  #s.dependency 'Alamofire', '~> 5.2'
 
   s.swift_version = "5.0"
 
