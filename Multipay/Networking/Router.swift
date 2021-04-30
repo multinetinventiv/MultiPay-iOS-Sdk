@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 enum NetworkConstants {
   static let baseURLPath = "MY_BASE_URL_WILL_BE_HERE"

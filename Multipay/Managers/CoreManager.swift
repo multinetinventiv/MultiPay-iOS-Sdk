@@ -10,7 +10,6 @@ import Foundation
 import MapKit
 import SwiftyJSON
 import XCGLogger
-import Alamofire
 
 typealias settingCallBack = (_
     data: Setting) -> Void
