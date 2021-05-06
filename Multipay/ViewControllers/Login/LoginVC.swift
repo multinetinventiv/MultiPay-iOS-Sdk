@@ -229,7 +229,7 @@ class LoginVC: BaseVC {
         let isEmail = emailText.length > 0 && emailText.isContainsLetterChars()
         let gsm:String = emailText.clearNonNumeric().getGsmNumber()
         
-        var parameters = ["password": passwordView.textValue()]
+        var parameters:[String:String] = [:]
         
         if isEmail{
             parameters["email"] = emailText
@@ -291,7 +291,7 @@ extension LoginVC {
     }
     
     private func decideForLoginState(){
-        if self.emailPhoneView.textValue().count > 0 && self.passwordView.textValue().count > 0{
+        if self.emailPhoneView.textValue().count > 0{
             self.selectedState = .active
         }
         else{
