@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 public let authTokenKey = "authToken"
 public let walletTokenKey = "walletToken"

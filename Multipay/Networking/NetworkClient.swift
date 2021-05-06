@@ -8,7 +8,6 @@
 
 import Foundation
 import SwiftyJSON
-import Alamofire
 
 //public typealias NetworkClientErrorCallBack = (_ errorModel: GenericErrorModel, data: ) -> Void
 

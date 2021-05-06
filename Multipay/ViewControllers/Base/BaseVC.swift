@@ -8,7 +8,6 @@
 import UIKit
 import SwiftMessages
 import PopupDialog
-import Alamofire
 
 typealias SuccessCallBack = (_ dictionary: [String:AnyObject]?, _ rawData: Data?) -> Void
 typealias ErrorCallBack = (_ errorModel: ErrorModel, _ rawData: Data?) -> Void
