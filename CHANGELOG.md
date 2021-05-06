@@ -17,7 +17,8 @@
 # Changed
 
 - [200] Test SDK Düzenlemeleri & Git Repo. [TFS-103605](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=103605)
-- [800] PO Editör link(key) lerin düzenlenmesi [TFS-109848](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=109848)
+- [800] PO Editör link(key) lerin düzenlenmesi. [TFS-109848](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=109848)
+- Pınar Su SDK Entegrasyonu Destek. [TFS-117906](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20%C4%B0sfanbul/_workitems#_a=edit&id=117906)
 
 # Fixed
 
