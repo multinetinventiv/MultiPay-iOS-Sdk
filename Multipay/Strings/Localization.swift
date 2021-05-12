@@ -117,6 +117,11 @@ extension Localization {
     static let WalletSumBalance                                     =   "wallet_item_balance_description_multipay_sdk"
     
     //Register
+    
+    static let RegisterInfoTitle = "register_content_title_multipay_sdk"
+    
+    static let RegisterInfo = "register_content_description_multipay_sdk"
+    
     static let RegisterHeader                                       =   "register_header_multipay_sdk"
     static let RegisterName                                         =   "register_name_multipay_sdk"
     static let RegisterLastname                                     =   "register_lastname_multipay_sdk"
@@ -132,6 +137,8 @@ extension Localization {
     static let RegisterKVKKTextLabel                                =   "register_kvkk_text_label_multipay_sdk"
     static let RegisterPersonalInfoLabelText                        =   "register_personal_info_label_text_multipay_sdk"
     static let RegisterSecurityInfoLabelText                        =   "register_security_info_label_text_multipay_sdk"
+    
+    static let RegisterButtonText                                   =   "register_button_multipay_sdk"
     
     //OTP
     static let OTPDescriptionWithGsm                                =   "otp_description_multipay_sdk"

@@ -96,9 +96,17 @@ class LoginVC: BaseVC {
             btnRegister.clipsToBounds = true
             btnRegister.layer.backgroundColor = UIColor.clear.cgColor
             btnRegister.layer.cornerRadius = 16
-            btnRegister.layer.borderWidth = 1
+            btnRegister.layer.borderWidth = 2
             btnRegister.layer.borderColor = ColorPalette.login.registerButtonBorder().cgColor
-            btnRegister.isHidden = hideForgotPasswordAndRegister
+            btnRegister.isHidden = false
+            
+            btnRegister.backgroundColor = UIColor(red: 0.384, green: 0.008, blue: 0.933, alpha: 0)
+            
+            btnRegister.layer.backgroundColor = UIColor(red: 0.384, green: 0.008, blue: 0.933, alpha: 0).cgColor
+            
+            btnRegister.layer.borderColor = ColorPalette.getirBorder.cgColor
+            
+            btnRegister.setTitleColor(ColorPalette.tintColor(), for: UIControl.State.normal)
         }
         
         rememberView.isHidden = hideForgotPasswordAndRegister
@@ -331,9 +339,8 @@ extension LoginVC {
             vc.loginRequestParameters = self.loginParameters as [String : AnyObject]
             vc.resendServiceName = ServiceConstants.ServiceName.SdkLogin
             vc.otpCalledType = OTPCalledType.loginWithOTP
-        } else if segue.identifier == "resetSegue" {
-            //let vc = segue.destination as! ResetPasswordVC
-            //vc.userID = self.emailPhoneView.textValue()
+        } else if segue.identifier == "RegisterSegue" {
+            let vc = segue.destination as! RegisterVC
         } else if segue.identifier == "activationSegue" {
             //_ = segue.destination as! LoginWithCodeVC
         }

@@ -167,6 +167,7 @@
 		5624EBA725063A3200C0C55E /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		5624EBA825063A3200C0C55E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		5624EBA925063A3200C0C55E /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		565149D1264AAFFA000C431C /* Common.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Common.storyboard; sourceTree = "<group>"; };
 		566036A92537342D0020CE23 /* DigitInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitInputView.swift; sourceTree = "<group>"; };
 		56688C7825480402007EDC8C /* AddCardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardVC.swift; sourceTree = "<group>"; };
 		566B7225251B268800A20C75 /* PinVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PinVC.swift; path = Multipay/ViewControllers/Setting/PinVC.swift; sourceTree = SOURCE_ROOT; };
@@ -471,6 +472,7 @@
 				5604BA0625067FD0009F6E28 /* InputToolBar.xib */,
 				5604BA0825067FD0009F6E28 /* InputTextView.xib */,
 				56B2D6A3250A2268001C5EF2 /* Main.storyboard */,
+				565149D1264AAFFA000C431C /* Common.storyboard */,
 				56B749072506246A007510F1 /* Localizable.strings */,
 				56B7F93725012D7E00F13C69 /* Assets.xcassets */,
 			);

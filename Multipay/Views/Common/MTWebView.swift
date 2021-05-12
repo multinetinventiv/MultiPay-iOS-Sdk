@@ -2,8 +2,6 @@
 //  MTWebView.swift
 //  MultiPay
 //
-//  Created by Hasan Hüseyin Gücüyener on 14.07.2019.
-//  Copyright © 2019 inventiv. All rights reserved.
 //
 
 import UIKit

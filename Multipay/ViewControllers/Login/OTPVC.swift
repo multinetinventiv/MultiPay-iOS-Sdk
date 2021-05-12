@@ -303,17 +303,22 @@ class OTPVC: BaseVC {
     
     fileprivate func navigate(_ responseData:OtpConfirmResponse?){
         
-        if ( OTPCalledType.loginWithOTP == self.otpCalledType) {
-            if(responseData != nil) {
-                if let result = responseData!.result
-                {
-                    if let authToken = result.authToken{
-                        Auth.authToken = authToken
-                    }
+        if(responseData != nil){
+            if let result = responseData!.result
+            {
+                if let authToken = result.authToken{
+                    Auth.authToken = authToken
                 }
             }
-            
+        }
+        
+        if ( OTPCalledType.loginWithOTP == self.otpCalledType) {
             gotoDashboard()
+            return
+        }
+        
+        else if ( OTPCalledType.register == self.otpCalledType) {
+            gotoAddCard()
             return
         }
         
@@ -372,14 +377,7 @@ extension OTPVC {
         
         self.state = .normal
     }
-    
-    
 }
-
-
-
-
-
 
 extension OTPVC {
     

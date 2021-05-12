@@ -2,16 +2,13 @@
 //  RegisterVC.swift
 //  MultiU
 //
-//  Created by  on 24/05/16.
-//  Copyright © 2016 . All rights reserved.
-//
 
 import UIKit
 
-//import FBSDKLoginKit
-
 class RegisterVC: BaseVC {
     
+    @IBOutlet weak var infoTitleLbl: UILabel!
+    @IBOutlet weak var infoLbl: UILabel!
     
     @IBOutlet weak var personalInfoLabel: UILabel!
     @IBOutlet weak var nameView: InputTextView!
@@ -20,8 +17,6 @@ class RegisterVC: BaseVC {
 
     @IBOutlet weak var securityInfoLabel: UILabel!
     @IBOutlet weak var phoneView: InputTextView!
-    @IBOutlet weak var passwordView: InputTextView!
-    @IBOutlet weak var passwordInfoLabel: UILabel!
     
     @IBOutlet weak var contractContainerView: UIView!
     @IBOutlet weak var contractHeaderLabel: UILabel!
@@ -37,11 +32,11 @@ class RegisterVC: BaseVC {
     @IBOutlet weak var informTextLabel: UILabel!
     @IBOutlet weak var informSwitch: UISwitch!
     
-    @IBOutlet weak var buttonfacebook: UIButton!
     @IBOutlet weak var buttonRegister: UIButton!
     
     @IBOutlet weak var scrolllView: UIScrollView!
-    var registerResponseData = [String:AnyObject]()
+    
+    var loginResponseModel: LoginResponseModel?
     
     var requestParameter: [String:AnyObject]?
     var isAgreementAgreed:Bool = false
@@ -51,13 +46,17 @@ class RegisterVC: BaseVC {
         self.hasKeyboard = true
         self.navigationViewType = .withLeftButton
         self.navigationEditionType = .whiteEditionType
-        self.hasKeyboard = true
+        
+        self.updateStatusBarStyle(forStyle: .default)
+        
         self.title = Localization.RegisterHeader.local
         self.keyboardScrollView = self.scrolllView
         self.analyticsScreenName = "Kullanıcı kaydı (Register)"
         
         initViewStyles()
         initView()
+        
+        self.decideRegisterButtonState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,51 +64,46 @@ class RegisterVC: BaseVC {
     }
     
     func initViewStyles() {
-        self.view.backgroundColor = ColorPalette.vcBackground
-
+        
+        self.infoLbl.text = Localization.RegisterInfo.local
+        self.infoLbl.textColor = ColorPalette.commonTextColorGrayish2()
+        self.infoLbl.font = FontHelper.login.bottomLbl
+        
+        self.infoTitleLbl.text = Localization.RegisterInfoTitle.local
+        self.infoTitleLbl.textColor = ColorPalette.login.titleColor
+        self.infoTitleLbl.font = FontHelper.login.titleLbl
+        
         //Fonts
-        self.personalInfoLabel.font = FontHelper.register.personalInfoLabel
-        self.personalInfoLabel.textColor = ColorPalette.register.personalInfoLabel
+        self.personalInfoLabel.font = FontHelper.login.bottomLbl
+        self.personalInfoLabel.textColor = ColorPalette.commonTextColorGrayish2()
         self.personalInfoLabel.text = Localization.RegisterPersonalInfoLabelText.local
         
-        self.securityInfoLabel.font = FontHelper.register.securityInfoLabel
-        self.securityInfoLabel.textColor = ColorPalette.register.securityInfoLabel
+        self.securityInfoLabel.font = FontHelper.login.bottomLbl
+        self.securityInfoLabel.textColor = ColorPalette.commonTextColorGrayish2()
         self.securityInfoLabel.text = Localization.RegisterSecurityInfoLabelText.local
-
-        self.passwordInfoLabel.font = FontHelper.register.registerInfoLabel
-        self.passwordInfoLabel.textColor = ColorPalette.register.passwordInfoLabel
-        self.passwordInfoLabel.text = Localization.ChangePasswordPasswordInfo.local
         
         self.contractHeaderLabel.font = FontHelper.register.contractHeaderLabel
         self.contractTextLabel.font = FontHelper.register.contractTextLabel
-        self.contractHeaderLabel.textColor = ColorPalette.register.contractHeaderLabel
-        self.contractTextLabel.textColor = ColorPalette.register.contractTextLabel
+        self.contractHeaderLabel.textColor = ColorPalette.commonTextColor()
+        self.contractTextLabel.textColor = ColorPalette.commonTextColor()
 
         self.informHeaderLabel.font = FontHelper.register.informHeaderLabel
         self.informTextLabel.font = FontHelper.register.informTextLabel
-        self.informHeaderLabel.textColor = ColorPalette.register.informHeaderLabel
-        self.informTextLabel.textColor = ColorPalette.register.informTextLabel
+        self.informHeaderLabel.textColor = ColorPalette.commonTextColor()
+        self.informTextLabel.textColor = ColorPalette.commonTextColor()
 
         self.kvkkHeaderLabel.font = FontHelper.register.informHeaderLabel
-        self.kvkkTextLabel.font = FontHelper.register.informTextLabel
-        self.kvkkHeaderLabel.textColor = ColorPalette.register.informHeaderLabel
-        self.kvkkTextLabel.textColor = ColorPalette.register.informTextLabel
+        self.kvkkTextLabel.font = FontHelper.register.contractTextLabel
+        self.kvkkHeaderLabel.textColor = ColorPalette.commonTextColor()
+        self.kvkkTextLabel.textColor = ColorPalette.commonTextColor()
 
         self.buttonRegister.titleLabel!.font =  FontHelper.register.registerBtnTitle
-        self.buttonRegister.backgroundColor = ColorPalette.register.buttonRegisterBackground
+        self.buttonRegister.backgroundColor = ColorPalette.register.buttonRegisterPassiveBackground
         
-        self.buttonfacebook.layer.cornerRadius = 5
-        self.buttonRegister.layer.cornerRadius = 5
-        
-        contractSwitch.onTintColor = ColorPalette.register.switchBtnsSelectedBackground
-        contractSwitch.tintColor = ColorPalette.register.switchBtnsUnSelectedBackground
-        
-        informSwitch.onTintColor = ColorPalette.register.switchBtnsSelectedBackground
-        informSwitch.tintColor = ColorPalette.register.switchBtnsUnSelectedBackground
+        self.buttonRegister.layer.cornerRadius = 10
         
         //Localization
-        self.buttonfacebook.setTitle(Localization.RegisterFacebook.local, for: UIControl.State())
-        self.buttonRegister.setTitle(Localization.LoginRegister.local, for: UIControl.State())
+        self.buttonRegister.setTitle(Localization.RegisterButtonText.local, for: UIControl.State())
         
         self.contractHeaderLabel.text = Localization.RegisterContract.local
         let underlineAttribute = [convertFromNSAttributedStringKey(NSAttributedString.Key.underlineStyle): NSUnderlineStyle.single.rawValue]
@@ -132,7 +126,7 @@ class RegisterVC: BaseVC {
                           regex: Regex.kName,
                           delegate:self,
                           errorMessage:Localization.ValidationName.local,
-                          editionType:.inputEditionTypeBlack,
+                          editionType:.inputEditionSdk,
                           toolbarType:.next)
         
         nameView.txtInput.autocapitalizationType = UITextAutocapitalizationType.words
@@ -144,7 +138,7 @@ class RegisterVC: BaseVC {
                               regex: Regex.kName,
                               delegate:self,
                               errorMessage:Localization.ValidationSurname.local,
-                              editionType:.inputEditionTypeBlack,
+                              editionType:.inputEditionSdk,
                               toolbarType:.next)
         
         
@@ -156,7 +150,7 @@ class RegisterVC: BaseVC {
                            delegate:self,
                            errorMessage:Localization.ValidationEmail.local,
                            inputFieldType:InputFieldType.inputEmail,
-                           editionType:.inputEditionTypeBlack,
+                           editionType:.inputEditionSdk,
                            toolbarType:.next)
         
         phoneView.initView(placeholder:Localization.RegisterGsm.local,
@@ -166,80 +160,15 @@ class RegisterVC: BaseVC {
                            delegate:self,
                            errorMessage:Localization.ValidationPhone.local,
                            inputFieldType:InputFieldType.inputPhone,
-                           editionType:.inputEditionTypeBlack,
+                           editionType:.inputEditionSdk,
                            toolbarType:.next)
         
         
-        passwordView.initView(placeholder:Localization.RegisterPassword.local,
-                              minValu: Regex.kPasswordMin,
-                              maxValue: Regex.kPasswordMax,
-                              lastFieldOnForm:false,
-                              delegate:self,
-                              errorMessage:Localization.ValidationPassword.local,
-                              secureField:true,
-                              inputFieldType:InputFieldType.inputPassword,
-                              editionType:.inputEditionTypeBlack,
-                              toolbarType:.next)
         
         contractSwitch.isOn = false
         informSwitch.isOn = false
         
     }
-    
-    
-    //MARK: - UIButton Clicked
-    
-//    @IBAction func facebookButtonClicked(sender: AnyObject) {
-//        
-//        let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
-//        
-//        fbLoginManager.logInWithReadPermissions(["public_profile", "email"], fromViewController: self, handler: { (result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
-//            
-//            if ((error) != nil)
-//            {
-//                // Process error
-//            }
-//            else if result.isCancelled {
-//                // Handle cancellations
-//            }
-//            else {
-//                let fbloginresult : FBSDKLoginManagerLoginResult = result
-//                if(fbloginresult.grantedPermissions.contains("email"))
-//                {
-//                    self.returnUserData()
-//                    fbLoginManager.logOut()
-//                }
-//            }
-//            
-//        })
-//        
-//    }
-//    
-//    func returnUserData()
-//    {
-//        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, first_name, last_name, email, picture.type(large)"])
-//        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-//            
-//            if ((error) != nil)
-//            {
-//                // Process error
-//                log.debug("Error: \(error)")
-//            }
-//            else
-//            {
-//                let userFirstName : NSString = result.valueForKey("first_name") as! String
-//                let userLastName  : NSString = result.valueForKey("last_name") as! String
-//                let userEmail : NSString = result.valueForKey("email") as! String
-//                
-//                self.nameView .setTextValue(userFirstName as String)
-//                self.lastNameView.setTextValue(userLastName as String)
-//                self.emailView.setTextValue(userEmail as String)
-//                
-//        
-//            }
-//        })
-//    }
-    
     
     @IBAction func contractButtonClicked(_ sender: AnyObject) {
         let vc = AgreementVC.instantiate()
@@ -265,13 +194,18 @@ class RegisterVC: BaseVC {
     }
     
     @IBAction func registerButtonClicked(_ sender: AnyObject) {
-        if (!isValid()){
+        
+        if Multipay.testModeActive{
+            self.loginResponseModel = LoginResponseModel(result: LoginResponseModel.Result(gsm: "5321765109", remainingTime: 30, verificationCode: "asd"), resultCode: 200, resultMessage: nil)
+            performSegue(withIdentifier: "otpSegue", sender: self)
             return
         }
         
-        
+        if (!isValid()){
+            return
+        }
+    
         let registerUserInfo = ["Email"   : emailView.textValue(),
-                                "Password"   : passwordView.textValue(),
                                 "Gsm" : phoneView.textValue().clearNonNumeric().getGsmNumber(),
                                 "Name" :nameView.textValue(),
                                 "SurName" : lastNameView.textValue(),
@@ -283,34 +217,33 @@ class RegisterVC: BaseVC {
         
         self.requestParameter = ["registerInfo" : registerUserInfo as AnyObject]
         
-        
-        post(ServiceConstants.ServiceName.registerUser, parameters: requestParameter , displayError: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
+        post(ServiceConstants.ServiceName.registerUser, parameters: requestParameter , displayError: true, callback: { [weak self](data: [String:AnyObject]?, rawData) in
             
             guard let strongSelf = self else { return }
 
             log.debug("data : \(String(describing: data))")
-                
-                if let responseData  = data {
-                    
-                    if  strongSelf.checkResultCodeAndShowError(responseData) == ServiceResultCodeType.exit {
-                        return
-                    }
-                    
-                    if let result = responseData[resultKey]  {
-                        
-                        if ((ServiceUrl.isPROD()) || (ServiceUrl.isPILOT())) {
-                            strongSelf.registerResponseData = result as! [String : AnyObject]
-                            strongSelf.performSegue(withIdentifier: "otpSegue", sender: self)
-                        }else{
-                            strongSelf.showMessage(MessageType.info, message:  (result["SmsMessage"] as? String)!,block: {
-                                strongSelf.registerResponseData = result as! [String : AnyObject]
-                                strongSelf.performSegue(withIdentifier: "otpSegue", sender: self)
-                            })
-                        }
-                    }
-                    
-                }
             
+            if let data = rawData {
+                do{
+                    let modelObject = try data.decoded() as LoginResponseModel
+                    strongSelf.loginResponseModel = modelObject
+                }
+                catch{
+                    print("error: \(error)")
+                }
+            }
+            
+            if let data  = data {
+                
+                //log.debug("data : \(data)")
+                
+                if  strongSelf.checkResultCodeAndShowError(data) == ServiceResultCodeType.exit {
+                    return
+                }
+                
+                //To show two factor authentication screen
+                strongSelf.performSegue(withIdentifier: "otpSegue", sender: self)
+            }
             
             },errorCallback: {
                  (data: ErrorModel, rawData) in
@@ -320,46 +253,52 @@ class RegisterVC: BaseVC {
     }
         
     
-    func  isValid() -> Bool
+    func  isValid(shouldShowMessage: Bool = true) -> Bool
     {
         if (!nameView.validate())
         {
-            showMessage(MessageType.error, message: nameView.getErrorMessage())
+            if shouldShowMessage {
+                showMessage(MessageType.error, message: nameView.getErrorMessage())
+            }
             return false
         }
         
         if (!lastNameView.validate())
         {
+            if shouldShowMessage {
             showMessage(MessageType.error, message: lastNameView.getErrorMessage())
+            }
             return false
         }
         
         if (!emailView.validate())
         {
+            if shouldShowMessage {
             showMessage(MessageType.error, message: emailView.getErrorMessage())
+            }
             return false
         }
         
         if (!phoneView.textValue().validatePhoneNumber())
         {
-            showMessage(MessageType.error, message: phoneView.getErrorMessage())
-            return false
-        }
-        
-        if (!passwordView.textValue().validatePassword())
-        {
-            showMessage(MessageType.error, message: passwordView.getErrorMessage())
+            if shouldShowMessage {
+                showMessage(MessageType.error, message: phoneView.getErrorMessage())
+            }
             return false
         }
         
         if (!contractSwitch.isOn)
         {
-            showMessage(MessageType.error, message: Localization.ValidationContract.local)
+            if shouldShowMessage {
+                showMessage(MessageType.error, message: Localization.ValidationContract.local)
+            }
             return false
         }
 
         if !kvkkSwitch.isOn {
-            showMessage(.error, message: Localization.ValidationKVKK.local)
+            if shouldShowMessage {
+                showMessage(.error, message: Localization.ValidationKVKK.local)
+            }
             return false
         }
 
@@ -372,13 +311,38 @@ class RegisterVC: BaseVC {
         if segue.identifier == "otpSegue"
         {
             let vc = segue.destination as! OTPVC
-            //vc.registerData = self.registerResponseData //as? [String : AnyObject]
+            vc.loginResponseModel = self.loginResponseModel
+            vc.loginRequestParameters  = self.requestParameter
             vc.resendServiceName = ServiceConstants.ServiceName.registerUser
             vc.otpCalledType = OTPCalledType.register
-            vc.loginRequestParameters  = self.requestParameter
         }
     }
+}
+
+//MARK: - RegisterButton Active State
+extension RegisterVC {
+    func decideRegisterButtonState(){
+        let isValid = Multipay.testModeActive ? true : isValid(shouldShowMessage: false)
+        
+        if isValid {
+            buttonRegister.setTitleColor(ColorPalette.login.girisYapActiveText, for: .normal)
+            buttonRegister.backgroundColor = ColorPalette.register.buttonRegisterActiveBackground
+        }
+        else{
+            buttonRegister.setTitleColor(ColorPalette.login.loginBtnTitlePassive, for: .normal)
+            buttonRegister.backgroundColor = ColorPalette.register.buttonRegisterPassiveBackground
+        }
+        
+        self.buttonRegister.isEnabled = isValid
+    }
     
+    @IBAction func contractSwitchChanged(_ sender: Any) {
+        self.decideRegisterButtonState()
+    }
+    
+    @IBAction func kvkkSwitchChanged(_ sender: Any) {
+        self.decideRegisterButtonState()
+    }
 }
 
 //MARK: - AgreementView Delegate
@@ -401,7 +365,11 @@ extension RegisterVC {
 
 
 //MARK: - UITextField Delegate
-extension RegisterVC {
+extension RegisterVC{
+    
+    func textFieldChanged(textView: UITextField) {
+        self.decideRegisterButtonState()
+    }
     
     override func textFieldShouldNext(textField: UITextField,textView:InputTextView? = nil) {
         guard textField.text != nil else {
@@ -415,8 +383,6 @@ extension RegisterVC {
         } else if(textView == emailView){
             self.phoneView.becomeFirstResponder()
         } else if(textView == phoneView){
-            self.passwordView.becomeFirstResponder()
-        }else if(textView == passwordView){
             textField.resignFirstResponder()
         }else{
             textField.resignFirstResponder()

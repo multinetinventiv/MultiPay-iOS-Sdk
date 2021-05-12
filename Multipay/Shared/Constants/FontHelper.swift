@@ -2,7 +2,6 @@
 //  FontHelper.swift
 //  MultiPay
 //
-//  Created by Ufuk Serdogan on 20.03.2019.
 //  Copyright © 2019 inventiv. All rights reserved.
 //
 
@@ -160,9 +159,9 @@ extension FontHelper{
     
     struct register {
         static let contractHeaderLabel: UIFont = FontHelper.boldFontWithSize(16)
-        static let contractTextLabel: UIFont = FontHelper.defaultRegularFontWithSize(16)
+        static let contractTextLabel: UIFont = FontHelper.defaultRegularFontWithSize(14)
         static let informHeaderLabel: UIFont = FontHelper.boldFontWithSize(16)
-        static let informTextLabel: UIFont = FontHelper.defaultRegularFontWithSize(16)
+        static let informTextLabel: UIFont = FontHelper.defaultRegularFontWithSize(10)
         static let registerBtnTitle: UIFont = FontHelper.defaultMediumFontWithSize(18)
         static let personalInfoLabel: UIFont = FontHelper.defaultRegularFontWithSize(18)
         static let securityInfoLabel: UIFont = FontHelper.defaultRegularFontWithSize(18)
