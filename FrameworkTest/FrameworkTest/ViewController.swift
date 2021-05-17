@@ -131,9 +131,11 @@ extension ViewController{
         
         lastSelectedApiType = apiType
         
-        let appDelegate = UIApplication.shared
+        //let userPreset = UserPreset(name: "TestName", surname: "TestSurname", email: "testEmail", gsm: "5321234567")
         
-        Multipay.start(vcToPresent: self.navigationController!.topViewController ?? self, appToken: getAppToken(apiType: apiType), referenceNumber: getReferenceNumber(apiType: apiType), delegate: self, languageCode: "tr", apiType: apiType, testMode: testModeSwitch.isOn, walletToken: walletTokenSwitch.isOn ? (selectedWalletToken != nil) ? selectedWalletToken : getWalletToken(apiType: apiType) : nil, obfuscationSalt: getObfuscationSalt(apiType: apiType) ?? "")
+        let userPreset = UserPreset()
+        
+        Multipay.start(vcToPresent: self.navigationController!.topViewController ?? self, appToken: getAppToken(apiType: apiType), referenceNumber: getReferenceNumber(apiType: apiType), delegate: self, languageCode: "tr", apiType: apiType, testMode: testModeSwitch.isOn, walletToken: walletTokenSwitch.isOn ? (selectedWalletToken != nil) ? selectedWalletToken : getWalletToken(apiType: apiType) : nil, obfuscationSalt: getObfuscationSalt(apiType: apiType) ?? "", userPreset: userPreset)
     }
 }
 
@@ -259,7 +261,7 @@ extension ViewController: MultipayDelegate {
     
     func multipayRollbackWithSignDidSucceed(sign: String?, rollbackServerReferenceNumber: String?) {
         
-        if let sign = sign, let rollbackServerReferenceNumber = rollbackServerReferenceNumber
+        if let sign = sign, let referenceNumber = rollbackServerReferenceNumber
         {
             
             let alert = UIAlertController(title: "Rollback payment request succeed!", message: "Success", preferredStyle: .alert)

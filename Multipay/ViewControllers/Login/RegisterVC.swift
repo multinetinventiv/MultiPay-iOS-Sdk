@@ -55,12 +55,24 @@ class RegisterVC: BaseVC {
         
         initViewStyles()
         initView()
+        setWithUserPreset()
         
         self.decideRegisterButtonState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    func setWithUserPreset(){
+        
+        if let userPreset = Auth.userPreset{
+            self.nameView.setTextValue(userPreset.name)
+            self.lastNameView.setTextValue(userPreset.surname)
+            self.emailView.setTextValue(userPreset.email)
+            self.phoneView.setTextValue(userPreset.gsm)
+        }
+        
     }
     
     func initViewStyles() {
@@ -204,20 +216,22 @@ class RegisterVC: BaseVC {
         if (!isValid()){
             return
         }
+        
+        let email = emailView.textValue()
+        let gsm = phoneView.textValue().clearNonNumeric().getGsmNumber()
+        let name = nameView.textValue()
+        let lastname = lastNameView.textValue()
     
-        let registerUserInfo = ["Email"   : emailView.textValue(),
-                                "Gsm" : phoneView.textValue().clearNonNumeric().getGsmNumber(),
-                                "Name" :nameView.textValue(),
-                                "SurName" : lastNameView.textValue(),
-                                "ContractVersion":"1.0",
-                                "IsNotificationAccepted":"true",
-                                "IsKvkkAccepted": String(informSwitch.isOn),
-                                "IsClarificationText": String(kvkkSwitch.isOn)
-        ]
+        var registerUserInfo = [String: AnyObject]()
+        registerUserInfo["email"] = email as AnyObject
+        registerUserInfo["gsm"] = gsm as AnyObject
+        registerUserInfo["name"] = name as AnyObject
+        registerUserInfo["surname"] = lastname as AnyObject
+        registerUserInfo["isNotificationAccepted"] = String(informSwitch.isOn) as AnyObject
         
-        self.requestParameter = ["registerInfo" : registerUserInfo as AnyObject]
+        self.requestParameter = registerUserInfo
         
-        post(ServiceConstants.ServiceName.registerUser, parameters: requestParameter , displayError: true, callback: { [weak self](data: [String:AnyObject]?, rawData) in
+        post(ServiceConstants.ServiceName.SdkRegister, parameters: self.requestParameter , displayError: true, callback: { [weak self](data: [String:AnyObject]?, rawData) in
             
             guard let strongSelf = self else { return }
 

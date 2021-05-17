@@ -323,8 +323,8 @@ class InputTextView: BaseView {
         } else {
             // Fallback on earlier versions
         }
-       
-    
+        
+        txtInput.font = UIFont(name: "Montserrat-Regular", size: 16)
     }
     
     
@@ -580,9 +580,6 @@ extension InputTextView {
         }
         return String(str.filter { Constants.validChars.contains($0) })
     }
-    
-    
-
     
     fileprivate func phoneTextCheckerWithEmail(_ textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         

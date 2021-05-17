@@ -739,13 +739,13 @@
                                                                 <rect key="frame" x="88" y="0.0" width="310" height="100"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MultiPay ile Giriş Yap" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nn9-Kx-2NO" userLabel="TitleLbl">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="310" height="19.666666666666668"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="310" height="49.666666666666664"/>
                                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                                         <color key="textColor" red="0.36470588240000001" green="0.69411764710000001" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ödeme Altyapmız Multinet |Up tarafından sağlanmaktadır ve işlem güvenliğiniz Multinet | Up güvencesi altındadır." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbB-50-dw0" userLabel="InfoLbl">
-                                                                        <rect key="frame" x="0.0" y="19.666666666666671" width="310" height="80.333333333333329"/>
+                                                                        <rect key="frame" x="0.0" y="49.666666666666657" width="310" height="50.333333333333343"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" red="0.41960784309999999" green="0.4549019608" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -1010,10 +1010,10 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="da3-WP-svC">
-                                                <rect key="frame" x="16" y="975" width="396" height="55"/>
+                                                <rect key="frame" x="16" y="975" width="396" height="52"/>
                                                 <color key="backgroundColor" red="0.2901960784" green="0.63529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="55" id="rm4-g0-fX4"/>
+                                                    <constraint firstAttribute="height" constant="52" id="rm4-g0-fX4"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <state key="normal" title="ÜYE OL">
@@ -1273,7 +1273,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="mv6-CV-Xka"/>
+        <segue reference="0HV-NS-1hP"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="LoginTopLogo" width="150" height="138"/>

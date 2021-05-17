@@ -26,6 +26,7 @@ class Auth {
     internal static var appToken: String?
     internal static var obfuscationSalt: String?
     static let isOnlyWalletTokenEnoughForAuthentication = true
+    static var userPreset: UserPreset?
     
     
     let headerInstance = Header.sharedInstance
