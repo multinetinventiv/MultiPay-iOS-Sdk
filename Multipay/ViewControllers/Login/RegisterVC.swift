@@ -387,13 +387,16 @@ extension RegisterVC {
         } else {
             kvkkSwitch.setOn(true, animated: true)
         }
+        self.decideRegisterButtonState()
     }
+    
     override func disagreedUserAgreementClicked(type: AgreementViewType) {
         if type == AgreementViewType.register {
             contractSwitch.setOn(false, animated: true)
         } else {
             kvkkSwitch.setOn(false, animated: true)
         }
+        self.decideRegisterButtonState()
     }
 }
 
@@ -431,7 +434,7 @@ extension RegisterVC{
     
     func callLegalAgreementsService(){
         
-        post(ServiceConstants.ServiceName.SdkListAgreements, parameters: [:] , displayError: true, displaySpinner: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
+        post(ServiceConstants.ServiceName.SdkListAgreements, parameters: [:] , displayError: false, displaySpinner: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
             
             guard let strongSelf = self else { return }
 
