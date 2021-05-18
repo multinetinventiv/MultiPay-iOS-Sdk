@@ -96,6 +96,7 @@ struct ServiceConstants {
         static let SdkPaymentConfirm    = "payment/confirm"
         static let SdkRollbackPayment   = "payment/rollback"
         static let SdkRegister          = "auth/register"
+        static let SdkListAgreements    = "common/list_agreements"
         
         
         static let SdkCreateMultinetCard        = "CreateMultinetCard"

@@ -26,7 +26,7 @@ extension AgreementViewType {
 class AgreementVC: BaseVC {
     
     var userAgreementUrl: String = "https://opystatic.multinet.com.tr/terms/term-l2-ch10-t1-v3.0.html"
-    var kvkkUrl: String = "https://opystatic.multinet.com.tr/terms/term-l2-ch10-t2-v1.0.html"
+    var gdprUrl: String = "https://opystatic.multinet.com.tr/terms/term-l2-ch10-t2-v1.0.html"
     
     // Constraints
     @IBOutlet weak var constraintBottomContainerHeight: NSLayoutConstraint!
@@ -105,7 +105,7 @@ class AgreementVC: BaseVC {
         if self.agreementViewType == AgreementViewType.virtualCard {
             self.webViewContainer.loadUrl(url: self.virtualCardAggrementUrl!)
         } else if (agreementViewType == AgreementViewType.kvkk || agreementViewType == AgreementViewType.kvkkWithNoButtons || agreementViewType == AgreementViewType.kvkkRegister){
-            self.webViewContainer.loadUrl(url: kvkkUrl)
+            self.webViewContainer.loadUrl(url: gdprUrl)
         } else {
             self.webViewContainer.loadUrl(url: self.userAgreementUrl)
         }

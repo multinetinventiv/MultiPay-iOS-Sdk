@@ -37,12 +37,16 @@ class RegisterVC: BaseVC {
     @IBOutlet weak var scrolllView: UIScrollView!
     
     var loginResponseModel: LoginResponseModel?
+    var listAgreementsResponse: ListAgreementsResponse?
     
     var requestParameter: [String:AnyObject]?
     var isAgreementAgreed:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        callLegalAgreementsService()
+        
         self.hasKeyboard = true
         self.navigationViewType = .withLeftButton
         self.navigationEditionType = .whiteEditionType
@@ -186,6 +190,14 @@ class RegisterVC: BaseVC {
         let vc = AgreementVC.instantiate()
         vc.delegate = self
         vc.agreementViewType = AgreementViewType.register
+        
+        if let gdprUrl = self.listAgreementsResponse?.result?.gdprUrl {
+            vc.gdprUrl = gdprUrl
+        }
+        if let userAgreementUrl = self.listAgreementsResponse?.result?.userAgreementUrl{
+            vc.userAgreementUrl = userAgreementUrl
+        }
+        
         self.presentModal(vc, animated: true, completion: nil)
     }
 
@@ -193,6 +205,14 @@ class RegisterVC: BaseVC {
         let vc = AgreementVC.instantiate()
         vc.delegate = self
         vc.agreementViewType = AgreementViewType.kvkkRegister
+        
+        if let gdprUrl = self.listAgreementsResponse?.result?.gdprUrl {
+            vc.gdprUrl = gdprUrl
+        }
+        if let userAgreementUrl = self.listAgreementsResponse?.result?.userAgreementUrl{
+            vc.userAgreementUrl = userAgreementUrl
+        }
+        
         self.presentModal(vc, animated: true, completion: nil)
     }
     
@@ -402,6 +422,42 @@ extension RegisterVC{
             textField.resignFirstResponder()
             self.registerButtonClicked(self.buttonRegister)
         }
+    }
+}
+
+
+//MARK: - Legal Agreements
+extension RegisterVC{
+    
+    func callLegalAgreementsService(){
+        
+        post(ServiceConstants.ServiceName.SdkListAgreements, parameters: [:] , displayError: true, displaySpinner: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
+            
+            guard let strongSelf = self else { return }
+
+            log.debug("data : \(String(describing: data))")
+            
+            if let data = rawData {
+                do{
+                    let modelObject = try data.decoded() as ListAgreementsResponse
+                    strongSelf.listAgreementsResponse = modelObject
+                }
+                catch{
+                    print("error: \(error)")
+                }
+            }
+            
+            if let data  = data {
+                //log.debug("data : \(data)")
+                if  strongSelf.checkResultCodeAndShowError(data) == ServiceResultCodeType.exit {
+                    return
+                }
+            }
+            
+            },errorCallback: {
+                 (data: ErrorModel, rawData) in
+                log.error("error : \(data.description)")
+            })
     }
     
 }
