@@ -116,3 +116,9 @@
 "api_error_network_multipay_sdk" = "Bağlantı ile ilgili bir hata oluştu";
 "api_error_no_network_multipay_sdk" = "Lütfen internet bağlantınızı kontrol ediniz";
 "api_error_invalid_response_multipay_sdk" = "Servis cevabı ile ilgili bir hata oluştu";
+"register_button_multipay_sdk" = "HESAP OLUŞTUR";
+"register_content_title_multipay_sdk" = "MultiPay’e Üye Ol";
+"register_content_description_multipay_sdk" = "Ödeme altyapımız Multinet|Up tarafından sağlanmaktadır ve işlem güvenliğiniz Multinet|Up güvencesi altındadır.";
+"register_user_agreement_checkbox_text_multipay_sdk" = "<b>Kullanıcı Sözleşmesi</b>\\n<u>MultiPay kullanıcı sözleşme koşullarını kabul ediyor ve onaylıyorum.</u>";
+"register_gdpr_checkbox_text_multipay_sdk" = "<b>Aydınlatma Metni</b>\\n<u>Kişisel verilerin korunması kanunu kapsamında, Multinet Kurumsal Hizmetler A.Ş. tarafından yayınlanan ’Aydınlatma Metni’ndeki hüküm ve şartları kabul ediyorum.</u>";
+"register_notification_checkbox_text_multipay_sdk" = "<b>Bilgilendirme</b>\\nMultipay’in, kampanyaları tanıtma, hatırlatma ve bilgilendirme amaçlı SMS veya e-posta yolu ile benimle iletişime geçmesine izin veriyorum.";

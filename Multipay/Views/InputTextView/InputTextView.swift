@@ -81,7 +81,7 @@ enum TextFieldShouldChangeCharactersInRangeType:Int {
 
 
 //MARK: InputTextView Delegate Methods
-@objc protocol InputTextViewDelegate :class {
+@objc protocol InputTextViewDelegate :AnyObject {
     
     @objc optional func inputTextTappedWith(textView:InputTextView)
     @objc optional func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String,textView:InputTextView) -> Int
@@ -323,8 +323,8 @@ class InputTextView: BaseView {
         } else {
             // Fallback on earlier versions
         }
-       
-    
+        
+        txtInput.font = UIFont(name: "Montserrat-Regular", size: 16)
     }
     
     
@@ -580,7 +580,6 @@ extension InputTextView {
         }
         return String(str.filter { Constants.validChars.contains($0) })
     }
-
     
     fileprivate func phoneTextCheckerWithEmail(_ textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
@@ -594,7 +593,13 @@ extension InputTextView {
             return false
         }
         
-        textField.replaceNSRange(range: range, withText: string)
+        var tempStr = string
+        
+        if tempStr.starts(with: "+90"){
+            tempStr = string.replacingOccurrences(of: "+90", with: "")
+        }
+        
+        textField.replaceNSRange(range: range, withText: tempStr)
         
         // text formatlanır
         textField.textWithCaret = FormatUtil.format(textField.textWithCaret.uppercased(), template: Constants.FormatTemplate.mobilePhoneTemplate)!
@@ -603,7 +608,6 @@ extension InputTextView {
     }
     
 }
-
 
 //MARK: - TextField Delegate
 extension InputTextView:UITextFieldDelegate {
@@ -623,7 +627,8 @@ extension InputTextView:UITextFieldDelegate {
     }
     
     //shouldChangeCharactersInRange
-    internal func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
    
         guard let textFieldShouldChange = delegate?.textField?(textField: textField, shouldChangeCharactersInRange: range, replacementString: string, textView: self), textFieldShouldChange != TextFieldShouldChangeCharactersInRangeType.notImplemented.rawValue else {
            
@@ -660,11 +665,25 @@ extension InputTextView:UITextFieldDelegate {
                 return phoneTextCheckerWithEmail(textField, shouldChangeCharactersInRange: range, replacementString: string)
             }
             
+            if self.inputFieldType == .inputText{
+                if range.location == 0 && string == " " { // prevent space on first character
+                        return false
+                    }
+
+                    if textField.text?.last == " " && string == " " { // allowed only single space
+                        return false
+                    }
+
+                    if string == " " { return true } // now allowing space between name
+
+                    if string.rangeOfCharacter(from: CharacterSet.letters.inverted) != nil {
+                        return false
+                    }
+            }
+            
             if let maxVal = self.maximumLength {
                 return textField.text!.count < maxVal
             }
-            
-            
             return true
             
         }
@@ -758,15 +777,14 @@ extension InputTextView:UITextFieldDelegate {
             }
         }
         
-        
 //        if let maxVal = self.maximumLength {
 //
-//            if text.characters.count > maxVal
+//            if text.count > maxVal
 //            {
-//                self.errorType = ErrorType.inValid
 //                return false
 //            }
 //        }
+        
         
         if (InputFieldType.inputPassword == inputFieldType) {
             

@@ -255,7 +255,10 @@ extension ColorPalette{
         static let contractTextLabel = UIColor.darkText
         static let informHeaderLabel = UIColor.darkText
         static let informTextLabel = UIColor.darkText
-        static let buttonRegisterBackground = ColorPalette.colorGreenTea
+        
+        static let buttonRegisterActiveBackground = UIColor.hexStringToUIColor(hex: "5DB185")
+        static let buttonRegisterPassiveBackground = UIColor.hexStringToUIColor(hex: "9FD0B5")
+        
         static let switchBtnsSelectedBackground = ColorPalette.colorGreenTea
         static let switchBtnsUnSelectedBackground = UIColor.lightGray.withAlphaComponent(0.5)
     }

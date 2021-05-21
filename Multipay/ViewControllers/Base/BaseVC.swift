@@ -121,6 +121,18 @@ class BaseVC: UIViewController {
         //appDelegate.window?.rootViewController  = UINavigationController(rootViewController: DashboardVC.instantiate())
     }
     
+    @objc func gotoAddCard(){
+        
+        CoreManager.Instance().viewControllerStack.clear()
+        
+        log.debug("Will open dashboard or necessary vc")
+        
+        let nav = self.navigationController as! MyNavigationController
+        nav.openAddCardFromOTP()
+        
+        //appDelegate.window?.rootViewController  = UINavigationController(rootViewController: DashboardVC.instantiate())
+    }
+    
 }
 
 //MARK: - LifeCycle

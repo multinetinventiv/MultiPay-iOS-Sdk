@@ -85,7 +85,7 @@ internal class CoreManager {
         return "Test"
     }
     
-    internal class func start(vcToPresent: UIViewController, appToken: String?, referenceNumber: String?, languageCode: String? = nil, apiType: APIType = .prod, walletToken: String? = nil, obfuscationSalt: String)
+    internal class func start(vcToPresent: UIViewController, appToken: String?, referenceNumber: String?, languageCode: String? = nil, apiType: APIType = .prod, walletToken: String? = nil, obfuscationSalt: String, userPreset: UserPreset? = nil)
     {
         
         CoreManager.shared.vcToPresent = vcToPresent
@@ -98,6 +98,8 @@ internal class CoreManager {
         Auth.referenceNumber = referenceNumber
         
         Auth.walletToken = walletToken
+        
+        Auth.userPreset = userPreset
         
         if let language = languageCode, language.count > 0{
             CoreManager.shared.language = language

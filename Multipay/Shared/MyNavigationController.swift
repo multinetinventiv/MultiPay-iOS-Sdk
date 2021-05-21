@@ -19,9 +19,12 @@ class MyNavigationController: UINavigationController {
     func openAddCardFromOTP(){
         
         self.popToRootViewController(animated: false)
+        
+        let walletVC = WalletViewController.instantiate()
+        self.pushViewController(walletVC, animated: false)
+        
         let addCardVC = AddCardVC.instantiate()
         self.pushViewController(addCardVC, animated: true)
-        
     }
     
     func openWalletFromOTP(){

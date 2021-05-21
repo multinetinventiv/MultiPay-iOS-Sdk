@@ -13,7 +13,7 @@ import UIKit
     case virtualCard
 }
 
-protocol AgreementViewDelegate :class {
+protocol AgreementViewDelegate :AnyObject {
     func agreedUserAgreementClicked(type: AgreementViewType)
 
     func disagreedUserAgreementClicked(type: AgreementViewType)
@@ -24,6 +24,10 @@ extension AgreementViewType {
 }
 
 class AgreementVC: BaseVC {
+    
+    var userAgreementUrl: String = "https://opystatic.multinet.com.tr/terms/term-l2-ch10-t1-v3.0.html"
+    var gdprUrl: String = "https://opystatic.multinet.com.tr/terms/term-l2-ch10-t2-v1.0.html"
+    
     // Constraints
     @IBOutlet weak var constraintBottomContainerHeight: NSLayoutConstraint!
 
@@ -51,29 +55,59 @@ class AgreementVC: BaseVC {
         } else if (self.agreementViewType == AgreementViewType.virtualCard) {
             self.navigationViewType = NavigationType.withRightButton
         } else {
-            self.navigationViewType = NavigationType.withTitleOnly
+            self.navigationViewType = NavigationType.withRightButton
         }
 
         self.navigationEditionType = .whiteEditionType
-        self.title =  Localization.AgreementHeader.local
+        self.title =  Localization.RegisterContract.local
 
         initViewStyles()
         initView()
     }
 
     func initViewStyles() {
-        disagreeButton.setTitle(Localization.AgreementCancelButton.local, for: UIControl.State())
-        agreeButton.setTitle(Localization.AgreementOkButton.local, for: UIControl.State())
-        self.view.backgroundColor = ColorPalette.agreement.backgroundColor
+        
+        agreeButton.titleLabel?.font = FontHelper.login.registerBtn
+        
+        agreeButton.setTitleColor(ColorPalette.login.girisYapActiveText, for: .normal)
+        
+        agreeButton.backgroundColor = ColorPalette.login.girisYapActiveBackground
+        
+        agreeButton.backgroundColor = ColorPalette.register.buttonRegisterActiveBackground
+
+        agreeButton.layer.cornerRadius = 10
+        
+        agreeButton.clipsToBounds = true
+        
+        agreeButton.setTitle(Localization.Ok.local, for: UIControl.State())
+        
+        disagreeButton.titleLabel?.font = FontHelper.login.registerBtn
+        
+        disagreeButton.setTitle(Localization.CancelButton2.local, for: UIControl.State())
+
+        disagreeButton.layer.cornerRadius = 10
+
+        disagreeButton.layer.borderWidth = 2
+        
+        disagreeButton.clipsToBounds = true
+        
+        disagreeButton.backgroundColor = UIColor(red: 0.384, green: 0.008, blue: 0.933, alpha: 0)
+        
+        disagreeButton.layer.backgroundColor = UIColor(red: 0.384, green: 0.008, blue: 0.933, alpha: 0).cgColor
+        
+        disagreeButton.layer.borderColor = ColorPalette.getirBorder.cgColor
+        
+        disagreeButton.setTitleColor(ColorPalette.tintColor(), for: UIControl.State.normal)
+        
     }
 
     func initView() {
         if self.agreementViewType == AgreementViewType.virtualCard {
             self.webViewContainer.loadUrl(url: self.virtualCardAggrementUrl!)
-        } else if (agreementViewType == AgreementViewType.kvkk || agreementViewType == AgreementViewType.kvkkWithNoButtons || agreementViewType == AgreementViewType.kvkkRegister), let kvkkUrl = CoreManager.Instance().setting.kvkkUrl {
-            self.webViewContainer.loadUrl(url: kvkkUrl)
-        } else if let stringUrl = CoreManager.Instance().setting.userAgreementUrl {
-            self.webViewContainer.loadUrl(url: stringUrl)
+        } else if (agreementViewType == AgreementViewType.kvkk || agreementViewType == AgreementViewType.kvkkWithNoButtons || agreementViewType == AgreementViewType.kvkkRegister){
+            self.webViewContainer.loadUrl(url: gdprUrl)
+        } else {
+            self.webViewContainer.loadUrl(url: self.userAgreementUrl)
         }
 
         if (self.agreementViewType == AgreementViewType.profile || self.agreementViewType == AgreementViewType.kvkkWithNoButtons) {
