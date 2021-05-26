@@ -250,15 +250,23 @@ class OTPVC: BaseVC {
                 }
                 
                 if let responseData  = data {
-                    if  strongSelf.checkResultCodeAndShowError(responseData,showMessage: Multipay.testModeActive ? false : true) == ServiceResultCodeType.exit {
-                        if Multipay.testModeActive{
+                    let serviceResultCodeType = strongSelf.checkResultCodeAndShowError(responseData,showMessage: Multipay.testModeActive ? false : true)
+                    
+                    if serviceResultCodeType == .maxRetryCountReached {
+                        strongSelf.timer?.invalidate()
+                        strongSelf.state = .reSend
+                        strongSelf.otpView.txtInput.text = ""
+                    }
+                    
+                    if serviceResultCodeType != ServiceResultCodeType.continue {
+                        if Multipay.testModeActive {
                             strongSelf.otpEndProcess(nil, otpResponseModel:nil)
                         }
                         return
                     }
+                    
                     strongSelf.otpEndProcess(responseData,otpResponseModel:strongSelf.otpConfirmResponse)
                 }
-                
             }
             
         },errorCallback: {

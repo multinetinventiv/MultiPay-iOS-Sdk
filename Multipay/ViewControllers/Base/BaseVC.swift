@@ -32,6 +32,7 @@ enum ServiceResultCodeType {
     case exit
     case `continue`
     case agreement
+    case maxRetryCountReached
 }
 
 let REGUEST_ERROR_CODE   = "999"
@@ -258,6 +259,17 @@ extension BaseVC {
             //Success
             if errorCode == 0 {
                 return ServiceResultCodeType.continue
+            }
+            
+            // Max retry count reached
+            if errorCode == 21000 {
+                if (showMessage) {
+                    if let resultMessage = data["ResultMessage"] as? String {
+                        self.showMessage(MessageType.error, message: resultMessage)
+                    }
+                }
+                
+                return ServiceResultCodeType.maxRetryCountReached
             }
             
             //Gösterilmesi Gereken Hata Mesajları

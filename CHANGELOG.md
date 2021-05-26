@@ -14,6 +14,7 @@
 - [300] SDK Reversal. [TFS-103555](http://isttfs02:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=103555)
 - [400] SDK Paylaşımı. [TFS-107243](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=107243)
 - SDK Register. [TFS-90532](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20%C4%B0sfanbul/_workitems#_a=edit&id=90532)
+- Onay kodu 3 defa hatalı girildiğinde, yeni onay kodu gönderilmesi sağlanmalı. [TFS-119576](http://isttfs02:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems/edit/119576)
 
 # Changed
 
