@@ -250,21 +250,12 @@ class OTPVC: BaseVC {
                 }
                 
                 if let responseData  = data {
-                    let serviceResultCodeType = strongSelf.checkResultCodeAndShowError(responseData,showMessage: Multipay.testModeActive ? false : true)
-                    
-                    if serviceResultCodeType == .maxRetryCountReached {
-                        strongSelf.timer?.invalidate()
-                        strongSelf.state = .reSend
-                        strongSelf.otpView.txtInput.text = ""
-                    }
-                    
-                    if serviceResultCodeType != ServiceResultCodeType.continue {
-                        if Multipay.testModeActive {
+                    if  strongSelf.checkResultCodeAndShowError(responseData,showMessage: Multipay.testModeActive ? false : true) == ServiceResultCodeType.exit {
+                        if Multipay.testModeActive{
                             strongSelf.otpEndProcess(nil, otpResponseModel:nil)
                         }
                         return
                     }
-                    
                     strongSelf.otpEndProcess(responseData,otpResponseModel:strongSelf.otpConfirmResponse)
                 }
             }
@@ -281,6 +272,23 @@ class OTPVC: BaseVC {
             }
             
             log.error("error : \(data.description)")
+            
+            var jsonDict: [String:AnyObject] = [:]
+
+            if let rawData = rawData {
+                do {
+                    jsonDict = try JSONSerialization.jsonObject(with: rawData, options: .mutableContainers) as? [String:AnyObject] ?? [:]
+                } catch {
+                    print("Something went wrong")
+                }
+            }
+            
+            if let resultCode = jsonDict["resultCode"] as? Int, resultCode == 23503 {
+                self.timer?.invalidate()
+                self.state = .reSend
+                self.digitInputView.clearText()
+            }
+
         })
     }
     

@@ -32,7 +32,6 @@ enum ServiceResultCodeType {
     case exit
     case `continue`
     case agreement
-    case maxRetryCountReached
 }
 
 let REGUEST_ERROR_CODE   = "999"
@@ -259,17 +258,6 @@ extension BaseVC {
             //Success
             if errorCode == 0 {
                 return ServiceResultCodeType.continue
-            }
-            
-            // Max retry count reached
-            if errorCode == 21000 {
-                if (showMessage) {
-                    if let resultMessage = data["ResultMessage"] as? String {
-                        self.showMessage(MessageType.error, message: resultMessage)
-                    }
-                }
-                
-                return ServiceResultCodeType.maxRetryCountReached
             }
             
             //Gösterilmesi Gereken Hata Mesajları
@@ -570,14 +558,13 @@ extension BaseVC {
                         message = resultMessage as! String
                     }
                     
-                    if (retryCount < Constants.maxRetryCount && resultCode != 20201 && responseFail.code != String(ServiceConstants.NO_INTERNET_CONNECTION)) || responseFail.code == String(ServiceConstants.CONNECTION_WAS_LOST) || responseFail.code == String(ServiceConstants.CONNECTION_WAS_CANCELLED)
+                    if (retryCount < Constants.maxRetryCount && resultCode != 20201 && resultCode != 23503 && responseFail.code != String(ServiceConstants.NO_INTERNET_CONNECTION)) || responseFail.code == String(ServiceConstants.CONNECTION_WAS_LOST) || responseFail.code == String(ServiceConstants.CONNECTION_WAS_CANCELLED)
                     {
                         strongSelf.post(serviceName, parameters: parameters, retryCount: retryCount + 1, callback: callback, errorCallback: errorCallback)
                         return
                     }
                     else {
-                        
-                        MessageManager.showMessageCustom(.error, message: message, btnTitle: resultCode != 20201 ? Localization.Retry.local : nil) {
+                        MessageManager.showMessageCustom(.error, message: message, btnTitle: (resultCode != 20201 && resultCode != 23503) ? Localization.Retry.local : nil) {
                             strongSelf.post(serviceName, parameters: parameters, retryCount: retryCount + 1, callback: callback, errorCallback: errorCallback)
                             return
                         }
