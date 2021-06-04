@@ -51,7 +51,7 @@ class OTPVC: BaseVC {
     
     weak var delegate: OTPVCDelegate?
     
-    var resendServiceName:String = ServiceConstants.ServiceName.LoginWithOtpSecure
+    var resendServiceName: String?
     
     var otpCalledType = OTPCalledType.register
     var smsCode:String?
@@ -351,7 +351,7 @@ extension OTPVC {
         
         let postDict = loginRequestParameters!
         
-        post(resendServiceName, parameters: postDict as [String:AnyObject], displayError: false, isSecure: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
+        post(resendServiceName!, parameters: postDict as [String:AnyObject], displayError: false, isSecure: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
             if let strongSelf = self
             {
                 log.debug("data : \(data!)")

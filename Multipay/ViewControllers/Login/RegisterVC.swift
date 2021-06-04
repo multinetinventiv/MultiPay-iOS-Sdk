@@ -347,7 +347,7 @@ class RegisterVC: BaseVC {
             let vc = segue.destination as! OTPVC
             vc.loginResponseModel = self.loginResponseModel
             vc.loginRequestParameters  = self.requestParameter
-            vc.resendServiceName = ServiceConstants.ServiceName.registerUser
+            vc.resendServiceName = ServiceConstants.ServiceName.SdkRegister
             vc.otpCalledType = OTPCalledType.register
         }
     }
