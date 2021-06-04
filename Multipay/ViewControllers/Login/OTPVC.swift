@@ -51,7 +51,7 @@ class OTPVC: BaseVC {
     
     weak var delegate: OTPVCDelegate?
     
-    var resendServiceName:String = ServiceConstants.ServiceName.LoginWithOtpSecure
+    var resendServiceName: String?
     
     var otpCalledType = OTPCalledType.register
     var smsCode:String?
@@ -258,7 +258,6 @@ class OTPVC: BaseVC {
                     }
                     strongSelf.otpEndProcess(responseData,otpResponseModel:strongSelf.otpConfirmResponse)
                 }
-                
             }
             
         },errorCallback: {
@@ -273,6 +272,23 @@ class OTPVC: BaseVC {
             }
             
             log.error("error : \(data.description)")
+            
+            var jsonDict: [String:AnyObject] = [:]
+
+            if let rawData = rawData {
+                do {
+                    jsonDict = try JSONSerialization.jsonObject(with: rawData, options: .mutableContainers) as? [String:AnyObject] ?? [:]
+                } catch {
+                    print("Something went wrong")
+                }
+            }
+            
+            if let resultCode = jsonDict["resultCode"] as? Int, resultCode == 23503 {
+                self.timer?.invalidate()
+                self.state = .reSend
+                self.digitInputView.clearText()
+            }
+
         })
     }
     
@@ -335,7 +351,7 @@ extension OTPVC {
         
         let postDict = loginRequestParameters!
         
-        post(resendServiceName, parameters: postDict as [String:AnyObject], displayError: false, isSecure: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
+        post(resendServiceName!, parameters: postDict as [String:AnyObject], displayError: false, isSecure: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
             if let strongSelf = self
             {
                 log.debug("data : \(data!)")

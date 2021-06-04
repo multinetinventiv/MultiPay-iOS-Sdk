@@ -558,14 +558,13 @@ extension BaseVC {
                         message = resultMessage as! String
                     }
                     
-                    if (retryCount < Constants.maxRetryCount && resultCode != 20201 && responseFail.code != String(ServiceConstants.NO_INTERNET_CONNECTION)) || responseFail.code == String(ServiceConstants.CONNECTION_WAS_LOST) || responseFail.code == String(ServiceConstants.CONNECTION_WAS_CANCELLED)
+                    if (retryCount < Constants.maxRetryCount && resultCode != 20201 && resultCode != 23503 && responseFail.code != String(ServiceConstants.NO_INTERNET_CONNECTION)) || responseFail.code == String(ServiceConstants.CONNECTION_WAS_LOST) || responseFail.code == String(ServiceConstants.CONNECTION_WAS_CANCELLED)
                     {
                         strongSelf.post(serviceName, parameters: parameters, retryCount: retryCount + 1, callback: callback, errorCallback: errorCallback)
                         return
                     }
                     else {
-                        
-                        MessageManager.showMessageCustom(.error, message: message, btnTitle: resultCode != 20201 ? Localization.Retry.local : nil) {
+                        MessageManager.showMessageCustom(.error, message: message, btnTitle: (resultCode != 20201 && resultCode != 23503) ? Localization.Retry.local : nil) {
                             strongSelf.post(serviceName, parameters: parameters, retryCount: retryCount + 1, callback: callback, errorCallback: errorCallback)
                             return
                         }
