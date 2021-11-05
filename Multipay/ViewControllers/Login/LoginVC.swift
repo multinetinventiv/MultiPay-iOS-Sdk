@@ -340,7 +340,7 @@ extension LoginVC {
             vc.resendServiceName = ServiceConstants.ServiceName.SdkLogin
             vc.otpCalledType = OTPCalledType.loginWithOTP
         } else if segue.identifier == "RegisterSegue" {
-            let vc = segue.destination as! RegisterVC
+            _ = segue.destination as! RegisterVC
         } else if segue.identifier == "activationSegue" {
             //_ = segue.destination as! LoginWithCodeVC
         }

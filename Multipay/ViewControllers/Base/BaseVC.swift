@@ -798,7 +798,7 @@ extension BaseVC {
     func logout()
     {
         let parameters = ["" : ""]
-        _ = post(ServiceConstants.ServiceName.Logout, parameters: parameters as [String : AnyObject] , displayError: false, displaySpinner:false,callback: { (data:[String:AnyObject]?, rawData) in
+        post(ServiceConstants.ServiceName.Logout, parameters: parameters as [String : AnyObject] , displayError: false, displaySpinner:false,callback: { (data:[String:AnyObject]?, rawData) in
             //....
         },errorCallback: {(data: ErrorModel, rawData) in
             log.error("error : \(data.description)")

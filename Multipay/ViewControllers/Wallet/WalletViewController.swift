@@ -400,9 +400,9 @@ extension WalletViewController{
             
             log.error("error : \(data.description)")
             
-            Multipay.delegate?.walletTokenExpired(expiredWalletToken: parameters[walletTokenKey] as? String)
+            Multipay.delegate?.walletTokenExpired(expiredWalletToken: parameters[walletTokenKey])
             
-            if let self = self{
+            if self != nil{
                 //self.navigationController?.popToRootViewController(animated: true)
                 return
             }

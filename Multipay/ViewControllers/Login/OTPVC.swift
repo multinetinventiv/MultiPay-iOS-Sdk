@@ -163,7 +163,7 @@ class OTPVC: BaseVC {
             
             let attText = tempStr.htmlAttributed(withRegularFont: FontHelper.otp.timerLbl, andBoldFont: UIFont(name: "Montserrat-Bold", size: 14)!)
             
-            let range = (tempStr as NSString).range(of: tempStr)
+            _ = (tempStr as NSString).range(of: tempStr)
             
             //attText.addAttribute(.foregroundColor, value: ColorPalette.commonTextColor(), range: range)
             

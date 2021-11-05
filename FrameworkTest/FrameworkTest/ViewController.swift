@@ -261,7 +261,7 @@ extension ViewController: MultipayDelegate {
     
     func multipayRollbackWithSignDidSucceed(sign: String?, rollbackServerReferenceNumber: String?) {
         
-        if let sign = sign, let referenceNumber = rollbackServerReferenceNumber
+        if let _ = sign, let _ = rollbackServerReferenceNumber
         {
             
             let alert = UIAlertController(title: "Rollback payment request succeed!", message: "Success", preferredStyle: .alert)

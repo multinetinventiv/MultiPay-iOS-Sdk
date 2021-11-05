@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol MultipayDelegate : class {
+public protocol MultipayDelegate : AnyObject {
     
     //MARK: - WalletToken expire delegate methods
     
