@@ -55,12 +55,12 @@ public class Multipay {
     
     static var testModeActive = false
     
-    public class func start(vcToPresent: UIViewController, appToken: String, referenceNumber: String?, delegate:MultipayDelegate? = nil, languageCode: String? = nil, apiType: APIType = .prod, testMode: Bool = false, walletToken: String? = nil, obfuscationSalt: String, userPreset: UserPreset? = nil)
+    public class func start(vcToPresent: UIViewController, walletAppToken: String, referenceNumber: String?, delegate:MultipayDelegate? = nil, languageCode: String? = nil, apiType: APIType = .prod, testMode: Bool = false, walletToken: String? = nil, obfuscationSalt: String, userPreset: UserPreset? = nil)
     {
         Multipay.testModeActive = testMode
         Multipay.delegate = delegate
         
-        CoreManager.start(vcToPresent: vcToPresent, appToken: appToken, referenceNumber: referenceNumber, languageCode: languageCode, apiType:apiType, walletToken: walletToken, obfuscationSalt: obfuscationSalt, userPreset: userPreset)
+        CoreManager.start(vcToPresent: vcToPresent, appToken: walletAppToken, referenceNumber: referenceNumber, languageCode: languageCode, apiType:apiType, walletToken: walletToken, obfuscationSalt: obfuscationSalt, userPreset: userPreset)
     }
     
     //MARK: SDK FUNCTIONS
