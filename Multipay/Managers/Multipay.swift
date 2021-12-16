@@ -282,7 +282,30 @@ public class Multipay {
             
             log.error("error: \(responseFail)")
             
-            delegate.multipayPaymentDidFail(error: responseFail as? Error)
+            DispatchQueue.main.async(execute: {
+                
+                var jsonDict: [String:AnyObject] = [:]
+                
+                if let rawData = rawData{
+                    do {
+                        jsonDict = try JSONSerialization.jsonObject(with: rawData, options: .mutableContainers) as? [String:AnyObject] ?? [:]
+                    } catch {
+                        print("Something went wrong")
+                    }
+                }
+                
+                let resultCode = jsonDict["resultCode"] as? Int
+                
+                var message = "Bilinmeyen bir hata oluştu!"
+                
+                if let resultMessage = jsonDict["resultMessage"] as? String{
+                    message = resultMessage
+                }
+                
+                let error = NSError(domain:"", code: resultCode ?? -999, userInfo: [NSLocalizedDescriptionKey: message ])
+                
+                delegate.multipayPaymentDidFail(error: error)
+            })
         }
     }
     
