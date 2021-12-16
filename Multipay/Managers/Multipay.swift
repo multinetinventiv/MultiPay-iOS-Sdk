@@ -261,7 +261,13 @@ public class Multipay {
                                                                 if let resultCode = modelObject.resultCode, resultCode == 0{
                                                                     delegate.multipayPaymentDidSucceed(sign: modelObject.result?.sign, transferServerRefNo: modelObject.result?.transferServerReferenceNumber)
                                                                 }
-                                                                else{
+                                                                else if let resultCode = modelObject.resultCode{
+                                                                    let errorTemp = NSError(domain:"", code: resultCode, userInfo: [NSLocalizedDescriptionKey: modelObject.resultMessage ?? ""])
+                                                                    delegate.multipayPaymentDidFail(error: errorTemp)
+                                                                }else if let resultMessage = modelObject.resultMessage{
+                                                                    let errorTemp = NSError(domain:"", code: -999, userInfo: [NSLocalizedDescriptionKey: resultMessage])
+                                                                    delegate.multipayPaymentDidFail(error: errorTemp)
+                                                                }else{
                                                                     delegate.multipayPaymentDidFail(error: nil)
                                                                 }
                                                             }
