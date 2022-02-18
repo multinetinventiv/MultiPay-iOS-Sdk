@@ -12,13 +12,13 @@ target 'FrameworkTest' do
 	# pod 'Multipay'
 
 	# To use specific version
-	# pod 'Multipay', '~> 1.0.16'	
+	 pod 'Multipay', '~> 1.0.24'	
 
 	# To use directly from repo
 	# pod 'Multipay', :git => 'https://github.com/multinetinventiv/MultiPay-iOS-Sdk.git'
 
 	# To use in development mode
-	pod 'Multipay', :path => '../'
+	#pod 'Multipay', :path => '../'
 
 	pod 'IQKeyboardManagerSwift'
 
