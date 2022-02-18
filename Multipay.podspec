@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "Multipay"
-  s.version      = "1.0.23"
+  s.version      = "1.0.24"
   s.summary      = "A framework of Multipay"
 
   # This description is used to generate tags and improve search results.
