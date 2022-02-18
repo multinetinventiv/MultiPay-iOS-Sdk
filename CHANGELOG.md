@@ -1,4 +1,14 @@
+
 ## [Unreleased]
+### Added
+
+### Changed
+
+### Fixed
+- MultiPay SDK XCode 13 Update Sonrası Hataların ve UI Bozulmaların Düzeltilmesi. [TFS-2270](https://dev.azure.com/inventivtech/Panda/_workitems/edit/2270)
+
+
+## [1.0.0]
 # Added
 
 - SDK Wallet UI Tasarım. [TFS-92977](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20İsfanbul/_workitems#_a=edit&id=92977)
@@ -24,4 +34,3 @@
 - Feature 103725:[150] Login with OTP (Şifresiz Giriş). [TFS-103725](http://192.168.100.209:8080/tfs/MultinetCollection/Prj%20-%20%C4%B0sfanbul/_workitems#_a=edit&id=103725)
 
 # Fixed
-
