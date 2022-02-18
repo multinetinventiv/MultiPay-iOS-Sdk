@@ -150,6 +150,16 @@ extension BaseVC {
         self.navigationController?.navigationBar.tintColor = ColorPalette.tintColor()
         self.view.backgroundColor = ColorPalette.login.loginViewBackground()
         
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = ColorPalette.login.loginViewBackground()
+            self.navigationController?.navigationBar.standardAppearance = appearance;
+            self.navigationController?.navigationBar.scrollEdgeAppearance = self.navigationController?.navigationBar.standardAppearance
+        } else {
+            // Fallback on earlier versions
+        }
+        
         //addNavBarImageAndBarButtons()
     }
     

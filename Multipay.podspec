@@ -151,7 +151,7 @@ Pod::Spec.new do |s|
   s.frameworks                     = 'Foundation', 'Security', 'UIKit'
 
   s.dependency 'SnapKit', '~> 5.0.0'
-  s.dependency 'SwiftMessages', '~> 8.0.2'
+  s.dependency 'SwiftMessages'
   s.dependency 'KeychainAccess'
   s.dependency 'SDWebImage'
   s.dependency 'NVActivityIndicatorView'
