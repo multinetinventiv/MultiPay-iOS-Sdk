@@ -14,12 +14,13 @@ class ConfigCommonViewController: UIViewController {
     @IBOutlet weak var authTokenTxtField: UITextField!
     @IBOutlet weak var walletTokenTxtField: UITextField!
     @IBOutlet weak var referenceNumberTxtField: UITextField!
-    @IBOutlet weak var appTokenTxtField: UITextField!
-    
-    var lastSelectedApiType:APIType?{
+    @IBOutlet weak var walletAppTokenTxtField: UITextField!
+    @IBOutlet weak var obfuscationKeyTxtField: UITextField!
+
+    var lastSelectedApiType:Environment?{
         get{
-            let apiType = userDefaults.object(forKey: "lastSelectedApiType") as? Int
-            return APIType(rawValue: apiType ?? 3)
+            let environment = userDefaults.object(forKey: "lastSelectedApiType") as? Int
+            return Environment(rawValue: environment ?? 3)
         }
         set{
             userDefaults.set(newValue?.rawValue, forKey: "lastSelectedApiType")
@@ -29,7 +30,7 @@ class ConfigCommonViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tempDict = getConfirmPaymentDict(apiType: self.lastSelectedApiType!)
+        let tempDict = getConfirmPaymentDict(environment: self.lastSelectedApiType!)
         
         if let dict = tempDict{
             
@@ -39,7 +40,9 @@ class ConfigCommonViewController: UIViewController {
             
             self.referenceNumberTxtField.text = dict["referenceNumber"] as? String
             
-            self.appTokenTxtField.text = dict["appToken"] as? String
+            self.walletAppTokenTxtField.text = dict["walletAppToken"] as? String
+            
+            self.obfuscationKeyTxtField.text = dict["obfuscationKey"] as? String
             
         }
     }
@@ -59,9 +62,9 @@ class ConfigCommonViewController: UIViewController {
 
 extension ConfigCommonViewController{
     
-    func getConfirmPaymentDict(apiType:APIType) -> [String:AnyObject]?{
+    func getConfirmPaymentDict(environment:Environment) -> [String:AnyObject]?{
         
-        if let plistDict = getPlist(apiType: apiType){
+        if let plistDict = getPlist(environment: environment){
             
             let paymentConfirmDict = plistDict
             
@@ -89,8 +92,10 @@ extension ConfigCommonViewController{
             
             tempDict["referenceNumber"] = referenceNumberTxtField.text
             
-            tempDict["appToken"] = appTokenTxtField.text
-            
+            tempDict["walletAppToken"] = walletAppTokenTxtField.text
+
+            tempDict["obfuscationKey"] = obfuscationKeyTxtField.text
+
             tempDict.write(toFile: returnValues.url.path, atomically: true)
             
         }

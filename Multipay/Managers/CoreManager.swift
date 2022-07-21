@@ -85,27 +85,24 @@ internal class CoreManager {
         return "Test"
     }
     
-    internal class func start(vcToPresent: UIViewController, appToken: String?, referenceNumber: String?, languageCode: String? = nil, apiType: APIType = .prod, walletToken: String? = nil, obfuscationSalt: String, userPreset: UserPreset? = nil)
+    internal class func start(vcToPresent: UIViewController, appToken: String?, referenceNumber: String?, languageCode: String, environment: Environment = .production, walletToken: String? = nil, obfuscationKey: String, userPreset: UserPreset? = nil)
     {
         
         CoreManager.shared.vcToPresent = vcToPresent
         
-        Auth.obfuscationSalt = obfuscationSalt
+        Auth.obfuscationKey = obfuscationKey
         
         if let token = appToken{
-            Auth.appToken = token
+            Auth.walletAppToken = token
         }
         Auth.referenceNumber = referenceNumber
         
         Auth.walletToken = walletToken
         
         Auth.userPreset = userPreset
+        CoreManager.shared.language = languageCode
         
-        if let language = languageCode, language.count > 0{
-            CoreManager.shared.language = language
-        }
-        
-        ServiceUrl.setApiType(kApiType: apiType)
+        ServiceUrl.setApiType(kApiType: environment)
         
         FontHelper.registerFonts()
         CoreManager.shared.setConfiguration()
@@ -115,46 +112,12 @@ internal class CoreManager {
         CoreManager.shared.vcToPresent.show(navigationCont, sender: nil)
     }
     
-    class func getLocaleIdentifier() -> String {
-        
-        
-        /*Bu Method LocaleIdentifier gerektirebileck durumlar için
-         ref : https://developer.apple.com/library/ios/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
-         
-         check with avaliableCurrentLocaleIdentifier()
-         
-         */
-        
-        //log.debug(NSLocaleCountryCode)
-        let langCode = shared.language
-        
-        
-        if (langCode.contains("en")) {
-            return "en_US"
-        }else if(langCode.contains("tr")) {
-            return "tr_TR"
-            
-        }else{
-            return "en_US"
-        }
-    }
-    
-    func getLanguageRegion() -> String {
-        
-        //log.debug(NSLocaleCountryCode)
-        let langCode = self.language
-        
-        if (langCode.contains("en")) {
-            return "en-US"
-        }else if(langCode.contains("tr")) {
-            return "tr-TR"
-        }else{
-            return "en-US"
+    class func getLocaleIdentifier(language: Language? = nil) -> String {
+        if let language = language {
+            return language.rawValue
         }
         
-        //        else if (langCode.contains("fr")){
-        //            return "fr-FR"
-        //        }
+        return shared.language
     }
     
     class func dateFromatter(formatStr:String) -> DateFormatter {
@@ -191,8 +154,8 @@ internal class CoreManager {
     public func getUser() {
         let url = ServiceUrl.getURL(ServiceConstants.ServiceName.GetUser)
         
-        let serviceParameter:[String:Any] = [languageCodeKey : self.getLanguageRegion(),
-                                             appTokenKey    : ServiceUrl.getToken() ]
+        let serviceParameter:[String:Any] = [languageCodeKey : CoreManager.getLocaleIdentifier(),
+                                             walletAppTokenKey : ServiceUrl.getToken() ]
         
         let httpHeaders = HTTPHeaders(Auth.shared.getHeader())
         

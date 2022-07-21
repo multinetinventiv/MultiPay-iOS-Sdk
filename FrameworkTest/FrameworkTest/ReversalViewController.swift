@@ -12,19 +12,17 @@ import Multipay
 class ReversalConfigViewController: UIViewController {
     
     @IBOutlet weak var requestIdTxtField: UITextField!
-    
-    @IBOutlet weak var saltKeyTxtField: UITextField!
-    
+        
     @IBOutlet weak var terminalRefNumTxtField: UITextField!
     
     @IBOutlet weak var merchantRefNumTxtField: UITextField!
     
-    @IBOutlet weak var paymentAppTokenTxtField: UITextField!
+    @IBOutlet weak var paymentwalletAppTokenTxtField: UITextField!
     
-    var lastSelectedApiType:APIType?{
+    var lastSelectedApiType:Environment?{
         get{
-            let apiType = userDefaults.object(forKey: "lastSelectedApiType") as? Int
-            return APIType(rawValue: apiType ?? 3)
+            let environment = userDefaults.object(forKey: "lastSelectedApiType") as? Int
+            return Environment(rawValue: environment ?? 3)
         }
         set{
             userDefaults.set(newValue?.rawValue, forKey: "lastSelectedApiType")
@@ -34,16 +32,14 @@ class ReversalConfigViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let confirmPayDict = getRollbackPaymentDict(apiType: self.lastSelectedApiType!)
+        let confirmPayDict = getRollbackPaymentDict(environment: self.lastSelectedApiType!)
         
         if let dict = confirmPayDict{
             
-            self.paymentAppTokenTxtField.text = dict["paymentAppTokenTest"] as? String
+            self.paymentwalletAppTokenTxtField.text = dict["paymentAppTokenTest"] as? String
             
             self.requestIdTxtField.text = dict["requestId"] as? String
-            
-            self.saltKeyTxtField.text = dict["saltKeyTest"] as? String
-            
+                        
             self.merchantRefNumTxtField.text = dict["merchantReferenceNumberTest"] as? String
             
             self.terminalRefNumTxtField.text = dict["terminalReferenceNumberTest"] as? String
@@ -67,9 +63,9 @@ class ReversalConfigViewController: UIViewController {
 
 extension ReversalConfigViewController{
     
-    func getRollbackPaymentDict(apiType:APIType) -> [String:AnyObject]?{
+    func getRollbackPaymentDict(environment:Environment) -> [String:AnyObject]?{
         
-        if let plistDict = getPlist(apiType: apiType){
+        if let plistDict = getPlist(environment: environment){
             
             let paymentConfirmDict = plistDict["RollbackPayment"]
             
@@ -90,14 +86,12 @@ extension ReversalConfigViewController{
         let plistDict = tempDict?["RollbackPayment"] as? NSMutableDictionary
         
         if let plistDict = plistDict{
-            
-            plistDict["saltKeyTest"] = saltKeyTxtField.text
-            
+                        
             plistDict["terminalReferenceNumberTest"] = terminalRefNumTxtField.text
             
             plistDict["merchantReferenceNumberTest"] = merchantRefNumTxtField.text
             
-            plistDict["paymentAppTokenTest"] = paymentAppTokenTxtField.text
+            plistDict["paymentAppTokenTest"] = paymentwalletAppTokenTxtField.text
             
             plistDict["requestId"] = self.requestIdTxtField.text
             

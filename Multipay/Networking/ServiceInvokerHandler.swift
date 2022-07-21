@@ -11,8 +11,7 @@ import Foundation
 public let authTokenKey = "authToken"
 public let walletTokenKey = "walletToken"
 public let languageCodeKey = "languageCode"
-public let appTokenKey = "appToken"
-public let newAppTokenKey = "walletAppToken"
+public let walletAppTokenKey = "walletAppToken"
 public let requestIdKey = "requestId"
 public let referenceNumberKey = "referenceNumber"
 public let paymentAppTokenKey = "paymentAppToken"
@@ -59,15 +58,14 @@ open class ServiceInvokerHandler {
         
         var serviceParameters = parameters
         
-        let languageRegion = CoreManager.shared.getLanguageRegion()
+        let languageRegion = CoreManager.getLocaleIdentifier()
         
         serviceParameters[languageCodeKey] = languageRegion as AnyObject
         
         let token = ServiceUrl.getToken()
         
         if sendAppTokenToRequests, token.count > 0{
-            serviceParameters[appTokenKey] = token as AnyObject
-            serviceParameters[newAppTokenKey] = token as AnyObject
+            serviceParameters[walletAppTokenKey] = token as AnyObject
         }
         
         if sendRequestIdToRequests, sendRequestIdToRequestsParam{

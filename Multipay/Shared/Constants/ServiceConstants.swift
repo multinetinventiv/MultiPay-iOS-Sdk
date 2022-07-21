@@ -1,15 +1,20 @@
 import Foundation
 
-public enum APIType : Int, CaseIterable {
-    case prod = 1
+public enum Environment : Int, CaseIterable {
+    case production = 1
     case pilot = 2
     case test = 3
     case dev = 4
 }
 
+public enum Language: String {
+    case tr = "tr-TR"
+    case en = "en-US"
+}
+
 struct Config {
-    static let basePathTpype: APIType = {
-        return (APIType(rawValue: API_TYPE) ?? APIType.prod)
+    static let basePathTpype: Environment = {
+        return (Environment(rawValue: API_TYPE) ?? Environment.production)
     }()
     static let forcePathType: Bool      = IS_ENVIRONMENT_FORCED  // true oldugunda uygulama icerisinden ortam degisikligi yapilamaz
     static let isDebug                  = true // Debug loglarını açar ve kullanıcı bilgilerini ilgili alanlara dolu getirir.
@@ -267,19 +272,19 @@ struct ServiceConstants {
 // MARK: - ServiceUrl
 public struct ServiceUrl {
     
-    static func setApiType(kApiType: APIType) {
+    static func setApiType(kApiType: Environment) {
         
         let userDefaults = UserDefaults.standard
-        userDefaults.set(kApiType.rawValue, forKey: "apiType")
+        userDefaults.set(kApiType.rawValue, forKey: "environment")
         userDefaults.synchronize()
         
     }
     
-    static func readApiType() -> APIType {
-        if let kApiType = UserDefaults.standard.object(forKey: "apiType") as? Int {
+    static func readApiType() -> Environment {
+        if let kApiType = UserDefaults.standard.object(forKey: "environment") as? Int {
             switch kApiType {
             case 1:
-                return .prod
+                return .production
             case 2:
                 return .pilot
             case 3:
@@ -287,14 +292,14 @@ public struct ServiceUrl {
             case 4:
                 return .dev
             default:
-                return .prod
+                return .production
             }
         }
-        return .prod
+        return .production
     }
     
     static func isPROD() -> Bool {
-        return ServiceUrl.readApiType() == .prod ? true : false
+        return ServiceUrl.readApiType() == .production ? true : false
     }
     
     static func isPILOT() -> Bool {
@@ -313,7 +318,7 @@ public struct ServiceUrl {
                 return TestSdkConfig.API_BASE_PATH
         case .pilot:
                 return PilotSdkConfig.API_BASE_PATH
-        case .prod:
+        case .production:
                 return ProdSdkConfig.API_BASE_PATH
         }
     }
@@ -327,7 +332,7 @@ public struct ServiceUrl {
                 return TestSdkConfig.API_BASE_DOMAIN_URL
         case .pilot:
                 return PilotSdkConfig.API_BASE_DOMAIN_URL
-        case .prod:
+        case .production:
                 return ProdSdkConfig.API_BASE_DOMAIN_URL
         }
     }
@@ -339,7 +344,7 @@ public struct ServiceUrl {
     
     static func getToken() -> String {
         
-        if let token = Auth.appToken{
+        if let token = Auth.walletAppToken{
             return token
         }
         else{

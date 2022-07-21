@@ -13,7 +13,7 @@ public let userDefaults = UserDefaults.standard
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var testModeSwitch: UISwitch!
+    @IBOutlet weak var offlineModeSwitch: UISwitch!
     
     @IBOutlet weak var authenticationTokenSwitch: UISwitch!
     
@@ -40,7 +40,7 @@ class ViewController: UIViewController {
     var selectedWalletToken: String?
     {
         get{
-            //return getWalletToken(apiType: lastSelectedApiType ?? .test) ?? userDefaults.object(forKey: "selectedWalletToken") as? String
+            //return getWalletToken(environment: lastSelectedApiType ?? .test) ?? userDefaults.object(forKey: "selectedWalletToken") as? String
             return userDefaults.object(forKey: "selectedWalletToken") as? String
         }
         set{
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     var selectedAuthToken: String?
     {
         get{
-            //return getAuthToken(apiType: lastSelectedApiType ?? .test) ?? userDefaults.object(forKey: "selectedAuthToken") as? String
+            //return getAuthToken(environment: lastSelectedApiType ?? .test) ?? userDefaults.object(forKey: "selectedAuthToken") as? String
             return userDefaults.object(forKey: "selectedAuthToken") as? String
         }
         set{
@@ -111,11 +111,11 @@ class ViewController: UIViewController {
         }
     }
     
-    var lastSelectedApiType:APIType?{
+    var lastSelectedApiType:Environment?{
         
         get{
-            let apiType = userDefaults.object(forKey: "lastSelectedApiType") as? Int
-            return APIType(rawValue: apiType ?? 3)
+            let environment = userDefaults.object(forKey: "lastSelectedApiType") as? Int
+            return Environment(rawValue: environment ?? 3)
         }
         set{
             userDefaults.set(newValue?.rawValue, forKey: "lastSelectedApiType")
@@ -127,76 +127,75 @@ class ViewController: UIViewController {
 
 extension ViewController{
     
-    func openMultipay(apiType:APIType){
+    func openMultipay(environment: Environment){
         
-        lastSelectedApiType = apiType
+        lastSelectedApiType = environment
         
         //let userPreset = UserPreset(name: "TestName", surname: "TestSurname", email: "testEmail", gsm: "5321234567")
         
         let userPreset = UserPreset()
         
-        Multipay.start(vcToPresent: self.navigationController!.topViewController ?? self, walletAppToken: getAppToken(apiType: apiType), referenceNumber: getReferenceNumber(apiType: apiType), delegate: self, languageCode: "tr", apiType: apiType, testMode: testModeSwitch.isOn, walletToken: walletTokenSwitch.isOn ? (selectedWalletToken != nil) ? selectedWalletToken : getWalletToken(apiType: apiType) : nil, obfuscationSalt: getObfuscationSalt(apiType: apiType) ?? "", userPreset: userPreset)
+        Multipay.start(vcToPresent: self.navigationController!.topViewController ?? self, walletAppToken: getWalletAppToken(environment: environment), referenceNumber: getReferenceNumber(environment: environment), delegate: self, language: .tr, environment: environment, offlineMode: offlineModeSwitch.isOn, walletToken: walletTokenSwitch.isOn ? (selectedWalletToken != nil) ? selectedWalletToken : getWalletToken(environment: environment) : nil, obfuscationKey: getObfuscationKey(environment: environment) ?? "", userPreset: userPreset)
     }
 }
 
 extension ViewController{
     
-    func getObfuscationSalt(apiType:APIType) -> String?{
-        var obfuscationSalt:String?
+    func getObfuscationKey(environment: Environment) -> String? {
+        var obfuscationKey: String?
         
-        if let plistDict = getPlist(apiType: apiType){
-            let tempAppToken = plistDict["obfuscationSalt"]
-            obfuscationSalt = tempAppToken as? String
+        if let plistDict = getPlist(environment: environment){
+            let tempObfuscationKey = plistDict["obfuscationKey"]
+            obfuscationKey = tempObfuscationKey as? String
         }
-        return obfuscationSalt
+        return obfuscationKey
     }
     
-    func getWalletToken(apiType:APIType) -> String?{
+    func getWalletToken(environment: Environment) -> String? {
+        var walletToken:String?
         
-        var appToken:String?
-        
-        if let plistDict = getPlist(apiType: apiType){
-            let tempAppToken = plistDict["walletToken"]
-            appToken = tempAppToken as? String
+        if let plistDict = getPlist(environment: environment){
+            let tempWalletToken = plistDict["walletToken"]
+            walletToken = tempWalletToken as? String
         }
         
-        return appToken
+        return walletToken
     }
     
-    func getAuthToken(apiType:APIType) -> String?{
+    func getAuthToken(environment: Environment) -> String? {
         
-        var appToken:String?
+        var authToken:String?
         
-        if let plistDict = getPlist(apiType: apiType){
-            let tempAppToken = plistDict["authenticationToken"]
-            appToken = tempAppToken as? String
+        if let plistDict = getPlist(environment: environment){
+            let tempAuthToken = plistDict["authenticationToken"]
+            authToken = tempAuthToken as? String
         }
         
-        return appToken
+        return authToken
     }
     
-    func getAppToken(apiType:APIType) -> String{
+    func getWalletAppToken(environment: Environment) -> String{
         
-        var appToken = ""
+        var walletAppToken = ""
         
-        if let plistDict = getPlist(apiType: apiType){
-            let tempAppToken = plistDict["appToken"]
-            appToken = tempAppToken as! String
+        if let plistDict = getPlist(environment: environment){
+            let tempWalletAppToken = plistDict["walletAppToken"]
+            walletAppToken = tempWalletAppToken as! String
         }
         
-        return appToken
+        return walletAppToken
     }
     
-    func getReferenceNumber(apiType:APIType) -> String{
+    func getReferenceNumber(environment:Environment) -> String{
         
-        var appToken = ""
+        var referenceNumber = ""
         
-        if let plistDict = getPlist(apiType: apiType){
-            let tempAppToken = plistDict["referenceNumber"]
-            appToken = tempAppToken as! String
+        if let plistDict = getPlist(environment: environment){
+            let tempReferenceNumber = plistDict["referenceNumber"]
+            referenceNumber = tempReferenceNumber as! String
         }
         
-        return appToken
+        return referenceNumber
     }
     
 }
@@ -209,7 +208,7 @@ extension ViewController{
         self.cardStack.layer.borderWidth = 1
         self.cardStack.layer.borderColor = UIColor.black.cgColor
         
-        testModeSwitch.isOn = false
+        offlineModeSwitch.isOn = false
         
         if selectedWalletToken != nil, selectedWalletToken!.count > 0{
             walletTokenSwitch.isOn = true
@@ -219,7 +218,7 @@ extension ViewController{
         }
         
         if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
-            Multipay.callSingleWallet(delegate: self, appToken: getAppToken(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, languageCode: "tr", referenceNumber: getReferenceNumber(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType!) ?? "", testMode: testModeSwitch.isOn)
+            Multipay.getWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType!) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
     }
     
@@ -269,7 +268,7 @@ extension ViewController: MultipayDelegate {
             self.present(alert, animated: true, completion: nil)
             
             if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
-                Multipay.callSingleWallet(delegate: self, appToken: getAppToken(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, languageCode: "tr", referenceNumber: getReferenceNumber(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
+                Multipay.getWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
             }
             
             self.reversalStackView.isHidden = true
@@ -306,7 +305,7 @@ extension ViewController: MultipayDelegate {
             }
             
             if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
-                Multipay.callSingleWallet(delegate: self, appToken: getAppToken(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, languageCode: "tr", referenceNumber: getReferenceNumber(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
+                Multipay.getWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
             }
             
             self.reversalStackView.isHidden = false
@@ -328,7 +327,7 @@ extension ViewController: MultipayDelegate {
     func multipayPaymentDidFail(error: Error?) {
         
         if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
-            Multipay.callSingleWallet(delegate: self, appToken: getAppToken(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, languageCode: "tr", referenceNumber: getReferenceNumber(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
+            Multipay.getWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
         
         self.reversalStackView.isHidden = false
@@ -444,12 +443,12 @@ extension UIImageView {
 
 extension ViewController{
     
-    func getPlist(apiType:APIType) -> [String:AnyObject]?
+    func getPlist(environment: Environment) -> [String:AnyObject]?
     {
         
         var apiFileNameStart = ""
         
-        switch apiType {
+        switch environment {
         case .dev:
             apiFileNameStart = "Dev"
             break
@@ -459,7 +458,7 @@ extension ViewController{
         case .pilot:
             apiFileNameStart = "Pilot"
             break
-        case .prod:
+        case .production:
             apiFileNameStart = "Prod"
             break
         }
@@ -474,9 +473,9 @@ extension ViewController{
         return nil
     }
     
-    func getConfirmPaymentDict(apiType:APIType) -> [String:AnyObject]?{
+    func getConfirmPaymentDict(environment:Environment) -> [String:AnyObject]?{
         
-        if let plistDict = getPlist(apiType: apiType){
+        if let plistDict = getPlist(environment: environment){
             
             let paymentConfirmDict = plistDict["ConfirmPayment"]
             
@@ -487,9 +486,9 @@ extension ViewController{
         }
     }
     
-    func getReversalPaymentDict(apiType:APIType) -> [String:AnyObject]?{
+    func getReversalPaymentDict(environment:Environment) -> [String:AnyObject]?{
         
-        if let plistDict = getPlist(apiType: apiType){
+        if let plistDict = getPlist(environment: environment){
             
             let paymentConfirmDict = plistDict["RollbackPayment"]
             
@@ -502,11 +501,11 @@ extension ViewController{
     
     func saveToPropertyList() {
         
-        let apiType:APIType = self.lastSelectedApiType!
+        let environment:Environment = self.lastSelectedApiType!
         
         var apiFileNameStart = ""
         
-        switch apiType {
+        switch environment {
         case .dev:
             apiFileNameStart = "Dev"
             break
@@ -516,7 +515,7 @@ extension ViewController{
         case .pilot:
             apiFileNameStart = "Pilot"
             break
-        case .prod:
+        case .production:
             apiFileNameStart = "Prod"
             break
         }
@@ -551,7 +550,7 @@ extension ViewController{
         
         self.silClicked(self)
         
-        self.testModeSwitch.isOn = false
+        self.offlineModeSwitch.isOn = false
         self.authenticationTokenSwitch.isOn = false
         self.walletTokenSwitch.isOn = false
         
@@ -602,13 +601,13 @@ extension ViewController{
             
             activityInd.startAnimating()
             
-            Multipay.callUnSelectWallet(delegate: self, appToken: getAppToken(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: walletToken, referenceNumber: getReferenceNumber(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
+            Multipay.callUnSelectWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: walletToken, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
     }
     
     @IBAction func confirmPaymentClicked(_ sender: Any) {
         
-        let confirmPayment = getConfirmPaymentDict(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test)
+        let confirmPayment = getConfirmPaymentDict(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test)
         
         if let confirmPaymentDict = confirmPayment, let walletToken = selectedWalletToken {
             
@@ -639,7 +638,7 @@ extension ViewController{
             
             let transactionDetailModelArray:[TransactionDetailModel] = [transactionDetailModel]
             
-            let saltKey = confirmPaymentDict["saltKeyTest"] as! String
+            let obfuscationKey = getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? ""
             
             var transactionDetailSaltValue = ""
             
@@ -647,12 +646,12 @@ extension ViewController{
                 transactionDetailSaltValue += transDetailModel.amount + transDetailModel.productId
             }
             
-            var sign = saltKey + merchantReferenceNumber + transferReferenceNumber + transactionDetailSaltValue + terminalReferenceNumber + requestId
+            var sign = obfuscationKey + merchantReferenceNumber + transferReferenceNumber + transactionDetailSaltValue + terminalReferenceNumber + requestId
             sign = sign.sha256PaymentConfirmation ?? sign
             
             self.lastConfirmPaymentRequestId = requestId
             
-            Multipay.callConfirmPayment(delegate: self, paymentAppToken: paymentAppToken, languageCode: "tr", requestId: requestId, walletToken: walletToken, merchantReferenceNumber: merchantReferenceNumber, terminalReferenceNumber: terminalReferenceNumber, transferReferenceNumber: transferReferenceNumber, transactionDetails: transactionDetailModelArray, sign: sign, obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
+            Multipay.callConfirmPayment(delegate: self, paymentAppToken: paymentAppToken, language: .tr, requestId: requestId, walletToken: walletToken, merchantReferenceNumber: merchantReferenceNumber, terminalReferenceNumber: terminalReferenceNumber, transferReferenceNumber: transferReferenceNumber, transactionDetails: transactionDetailModelArray, sign: sign, obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
         
     }
@@ -665,7 +664,7 @@ extension ViewController{
     
     func callPaymentReversal(reason:ReferenceToRollbackModel.ReasonRollback){
         
-        let confirmPayment = getReversalPaymentDict(apiType: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test)
+        let confirmPayment = getReversalPaymentDict(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test)
         
         if let confirmPaymentDict = confirmPayment{
             
@@ -688,9 +687,9 @@ extension ViewController{
             
             self.lastReversalPaymentRequestId = requestId
             
-            let saltKey = confirmPaymentDict["saltKeyTest"] as! String
+            let obfuscationKey = getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? ""
             
-            var sign = saltKey + merchantReferenceNumber + self.lastRollbackReferenceNumber! + String(reason.rawValue) + terminalReferenceNumber + requestId
+            var sign = obfuscationKey + merchantReferenceNumber + self.lastRollbackReferenceNumber! + String(reason.rawValue) + terminalReferenceNumber + requestId
             sign = sign.sha256PaymentConfirmation ?? sign
             
             let selectedSegmentIndex = self.reversalSegmentedControl.selectedSegmentIndex
@@ -711,7 +710,7 @@ extension ViewController{
                 referenceNumber = lastTransferReferenceNumber
             }
             
-            Multipay.callPaymentReversal(delegate: self, paymentAppToken: paymentAppToken, languageCode: "tr", requestId: requestId, sign: sign, merchantRefNo: merchantReferenceNumber, terminalRefNo: terminalReferenceNumber, rollbackReferenceNumber: rollbackReferenceNumber, reason: reason, referenceNumberType: referenceNumberType, referenceNumber: referenceNumber, obfuscationSalt: getObfuscationSalt(apiType: lastSelectedApiType ?? .test) ?? "", testMode: testModeSwitch.isOn)
+            Multipay.rollbackPayment(delegate: self, paymentAppToken: paymentAppToken, language: .tr, requestId: requestId, sign: sign, merchantReferenceNumber: merchantReferenceNumber, terminalReferenceNumber: terminalReferenceNumber, rollbackReferenceNumber: rollbackReferenceNumber, reason: reason, referenceNumberType: referenceNumberType, referenceNumber: referenceNumber, obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
             
         }
     }
@@ -735,7 +734,7 @@ extension ViewController{
     }
     
     @IBAction func kartDegistirClicked(_ sender: Any) {
-        self.openMultipay(apiType: lastSelectedApiType ?? .test)
+        self.openMultipay(environment: lastSelectedApiType ?? .test)
     }
 }
 

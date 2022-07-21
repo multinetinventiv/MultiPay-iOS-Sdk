@@ -23,8 +23,8 @@ class Auth {
     static var authToken: String?
     static var referenceNumber: String?
     static var walletToken: String?
-    internal static var appToken: String?
-    internal static var obfuscationSalt: String?
+    internal static var walletAppToken: String?
+    internal static var obfuscationKey: String?
     static let isOnlyWalletTokenEnoughForAuthentication = true
     static var userPreset: UserPreset?
     

@@ -219,7 +219,7 @@ class LoginVC: BaseVC {
     
     @IBAction func loginClicked(_ sender: AnyObject) {
         
-        if Multipay.testModeActive{
+        if Multipay.offlineModeActive{
             self.loginResponseModel = LoginResponseModel(result: LoginResponseModel.Result(gsm: emailPhoneView.textValue(), remainingTime: 30, verificationCode: "asd"), resultCode: 200, resultMessage: nil)
             performSegue(withIdentifier: "verifySegue", sender: self)
             return

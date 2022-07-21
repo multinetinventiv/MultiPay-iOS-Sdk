@@ -31,7 +31,7 @@ struct Constants {
     
     static let STATUS_BAR_STYLE_ANIMATION_DURATION = 0.3
     
-    static let maxRetryCount = Multipay.testModeActive ? 0 : 2
+    static let maxRetryCount = Multipay.offlineModeActive ? 0 : 2
 
     //MARK:
     struct FormatTemplate {

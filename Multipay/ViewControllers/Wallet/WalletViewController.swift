@@ -51,7 +51,7 @@ class WalletViewController: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if Multipay.testModeActive
+        if Multipay.offlineModeActive
         {
             addTestModel()
             walletModelList.forEach { (model) in
@@ -171,7 +171,7 @@ extension WalletViewController: UITableViewDataSource, UITableViewDelegate {
             return WalletTableViewCell()
         }
         
-        if Multipay.testModeActive, let model = walletModelList[safeIndex:indexPath.row]{
+        if Multipay.offlineModeActive, let model = walletModelList[safeIndex:indexPath.row]{
             cell.initTestView(model: model)
         }
         else if let wallets = self.getWalletsResponseModel?.result?.wallets, let model = wallets[safeIndex:indexPath.row]{
@@ -183,7 +183,7 @@ extension WalletViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if Multipay.testModeActive{
+        if Multipay.offlineModeActive{
             return walletModelList.count
         }
         else{
@@ -207,7 +207,7 @@ extension WalletViewController: UITableViewDataSource, UITableViewDelegate {
             self.lastSelectedCard = realModel
         }
         
-        if Multipay.testModeActive{
+        if Multipay.offlineModeActive{
             walletModelList.forEach { (model) in
                 model.isChecked = false
             }
@@ -243,7 +243,7 @@ extension WalletViewController{
         
         log.debug("eslestir btn clicked")
         
-        guard let selected = self.lastSelectedCardTest, Multipay.testModeActive else {
+        guard let selected = self.lastSelectedCardTest, Multipay.offlineModeActive else {
             guard let selected = self.lastSelectedCard else{
                 return
             }
@@ -277,7 +277,7 @@ extension WalletViewController{
         log.debug("callGetWallets is called")
         
         var parameters : [String:String] = [:]
-        if let walletToken = Auth.walletToken {
+        if let walletToken = Auth.walletToken, walletToken.count > 0 {
             parameters[walletTokenKey] = walletToken
         }
         else{
@@ -313,7 +313,7 @@ extension WalletViewController{
                 }
                 
                 if let responseData  = data {
-                    if  strongSelf.checkResultCodeAndShowError(responseData,showMessage: Multipay.testModeActive ? false : true) == ServiceResultCodeType.exit {
+                    if  strongSelf.checkResultCodeAndShowError(responseData,showMessage: Multipay.offlineModeActive ? false : true) == ServiceResultCodeType.exit {
                         //strongSelf.navigationController?.popToRootViewController(animated: true)
                         return
                     }
@@ -384,7 +384,7 @@ extension WalletViewController{
                 lastSelectedCard.isSelected = true
                 
                 if let responseData  = data {
-                    if  self.checkResultCodeAndShowError(responseData,showMessage: Multipay.testModeActive ? false : true) == ServiceResultCodeType.exit {
+                    if  self.checkResultCodeAndShowError(responseData,showMessage: Multipay.offlineModeActive ? false : true) == ServiceResultCodeType.exit {
                         //self.navigationController?.popToRootViewController(animated: true)
                         return
                     }

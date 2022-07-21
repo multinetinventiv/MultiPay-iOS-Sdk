@@ -18,10 +18,10 @@ class Obfuscator {
     
     init() {
         
-        let apiTypeInt = UserDefaults.standard.object(forKey: "lastSelectedApiType") as? Int
-        let apiType = APIType(rawValue: apiTypeInt ?? 3) ?? APIType.test
+        let environmentInt = UserDefaults.standard.object(forKey: "lastSelectedApiType") as? Int
+        let environment = Environment(rawValue: environmentInt ?? 3) ?? Environment.test
         
-        let obfsSalt = getObfuscationSalt(apiType: apiType)
+        let obfsSalt = getObfuscationKey(environment: environment)
         
         if let tempSalt = obfsSalt{
             salt = tempSalt
@@ -90,27 +90,27 @@ class Obfuscator {
 
 extension Obfuscator{
     
-    func getObfuscationSalt(apiType:APIType) -> String?{
-        var obfuscationSalt:String?
+    func getObfuscationKey(environment:Environment) -> String?{
+        var obfuscationKey:String?
         
-        if let plistDict = getPlist(apiType: apiType){
-            let tempAppToken = plistDict["obfuscationSalt"]
-            obfuscationSalt = tempAppToken as? String
+        if let plistDict = getPlist(environment: environment){
+            let tempAppToken = plistDict["obfuscationKey"]
+            obfuscationKey = tempAppToken as? String
         }
         
-        if obfuscationSalt == nil || obfuscationSalt?.count ?? 0 < 1{
-            obfuscationSalt = Auth.obfuscationSalt
+        if obfuscationKey == nil || obfuscationKey?.count ?? 0 < 1{
+            obfuscationKey = Auth.obfuscationKey
         }
             
-        return obfuscationSalt
+        return obfuscationKey
     }
     
     
-    func getPlist(apiType:APIType) -> [String:AnyObject]?
+    func getPlist(environment:Environment) -> [String:AnyObject]?
     {
         var apiFileNameStart = ""
         
-        switch apiType {
+        switch environment {
         case .dev:
             apiFileNameStart = "Dev"
             break
@@ -120,7 +120,7 @@ extension Obfuscator{
         case .pilot:
             apiFileNameStart = "Pilot"
             break
-        case .prod:
+        case .production:
             apiFileNameStart = "Prod"
             break
         }

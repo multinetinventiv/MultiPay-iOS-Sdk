@@ -31,8 +31,8 @@ class BaseModel: SessionDelegate {
         
         let url = ServiceUrl.getURL(serviceName)
         
-        var serviceParameter:[String:Any] = [languageCodeKey :  CoreManager.Instance().getLanguageRegion(),
-                                             appTokenKey     : ServiceUrl.getToken()  ]
+        var serviceParameter:[String:Any] = [languageCodeKey :  CoreManager.getLocaleIdentifier(),
+                                             walletAppTokenKey : ServiceUrl.getToken()  ]
         
         
         if let paramdictionary  = parameters {
