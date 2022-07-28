@@ -174,7 +174,7 @@ extension BaseVC {
         if(hasKeyboard){
             registerKeyboardNotificarion(false)
         }
-        if Multipay.testModeActive{
+        if Multipay.offlineModeActive{
             log.debug("Controller Disappear : \(self.className)")
         }
     }

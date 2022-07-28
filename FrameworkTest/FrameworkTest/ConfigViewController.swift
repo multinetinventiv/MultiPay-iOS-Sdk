@@ -12,18 +12,18 @@ import Multipay
 class ConfigViewController: UIViewController {
     
     @IBOutlet weak var requestIdTxtField: UITextField!
-    @IBOutlet weak var saltKeyTxtField: UITextField!
     @IBOutlet weak var productIdTxtField: UITextField!
     @IBOutlet weak var amountTxtField: UITextField!
     @IBOutlet weak var transferRefNumTxtField: UITextField!
     @IBOutlet weak var terminalRefNumTxtField: UITextField!
     @IBOutlet weak var merchantRefNumTxtField: UITextField!
-    @IBOutlet weak var paymentAppTokenTxtField: UITextField!
-    
-    var lastSelectedApiType:APIType?{
+    @IBOutlet weak var paymentwalletAppTokenTxtField: UITextField!
+    @IBOutlet weak var signTxtField: UITextField!
+
+    var lastSelectedApiType:Environment?{
         get{
-            let apiType = userDefaults.object(forKey: "lastSelectedApiType") as? Int
-            return APIType(rawValue: apiType ?? 3)
+            let environment = userDefaults.object(forKey: "lastSelectedApiType") as? Int
+            return Environment(rawValue: environment ?? 3)
         }
         set{
             userDefaults.set(newValue?.rawValue, forKey: "lastSelectedApiType")
@@ -33,13 +33,11 @@ class ConfigViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let confirmPayDict = getConfirmPaymentDict(apiType: self.lastSelectedApiType!)
+        let confirmPayDict = getConfirmPaymentDict(environment: self.lastSelectedApiType!)
         
         if let dict = confirmPayDict{
-            
-            self.saltKeyTxtField.text = dict["saltKeyTest"] as? String
-            
-            self.paymentAppTokenTxtField.text = dict["paymentAppTokenTest"] as? String
+                        
+            self.paymentwalletAppTokenTxtField.text = dict["paymentAppTokenTest"] as? String
             
             self.merchantRefNumTxtField.text = dict["merchantReferenceNumberTest"] as? String
             
@@ -52,6 +50,8 @@ class ConfigViewController: UIViewController {
             self.amountTxtField.text = dict["amount"] as? String ?? "100TRY"
             
             self.requestIdTxtField.text = dict["requestId"] as? String
+            
+            self.signTxtField.text = dict["sign"] as? String
         }
         
         // Do any additional setup after loading the view.
@@ -77,9 +77,9 @@ class ConfigViewController: UIViewController {
 
 extension ConfigViewController{
     
-    func getConfirmPaymentDict(apiType:APIType) -> [String:AnyObject]?{
+    func getConfirmPaymentDict(environment:Environment) -> [String:AnyObject]?{
         
-        if let plistDict = getPlist(apiType: apiType){
+        if let plistDict = getPlist(environment: environment){
             
             let paymentConfirmDict = plistDict["ConfirmPayment"]
             
@@ -100,24 +100,24 @@ extension ConfigViewController{
         let plistDict = tempDict?["ConfirmPayment"] as? NSMutableDictionary
             
         if let plistDict = plistDict{
-                
-                plistDict["saltKeyTest"] = saltKeyTxtField.text
-                
-                plistDict["productIdTest"] = productIdTxtField.text
-                
-                plistDict["transferReferenceNumberTest"] = transferRefNumTxtField.text
-                
-                plistDict["terminalReferenceNumberTest"] = terminalRefNumTxtField.text
-                
-                plistDict["merchantReferenceNumberTest"] = merchantRefNumTxtField.text
-                
-                plistDict["paymentAppTokenTest"] = paymentAppTokenTxtField.text
-                
-                plistDict["amount"] = amountTxtField.text
-                
-                plistDict["requestId"] = self.requestIdTxtField.text
-                
-                tempDict?["ConfirmPayment"] = plistDict
+            
+            plistDict["productIdTest"] = productIdTxtField.text
+            
+            plistDict["transferReferenceNumberTest"] = transferRefNumTxtField.text
+            
+            plistDict["terminalReferenceNumberTest"] = terminalRefNumTxtField.text
+            
+            plistDict["merchantReferenceNumberTest"] = merchantRefNumTxtField.text
+            
+            plistDict["paymentAppTokenTest"] = paymentwalletAppTokenTxtField.text
+            
+            plistDict["amount"] = amountTxtField.text
+            
+            plistDict["requestId"] = self.requestIdTxtField.text
+            
+            plistDict["sign"] = self.signTxtField.text
+            
+            tempDict?["ConfirmPayment"] = plistDict
         }
             
         tempDict?.write(toFile: returnValues.url.path, atomically: true)

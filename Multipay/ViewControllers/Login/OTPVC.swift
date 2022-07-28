@@ -194,7 +194,7 @@ class OTPVC: BaseVC {
     
     fileprivate func initializeTimer(){
         
-        let constantTime: Int = Multipay.testModeActive ? 10 : 180
+        let constantTime: Int = Multipay.offlineModeActive ? 10 : 180
         
         if let data = loginResponseModel?.result ,  let remainTime  = data.remainingTime{
             self.timeCount = (remainTime < 1) ? constantTime : remainTime
@@ -223,7 +223,7 @@ class OTPVC: BaseVC {
             return
         }
         
-        if Multipay.testModeActive{
+        if Multipay.offlineModeActive{
             self.otpEndProcess(nil, otpResponseModel:nil)
             return
         }
@@ -250,8 +250,8 @@ class OTPVC: BaseVC {
                 }
                 
                 if let responseData  = data {
-                    if  strongSelf.checkResultCodeAndShowError(responseData,showMessage: Multipay.testModeActive ? false : true) == ServiceResultCodeType.exit {
-                        if Multipay.testModeActive{
+                    if  strongSelf.checkResultCodeAndShowError(responseData,showMessage: Multipay.offlineModeActive ? false : true) == ServiceResultCodeType.exit {
+                        if Multipay.offlineModeActive{
                             strongSelf.otpEndProcess(nil, otpResponseModel:nil)
                         }
                         return
@@ -267,7 +267,7 @@ class OTPVC: BaseVC {
                 return
             }
             
-            if Multipay.testModeActive{
+            if Multipay.offlineModeActive{
                 self.otpEndProcess(nil, otpResponseModel:nil)
             }
             
@@ -362,7 +362,7 @@ extension OTPVC {
             [weak self] (data, rawData) in
             log.error("error : \(data.description)")
             if let strongSelf = self{
-                if Multipay.testModeActive{
+                if Multipay.offlineModeActive{
                     strongSelf.processResendService(postDict: postDict, data: nil, rawData: nil)
                 }
                 else{

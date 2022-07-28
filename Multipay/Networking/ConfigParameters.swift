@@ -9,5 +9,5 @@
 import Foundation
 
 public let API_TYPE = 1
-public let MP_IS_DEBUG=Multipay.testModeActive
+public let MP_IS_DEBUG=Multipay.offlineModeActive
 public let IS_ENVIRONMENT_FORCED = false

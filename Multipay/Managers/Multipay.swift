@@ -53,33 +53,30 @@ public class Multipay {
     
     weak static var delegate: MultipayDelegate?
     
-    static var testModeActive = false
+    static var offlineModeActive = false
     
-    public class func start(vcToPresent: UIViewController, walletAppToken: String, referenceNumber: String?, delegate:MultipayDelegate? = nil, languageCode: String? = nil, apiType: APIType = .prod, testMode: Bool = false, walletToken: String? = nil, obfuscationSalt: String, userPreset: UserPreset? = nil)
-    {
-        Multipay.testModeActive = testMode
+    public class func start(vcToPresent: UIViewController, walletAppToken: String, referenceNumber: String?, delegate: MultipayDelegate? = nil, language: Language? = nil, environment: Environment = .production, offlineMode: Bool = false, walletToken: String? = nil, obfuscationKey: String, userPreset: UserPreset? = nil) {
+        Multipay.offlineModeActive = offlineMode
         Multipay.delegate = delegate
         
-        CoreManager.start(vcToPresent: vcToPresent, appToken: walletAppToken, referenceNumber: referenceNumber, languageCode: languageCode, apiType:apiType, walletToken: walletToken, obfuscationSalt: obfuscationSalt, userPreset: userPreset)
+        CoreManager.start(vcToPresent: vcToPresent, appToken: walletAppToken, referenceNumber: referenceNumber, languageCode: language?.rawValue ?? NSLocale.preferredLanguages[0], environment: environment, walletToken: walletToken, obfuscationKey: obfuscationKey, userPreset: userPreset)
     }
     
     //MARK: SDK FUNCTIONS
     
-    public class func callUnSelectWallet(delegate:MultipayDelegate, appToken: String, walletToken: String, languageCode: String = NSLocale.preferredLanguages[0], referenceNumber: String?, obfuscationSalt: String, testMode: Bool = false)
-    {
+    public class func callUnSelectWallet(delegate: MultipayDelegate, walletAppToken: String, walletToken: String, language: Language? = nil, referenceNumber: String?, obfuscationKey: String, offlineMode: Bool = false) {
         
         log.debug("callUnSelectWallet is called")
         
-        Auth.obfuscationSalt = obfuscationSalt
+        Auth.obfuscationKey = obfuscationKey
         
-        if testMode{
+        if offlineMode{
             delegate.multipayUnselectCardSuccess()
             return
         }
         
-        var parameters = [appTokenKey : appToken.count > 0 ? appToken : Auth.appToken]
-        parameters[newAppTokenKey] = appToken.count > 0 ? appToken : Auth.appToken
-        parameters[languageCodeKey] = languageCode.count > 0 ? languageCode : "tr"
+        var parameters = [walletAppTokenKey : walletAppToken.count > 0 ? walletAppToken : Auth.walletAppToken]
+        parameters[languageCodeKey] = CoreManager.getLocaleIdentifier(language: language)
         parameters[walletTokenKey] = walletToken.count > 0 ? walletToken : Auth.walletToken
         if let referenceNmbr = referenceNumber{
             parameters[referenceNumberKey] = referenceNmbr
@@ -121,29 +118,26 @@ public class Multipay {
             log.error("error: \(responseFail)")
             
             DispatchQueue.main.async(execute: {
-                
                 delegate.multipayUnselectCardFailed(resultCode: responseFail.code, resultMessage: responseFail.description)
-                
             })
         }
     }
     
-    public class func callSingleWallet(delegate:MultipayDelegate, appToken: String, walletToken: String, languageCode: String = NSLocale.preferredLanguages[0], referenceNumber: String?, obfuscationSalt: String, testMode: Bool = false)
-    {
+    public class func getWallet(delegate:MultipayDelegate, walletAppToken: String, walletToken: String, language: Language? = nil, referenceNumber: String?, obfuscationKey: String, offlineMode: Bool = false) {
         
         log.debug("callSingleWallet is called")
         
-        Auth.obfuscationSalt = obfuscationSalt
+        Auth.obfuscationKey = obfuscationKey
         
-        if testMode{
+        if offlineMode{
             let walletModelTest = WalletModelTest()
             delegate.multipaySingleWalletSuccess(cardBalance: walletModelTest.cardBalance, cardImageUrl: walletModelTest.cardImageUrl, cardName: walletModelTest.cardName, walletToken: walletModelTest.token, cardMaskedNumber: walletModelTest.cardNumber)
             return
         }
         
-        var parameters = [appTokenKey : appToken.count > 0 ? appToken : Auth.appToken]
-        parameters[newAppTokenKey] = appToken.count > 0 ? appToken : Auth.appToken
-        parameters[languageCodeKey] = languageCode.count > 0 ? languageCode : "tr"
+        var parameters = [walletAppTokenKey : walletAppToken.count > 0 ? walletAppToken : Auth.walletAppToken]
+        parameters[languageCodeKey] = CoreManager.getLocaleIdentifier(language: language)
+        
         parameters[walletTokenKey] = walletToken.count > 0 ? walletToken : Auth.walletToken
         if let referenceNmbr = referenceNumber{
             parameters[referenceNumberKey] = referenceNmbr
@@ -207,14 +201,14 @@ public class Multipay {
     
     //MARK: CONFIRM PAYMENT
     
-    public class func callConfirmPayment(delegate:MultipayDelegate, paymentAppToken: String, languageCode: String = NSLocale.preferredLanguages[0], requestId: String, walletToken: String, merchantReferenceNumber: String, terminalReferenceNumber:String, transferReferenceNumber:String, transactionDetails: [TransactionDetailModel], sign:String, obfuscationSalt: String, testMode: Bool = false)
+    public class func callConfirmPayment(delegate: MultipayDelegate, paymentAppToken: String, language: Language? = nil, requestId: String, walletToken: String, merchantReferenceNumber: String, terminalReferenceNumber: String, transferReferenceNumber: String, transactionDetails: [TransactionDetailModel], sign: String, obfuscationKey: String, offlineMode: Bool = false)
     {
         
         log.debug("callConfirmPayment is called")
         
-        Auth.obfuscationSalt = obfuscationSalt
+        Auth.obfuscationKey = obfuscationKey
         
-        if testMode{
+        if offlineMode{
             delegate.multipayPaymentDidSucceed(sign: nil, transferServerRefNo: nil)
             return
         }
@@ -222,7 +216,7 @@ public class Multipay {
         var parameters:[String:AnyObject] = [:]
         
         parameters[paymentAppTokenKey] = paymentAppToken as AnyObject
-        parameters[languageCodeKey] = (languageCode.count > 0 ? languageCode : "tr") as AnyObject
+        parameters[languageCodeKey] = CoreManager.getLocaleIdentifier(language: language) as AnyObject
         parameters[requestIdKey] = requestId as AnyObject
         parameters[walletTokenKey] = (walletToken.count > 0 ? walletToken : Auth.walletToken) as AnyObject
         parameters[merchantReferenceNumberKey] = merchantReferenceNumber as AnyObject
@@ -311,14 +305,13 @@ public class Multipay {
     
     //MARK: PAYMENT Reversal
     
-    public class func callPaymentReversal(delegate:MultipayDelegate, paymentAppToken: String, languageCode: String = NSLocale.preferredLanguages[0], requestId: String, sign:String, merchantRefNo:String, terminalRefNo:String, rollbackReferenceNumber:String, reason:ReferenceToRollbackModel.ReasonRollback, referenceNumberType: ReferenceToRollbackModel.ReferenceNumberType, referenceNumber: String, obfuscationSalt: String, testMode: Bool = false)
-    {
+    public class func rollbackPayment(delegate: MultipayDelegate, paymentAppToken: String, language: Language? = nil, requestId: String, sign: String, merchantReferenceNumber: String, terminalReferenceNumber: String, rollbackReferenceNumber: String, reason: ReferenceToRollbackModel.ReasonRollback, referenceNumberType: ReferenceToRollbackModel.ReferenceNumberType, referenceNumber: String, obfuscationKey: String, offlineMode: Bool = false) {
         
         log.debug("callPaymentReversal is called")
         
-        Auth.obfuscationSalt = obfuscationSalt
+        Auth.obfuscationKey = obfuscationKey
         
-        if testMode{
+        if offlineMode{
             delegate.multipayRollbackWithSignDidSucceed(sign: nil, rollbackServerReferenceNumber: nil)
             return
         }
@@ -327,15 +320,15 @@ public class Multipay {
         
         parameters[paymentAppTokenKey] = paymentAppToken as AnyObject
         
-        parameters[languageCodeKey] = (languageCode.count > 0 ? languageCode : "tr") as AnyObject
+        parameters[languageCodeKey] = CoreManager.getLocaleIdentifier(language: language) as AnyObject
         
         parameters[requestIdKey] = requestId as AnyObject
         
         parameters[signKey] = sign as AnyObject
 
-        parameters[merchantReferenceNumberKey] = merchantRefNo as AnyObject
+        parameters[merchantReferenceNumberKey] = merchantReferenceNumber as AnyObject
         
-        parameters[terminalReferenceNumberKey] = terminalRefNo as AnyObject
+        parameters[terminalReferenceNumberKey] = terminalReferenceNumber as AnyObject
         
         parameters[rollbackReferenceNumberKey] = rollbackReferenceNumber as AnyObject
         

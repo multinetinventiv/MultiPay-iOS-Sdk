@@ -227,7 +227,7 @@ class RegisterVC: BaseVC {
     
     @IBAction func registerButtonClicked(_ sender: AnyObject) {
         
-        if Multipay.testModeActive{
+        if Multipay.offlineModeActive{
             self.loginResponseModel = LoginResponseModel(result: LoginResponseModel.Result(gsm: "5321765109", remainingTime: 30, verificationCode: "asd"), resultCode: 200, resultMessage: nil)
             performSegue(withIdentifier: "otpSegue", sender: self)
             return
@@ -356,7 +356,7 @@ class RegisterVC: BaseVC {
 //MARK: - RegisterButton Active State
 extension RegisterVC {
     func decideRegisterButtonState(){
-        let isValid = Multipay.testModeActive ? true : isValid(shouldShowMessage: false)
+        let isValid = Multipay.offlineModeActive ? true : isValid(shouldShowMessage: false)
         
         if isValid {
             buttonRegister.setTitleColor(ColorPalette.login.girisYapActiveText, for: .normal)

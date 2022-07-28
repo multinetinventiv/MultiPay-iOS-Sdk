@@ -9,12 +9,12 @@
 import Foundation
 import Multipay
 
-func getPlist(apiType:APIType) -> [String:AnyObject]?
+func getPlist(environment:Environment) -> [String:AnyObject]?
 {
     
     var apiFileNameStart = ""
     
-    switch apiType {
+    switch environment {
     case .dev:
         apiFileNameStart = "Dev"
         break
@@ -24,7 +24,7 @@ func getPlist(apiType:APIType) -> [String:AnyObject]?
     case .pilot:
         apiFileNameStart = "Pilot"
         break
-    case .prod:
+    case .production:
         apiFileNameStart = "Prod"
         break
     }
@@ -53,14 +53,14 @@ func getPlist(apiType:APIType) -> [String:AnyObject]?
     return nil
 }
 
-func getMutableDictionaryFromPlist(lastSelectedApiType:APIType) -> (mutDict: NSMutableDictionary?, url: URL)
+func getMutableDictionaryFromPlist(lastSelectedApiType:Environment) -> (mutDict: NSMutableDictionary?, url: URL)
 {
     
-    let apiType:APIType = lastSelectedApiType
+    let environment:Environment = lastSelectedApiType
     
     var apiFileNameStart = ""
     
-    switch apiType {
+    switch environment {
     case .dev:
         apiFileNameStart = "Dev"
         break
@@ -70,7 +70,7 @@ func getMutableDictionaryFromPlist(lastSelectedApiType:APIType) -> (mutDict: NSM
     case .pilot:
         apiFileNameStart = "Pilot"
         break
-    case .prod:
+    case .production:
         apiFileNameStart = "Prod"
         break
     }
