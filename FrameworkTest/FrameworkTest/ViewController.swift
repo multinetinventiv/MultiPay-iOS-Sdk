@@ -582,15 +582,15 @@ extension ViewController{
             
             activityInd.startAnimating()
             
-            let paymentAppToken = confirmPaymentDict["paymentAppTokenTest"] as! String
-            let merchantReferenceNumber = confirmPaymentDict["merchantReferenceNumberTest"] as! String
-            let terminalReferenceNumber = confirmPaymentDict["terminalReferenceNumberTest"] as! String
-            let transferReferenceNumber = confirmPaymentDict["transferReferenceNumberTest"] as! String
-            let sign = confirmPaymentDict["sign"] as! String
+            let paymentAppToken = confirmPaymentDict["paymentAppTokenTest"] as? String ?? ""
+            let merchantReferenceNumber = confirmPaymentDict["merchantReferenceNumberTest"] as? String ?? ""
+            let terminalReferenceNumber = confirmPaymentDict["terminalReferenceNumberTest"] as? String ?? ""
+            let transferReferenceNumber = confirmPaymentDict["transferReferenceNumberTest"] as? String ?? ""
+            let sign = confirmPaymentDict["sign"] as? String ?? ""
             
             self.lastTransferReferenceNumber = transferReferenceNumber
             
-            let productId = confirmPaymentDict["productIdTest"] as! String
+            let productId = confirmPaymentDict["productIdTest"] as? String ?? ""
             
             let requestId = confirmPaymentDict["requestId"] as? String ?? ""
                         
@@ -627,10 +627,10 @@ extension ViewController{
             
             activityInd2.startAnimating()
             
-            let paymentAppToken = confirmPaymentDict["paymentAppTokenTest"] as! String
-            let merchantReferenceNumber = confirmPaymentDict["merchantReferenceNumberTest"] as! String
-            let terminalReferenceNumber = confirmPaymentDict["terminalReferenceNumberTest"] as! String
-            let sign = confirmPaymentDict["sign"] as! String
+            let paymentAppToken = confirmPaymentDict["paymentAppTokenTest"] as? String ?? ""
+            let merchantReferenceNumber = confirmPaymentDict["merchantReferenceNumberTest"] as? String ?? ""
+            let terminalReferenceNumber = confirmPaymentDict["terminalReferenceNumberTest"] as? String ?? ""
+            let sign = confirmPaymentDict["sign"] as? String ?? ""
 
             let rollbackReferenceNumber = UUID().uuidString.lowercased()
             
