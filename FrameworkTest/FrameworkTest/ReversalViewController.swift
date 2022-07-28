@@ -19,6 +19,8 @@ class ReversalConfigViewController: UIViewController {
     
     @IBOutlet weak var paymentwalletAppTokenTxtField: UITextField!
     
+    @IBOutlet weak var signTxtField: UITextField!
+
     var lastSelectedApiType:Environment?{
         get{
             let environment = userDefaults.object(forKey: "lastSelectedApiType") as? Int
@@ -44,6 +46,7 @@ class ReversalConfigViewController: UIViewController {
             
             self.terminalRefNumTxtField.text = dict["terminalReferenceNumberTest"] as? String
             
+            self.signTxtField.text = dict["sign"] as? String
         }
         // Do any additional setup after loading the view.
     }
@@ -95,6 +98,8 @@ extension ReversalConfigViewController{
             
             plistDict["requestId"] = self.requestIdTxtField.text
             
+            plistDict["sign"] = self.signTxtField.text
+
             tempDict?["RollbackPayment"] = plistDict
         }
         

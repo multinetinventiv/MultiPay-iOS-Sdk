@@ -34,7 +34,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var kartSilBtn: UIButton!
     
     @IBOutlet weak var reversalStackView: UIStackView!
-    @IBOutlet weak var transferServerRefNoValue: UILabel!
     @IBOutlet weak var reversalSegmentedControl: UISegmentedControl!
     
     var selectedWalletToken: String?
@@ -441,37 +440,7 @@ extension UIImageView {
     }
 }
 
-extension ViewController{
-    
-    func getPlist(environment: Environment) -> [String:AnyObject]?
-    {
-        
-        var apiFileNameStart = ""
-        
-        switch environment {
-        case .dev:
-            apiFileNameStart = "Dev"
-            break
-        case .test:
-            apiFileNameStart = "Test"
-            break
-        case .pilot:
-            apiFileNameStart = "Pilot"
-            break
-        case .production:
-            apiFileNameStart = "Prod"
-            break
-        }
-        
-        if  let path = Bundle.main.path(forResource: apiFileNameStart + "-Configs", ofType: "plist"),
-            let xml = FileManager.default.contents(atPath: path)
-        {
-            print("xml: \(xml)")
-            return (try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil)) as? [String:AnyObject]
-        }
-        
-        return nil
-    }
+extension ViewController {
     
     func getConfirmPaymentDict(environment:Environment) -> [String:AnyObject]?{
         
@@ -616,44 +585,32 @@ extension ViewController{
             let paymentAppToken = confirmPaymentDict["paymentAppTokenTest"] as! String
             let merchantReferenceNumber = confirmPaymentDict["merchantReferenceNumberTest"] as! String
             let terminalReferenceNumber = confirmPaymentDict["terminalReferenceNumberTest"] as! String
-            //let transferReferenceNumber = confirmPaymentDict["transferReferenceNumberTest"] as! String
-            
-            let transferReferenceNumber = UUID().uuidString.lowercased()
+            let transferReferenceNumber = confirmPaymentDict["transferReferenceNumberTest"] as! String
+            let sign = confirmPaymentDict["sign"] as! String
             
             self.lastTransferReferenceNumber = transferReferenceNumber
             
             let productId = confirmPaymentDict["productIdTest"] as! String
             
-            var configRequestId = confirmPaymentDict["requestId"] as? String ?? ""
-            if configRequestId.count < 1 {
-                configRequestId = UUID().uuidString.lowercased()
-            }
-            
-            let requestId = configRequestId
-            
+            let requestId = confirmPaymentDict["requestId"] as? String ?? ""
+                        
             let referenceNumber = UUID().uuidString.lowercased()
             
             let amount = confirmPaymentDict["amount"] as? String ?? "100TRY"
             let transactionDetailModel: TransactionDetailModel = TransactionDetailModel(amount: amount, productId: productId , referenceNumber: referenceNumber)
             
             let transactionDetailModelArray:[TransactionDetailModel] = [transactionDetailModel]
-            
-            let obfuscationKey = getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? ""
-            
+                        
             var transactionDetailSaltValue = ""
             
             for transDetailModel in transactionDetailModelArray{
                 transactionDetailSaltValue += transDetailModel.amount + transDetailModel.productId
             }
             
-            var sign = obfuscationKey + merchantReferenceNumber + transferReferenceNumber + transactionDetailSaltValue + terminalReferenceNumber + requestId
-            sign = sign.sha256PaymentConfirmation ?? sign
-            
             self.lastConfirmPaymentRequestId = requestId
             
             Multipay.callConfirmPayment(delegate: self, paymentAppToken: paymentAppToken, language: .tr, requestId: requestId, walletToken: walletToken, merchantReferenceNumber: merchantReferenceNumber, terminalReferenceNumber: terminalReferenceNumber, transferReferenceNumber: transferReferenceNumber, transactionDetails: transactionDetailModelArray, sign: sign, obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
-        
     }
     
 }
@@ -673,25 +630,16 @@ extension ViewController{
             let paymentAppToken = confirmPaymentDict["paymentAppTokenTest"] as! String
             let merchantReferenceNumber = confirmPaymentDict["merchantReferenceNumberTest"] as! String
             let terminalReferenceNumber = confirmPaymentDict["terminalReferenceNumberTest"] as! String
-            
+            let sign = confirmPaymentDict["sign"] as! String
+
             let rollbackReferenceNumber = UUID().uuidString.lowercased()
             
             self.lastRollbackReferenceNumber = rollbackReferenceNumber
             
-            var configRequestId = confirmPaymentDict["requestId"] as? String ?? ""
-            if configRequestId.count < 1 {
-                configRequestId = UUID().uuidString.lowercased()
-            }
-            
-            let requestId = configRequestId
-            
+            let requestId = confirmPaymentDict["requestId"] as? String ?? ""
+                        
             self.lastReversalPaymentRequestId = requestId
-            
-            let obfuscationKey = getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? ""
-            
-            var sign = obfuscationKey + merchantReferenceNumber + self.lastRollbackReferenceNumber! + String(reason.rawValue) + terminalReferenceNumber + requestId
-            sign = sign.sha256PaymentConfirmation ?? sign
-            
+                        
             let selectedSegmentIndex = self.reversalSegmentedControl.selectedSegmentIndex
             
             let referenceNumberType = ReferenceToRollbackModel.ReferenceNumberType(rawValue: selectedSegmentIndex)!
