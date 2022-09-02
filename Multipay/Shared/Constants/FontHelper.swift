@@ -123,10 +123,10 @@ public struct FontHelper
     {
 //        let fontFamilyNames = UIFont.familyNames
 //        for familyName in fontFamilyNames {
-//            log.debug("\(familyName)")
+//            LoggerHelper.logger.debug("\(familyName)")
 //            let names = UIFont.fontNames(forFamilyName: familyName )
 //            for name in names {
-//                log.debug("  \(name)")
+//                LoggerHelper.logger.debug("  \(name)")
 //            }
 //
 //        }

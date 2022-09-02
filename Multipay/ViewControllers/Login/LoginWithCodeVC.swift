@@ -74,8 +74,8 @@ class LoginWithCodeVC: BaseVC {
 
                 }
 
-                log.debug("response: \(data)")
-                log.debug("user : \(CoreManager.instance.user!)")
+                LoggerHelper.logger.debug("response: \(data)")
+                LoggerHelper.logger.debug("user : \(CoreManager.instance.user!)")
 
                 let vc = LoginWithCodeSetPasswordVC.instantiate()
                 vc.user = CoreManager.instance.user

@@ -152,7 +152,7 @@ class LoginWithCodeSetPasswordVC: BaseVC {
                     return
                 }
 
-                log.debug("data : \(data)")
+                LoggerHelper.logger.debug("data : \(data)")
 
                 if self.checkResultCodeAndShowError(data) == ServiceResultCodeType.exit {
                     return
@@ -163,7 +163,7 @@ class LoginWithCodeSetPasswordVC: BaseVC {
 
                 }
 
-                log.debug("user : \(CoreManager.instance.user!)")
+                LoggerHelper.logger.debug("user : \(CoreManager.instance.user!)")
 
                 if let user = CoreManager.instance.user, user.isGsmVerified ?? false {
                     DispatchQueue.main.async {

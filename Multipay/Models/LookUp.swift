@@ -35,8 +35,8 @@ class LookUpTableItem: BaseModel {
         if let result = data {
             
             for item in result {
-                // log.debug(item["Key"])
-                //log.debug(item["Value"])
+                // LoggerHelper.logger.debug(item["Key"])
+                //LoggerHelper.logger.debug(item["Value"])
                 list.append(LookUpTableItem(key: Int(item["Key"] as! String) , value: item["Value"] as? String))
                 
             }

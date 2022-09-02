@@ -8,15 +8,11 @@
 
 import Foundation
 import MapKit
-import SwiftyJSON
-import XCGLogger
 
 typealias settingCallBack = (_
     data: Setting) -> Void
 typealias lookUpCallBack = (_ data: [String : LookUpTable]?) -> AnyObject?
 typealias errorCallBack = (_ data: ErrorModel) -> Void
-
-internal let log = XCGLogger.default
 
 internal class CoreManager {
     
@@ -164,25 +160,17 @@ internal class CoreManager {
             switch response.result {
             case .success(let value):
                 
-                let json = JSON(value)
+                let result = value as? [String : AnyObject] ?? [:]
                 
-                if  let jsonData = json.dictionaryObject,let resultDictionary = jsonData[resultKey] {
+                if  let resultDictionary = result[resultKey] {
                     
-                    let theCode =  jsonData[resultCodeKey]
+                    let theCode =  result[resultCodeKey]
                     
-                    if  ServiceConstants.ErrorCheck.isUserAggrement((theCode as! Int)) {
-                        
-                        return
-                    }
-                    
-                    if ServiceConstants.ErrorCheck.isKVKKAgreementErrorEquals(to: theCode as! Int) {
-                        
-                        return
-                    }
-                    
-                    
+                    if ServiceConstants.ErrorCheck.isUserAggrement((theCode as! Int)) ||
+                        ServiceConstants.ErrorCheck.isKVKKAgreementErrorEquals(to: theCode as! Int) { return }
+                                        
                     guard let _ = theCode, theCode as! Int == 0 else {
-                        print("GetUser error \(String(describing: theCode)) - \(String(describing: jsonData[resultMessageKey]))")
+                        print("GetUser error \(String(describing: theCode)) - \(String(describing: result[resultMessageKey]))")
                         return
                     }
                     
@@ -337,7 +325,7 @@ internal class CoreManager {
     
     func pushVCToSctack(viewController:UIViewController)  {
         viewControllerStack.push(viewController)
-        log.debug("push : \(viewController.className)")
+        LoggerHelper.logger.debug("push : \(viewController.className)")
     }
     
     func clear()  {

@@ -41,7 +41,7 @@ class LoginVC: BaseVC {
     
     fileprivate func stateChanged(){
         
-        //log.debug("Login button state changed to \(selectedState)")
+        //LoggerHelper.logger.debug("Login button state changed to \(selectedState)")
         
         switch selectedState {
         case .passive:
@@ -268,7 +268,7 @@ class LoginVC: BaseVC {
                     
                     if let data  = data {
                         
-                        //log.debug("data : \(data)")
+                        //LoggerHelper.logger.debug("data : \(data)")
                         
                         if  strongSelf.checkResultCodeAndShowError(data) == ServiceResultCodeType.exit {
                             return
@@ -346,7 +346,7 @@ extension LoginVC {
         }
         
         else if segue.identifier == "showAddCard" {
-            log.debug("show add card or needed vc after login")
+            LoggerHelper.logger.debug("show add card or needed vc after login")
         }
     }
 }

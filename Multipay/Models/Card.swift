@@ -8,7 +8,6 @@
 //
 
 import Foundation
-import XCGLogger
 
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -767,7 +766,7 @@ class Card :BaseModel{
                         
                         if let data  = resData {
                             
-                            log.debug("data : \(data)")
+                            LoggerHelper.logger.debug("data : \(data)")
                             
                             let theCode =  data[resultCodeKey]
                             
@@ -833,14 +832,14 @@ class Card :BaseModel{
                 
                 guard let filePath = Bundle.main.path(forResource: ServiceConstants.ServiceName.GetCardTransactions, ofType: "json") else {
                     
-                    log.error("\(ServiceConstants.ServiceName.GetCardTransactions)  json not found")
+                    LoggerHelper.logger.error("\(ServiceConstants.ServiceName.GetCardTransactions)  json not found")
                     _ = ErrorModel(result: REGUEST_ERROR_CODE, code: REGUEST_ERROR_CODE, message: "\(ServiceConstants.ServiceName.GetCardTransactions)  json file read error ", additionalData: nil)
                     self.trxs = nil
                     return
                     
                 }
                 
-                log.debug("filePath :\(filePath)");
+                LoggerHelper.logger.debug("filePath :\(filePath)");
                 
                 do {
                     let content = try String(contentsOfFile:filePath, encoding: String.Encoding.utf8)
@@ -868,7 +867,7 @@ class Card :BaseModel{
                     
                     self.trxs = Transactions.createTrx(trx)
                 } catch _ as NSError {
-                    log.error("\(ServiceConstants.ServiceName.GetCardTransactions)  json file read error ")
+                    LoggerHelper.logger.error("\(ServiceConstants.ServiceName.GetCardTransactions)  json file read error ")
                     self.trxs = nil
                     return
                 }
@@ -898,7 +897,7 @@ class Card :BaseModel{
                     {
                         if let data  = data {
                             
-                            log.debug("data : \(data)")
+                            LoggerHelper.logger.debug("data : \(data)")
                             
                             let theCode =  data[resultCodeKey]
                             
@@ -955,7 +954,7 @@ class Card :BaseModel{
                         strongSelf.pageNumber += 1
                         if let data  = data {
                             
-                            log.debug("data : \(data)")
+                            LoggerHelper.logger.debug("data : \(data)")
                             
                             let theCode =  data[resultCodeKey]
                             
@@ -1020,7 +1019,7 @@ class Card :BaseModel{
                     {
                         if let data  = data {
                             
-                            log.debug("data : \(data)")
+                            LoggerHelper.logger.debug("data : \(data)")
                             
                             let theCode =  data[resultCodeKey]
                             
@@ -1120,7 +1119,7 @@ class Transactions: BaseModel {
     var amountDisplayValue :String = ""
     
     deinit{
-        log.debug("\(String(describing: self.merchantName)), \(String(describing: self.amount))")
+        LoggerHelper.logger.debug("\(String(describing: self.merchantName)), \(String(describing: self.amount))")
     }
     
     init(id:Int,merchantName:String,amount:String ,processType:ProcessType,dateTime:String,currency:String){

@@ -255,7 +255,7 @@ class RegisterVC: BaseVC {
             
             guard let strongSelf = self else { return }
 
-            log.debug("data : \(String(describing: data))")
+            LoggerHelper.logger.debug("data : \(String(describing: data))")
             
             if let data = rawData {
                 do{
@@ -269,7 +269,7 @@ class RegisterVC: BaseVC {
             
             if let data  = data {
                 
-                //log.debug("data : \(data)")
+                //LoggerHelper.logger.debug("data : \(data)")
                 
                 if  strongSelf.checkResultCodeAndShowError(data) == ServiceResultCodeType.exit {
                     return
@@ -281,7 +281,7 @@ class RegisterVC: BaseVC {
             
             },errorCallback: {
                  (data: ErrorModel, rawData) in
-                log.error("error : \(data.description)")
+                LoggerHelper.logger.error("error : \(data.description)")
             })
         
     }
@@ -438,7 +438,7 @@ extension RegisterVC{
             
             guard let strongSelf = self else { return }
 
-            log.debug("data : \(String(describing: data))")
+            LoggerHelper.logger.debug("data : \(String(describing: data))")
             
             if let data = rawData {
                 do{
@@ -451,7 +451,7 @@ extension RegisterVC{
             }
             
             if let data  = data {
-                //log.debug("data : \(data)")
+                //LoggerHelper.logger.debug("data : \(data)")
                 if  strongSelf.checkResultCodeAndShowError(data) == ServiceResultCodeType.exit {
                     return
                 }
@@ -459,7 +459,7 @@ extension RegisterVC{
             
             },errorCallback: {
                  (data: ErrorModel, rawData) in
-                log.error("error : \(data.description)")
+                LoggerHelper.logger.error("error : \(data.description)")
             })
     }
     

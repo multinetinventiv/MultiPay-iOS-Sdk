@@ -14,7 +14,7 @@ public class ErrorModel :GenericErrorModel  {
     }
     
     deinit{
-        //log.debug(self.description)
+        //LoggerHelper.logger.debug(self.description)
     }
     
     override func getSystemError(_ code:String) -> String {

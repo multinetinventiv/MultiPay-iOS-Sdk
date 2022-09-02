@@ -495,7 +495,7 @@ class InputTextView: BaseView {
     //kalkacak
     @IBAction func textEditingChanged(_ sender: AnyObject) {
         
-        //log.debug("text: \(txtInput.text)")
+        //LoggerHelper.logger.debug("text: \(txtInput.text)")
         
         return
         

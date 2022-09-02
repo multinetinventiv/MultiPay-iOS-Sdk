@@ -7,8 +7,6 @@
 
 import Foundation
 import UIKit
-import SnapKit
-
 
 protocol RadioButtonDelegate {
     func onClick(_ sender: UIView)
@@ -37,7 +35,7 @@ class RadioButton: UIButton {
         super.init(coder: aDecoder)
         self.addTarget(self, action: #selector(onClick), for: UIControl.Event.touchUpInside)
         self.setTitle("", for: .normal)
-      }
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -46,14 +44,12 @@ class RadioButton: UIButton {
         //removeConstraints(self.constraints)
         
         let view = isChecked == true ? checkedView : uncheckedView
-            addSubview(view)
+        addSubview(view)
         
-        view.snp.remakeConstraints { (make) in
-            make.center.equalToSuperview()
-            
-        }
+        view.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
-
+    
     @objc func onClick(sender: UIButton) {
         if sender == self {
             delegate?.onClick(self)

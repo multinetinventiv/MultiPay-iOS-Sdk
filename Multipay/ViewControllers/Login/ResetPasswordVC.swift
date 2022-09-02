@@ -56,7 +56,7 @@ class ResetPasswordVC: BaseVC {
     var userID:String?
     
     deinit{
-        log.debug("")
+        LoggerHelper.logger.debug("")
     }
     
     override func viewDidLoad() {
@@ -225,7 +225,7 @@ extension ResetPasswordVC  {
                 {
                     if let data  = data {
                         
-                        log.debug("data : \(data)")
+                        LoggerHelper.logger.debug("data : \(data)")
                         
                         if  strongSelf.checkResultCodeAndShowError(data) == ServiceResultCodeType.exit {
                             return
@@ -248,7 +248,7 @@ extension ResetPasswordVC  {
                     }
                     
                 }
-                log.error("error : \(data.description)")
+                LoggerHelper.logger.error("error : \(data.description)")
             })
     }
     

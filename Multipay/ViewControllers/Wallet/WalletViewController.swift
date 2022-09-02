@@ -218,7 +218,7 @@ extension WalletViewController: UITableViewDataSource, UITableViewDelegate {
         
         tableView.reloadData()
         self.eslestirBtn.isHidden = false
-        log.debug("row clicked \(indexPath.row)")
+        LoggerHelper.logger.debug("row clicked \(indexPath.row)")
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -241,7 +241,7 @@ extension WalletViewController{
     
     @IBAction func eslestirBtnClicked(_ sender: Any) {
         
-        log.debug("eslestir btn clicked")
+        LoggerHelper.logger.debug("eslestir btn clicked")
         
         guard let selected = self.lastSelectedCardTest, Multipay.offlineModeActive else {
             guard let selected = self.lastSelectedCard else{
@@ -274,7 +274,7 @@ extension WalletViewController{
     
     func callGetWallets(){
         
-        log.debug("callGetWallets is called")
+        LoggerHelper.logger.debug("callGetWallets is called")
         
         var parameters : [String:String] = [:]
         if let walletToken = Auth.walletToken, walletToken.count > 0 {
@@ -289,9 +289,7 @@ extension WalletViewController{
         }
         
         post(ServiceConstants.ServiceName.SdkWallet, isSdkService: true, parameters: parameters  as [String:AnyObject], displayError: true, isSecure: false, httpMethod: .post, callback: { [weak self](data: [String:AnyObject]?, rawData) in
-            if let strongSelf = self{
-                //log.debug("data : \(String(describing: data))")
-                
+            if let strongSelf = self {                
                 if let rawData = rawData{
                     do{
                         let modelObject = try rawData.decoded() as GetWalletsResponse
@@ -324,7 +322,7 @@ extension WalletViewController{
         },errorCallback: {
             [weak self] (data, rawData) in
             
-            log.error("error : \(data.description)")
+            LoggerHelper.logger.error("error : \(data.description)")
             
             let alert = UIAlertController(title: "Failed", message: data.description, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -342,7 +340,7 @@ extension WalletViewController{
     
     func callSelectWallet(lastSelectedCard: Wallet){
         
-        log.debug("callSelectWallet is called")
+        LoggerHelper.logger.debug("callSelectWallet is called")
         
         var parameters:[String : String] = [:]
         
@@ -373,7 +371,7 @@ extension WalletViewController{
         
         post(serviceName, isSdkService: true, parameters: parameters  as [String:AnyObject], displayError: true, isSecure: false, httpMethod: .post, callback: { [weak self](data: [String:AnyObject]?, rawData) in
             if let self = self{
-                log.debug("data : \(String(describing: data))")
+                LoggerHelper.logger.debug("data : \(String(describing: data))")
                 
                 if let wallets = self.getWalletsResponseModel?.result?.wallets{
                     wallets.forEach { (wallet) in
@@ -398,7 +396,7 @@ extension WalletViewController{
         },errorCallback: {
             [weak self] (data, rawData) in
             
-            log.error("error : \(data.description)")
+            LoggerHelper.logger.error("error : \(data.description)")
             
             Multipay.delegate?.walletTokenExpired(expiredWalletToken: parameters[walletTokenKey])
             

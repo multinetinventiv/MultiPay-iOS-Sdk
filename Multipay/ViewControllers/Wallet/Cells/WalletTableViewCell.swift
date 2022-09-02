@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import SnapKit
-import SDWebImage
 
 class WalletTableViewCell: UITableViewCell {
     @IBOutlet weak var cardImage: UIImageView!
@@ -102,7 +100,11 @@ class WalletTableViewCell: UITableViewCell {
             self.contentView.backgroundColor = ColorPalette.walletSdk.kartListBackground()
         }
         
-        self.cardImage.sd_setImage(with: URL(string: model.image ?? ""), placeholderImage: UIImage(named: "WalletCard", in: getResourceBundle(anyClass: LoginVC.self), compatibleWith: nil))
+        self.cardImage.image = UIImage(named: "WalletCard", in: getResourceBundle(anyClass: LoginVC.self), compatibleWith: nil)
+        
+        if let urlString = model.image, let url = URL(string: urlString) {
+            self.cardImage.load(url: url)
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

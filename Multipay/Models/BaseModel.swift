@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 class BaseModel: SessionDelegate {
     
@@ -41,7 +40,7 @@ class BaseModel: SessionDelegate {
             }
         }
         
-        log.debug("\(serviceName) -> \(serviceParameter)")
+        LoggerHelper.logger.debug("\(serviceName) -> \(serviceParameter)")
         
         let httpHeaders = HTTPHeaders(Auth.shared.getHeader())
         
@@ -54,29 +53,24 @@ class BaseModel: SessionDelegate {
                 let code = "\(ServiceConstants.SSL_PINNING_VALIDATION_ERROR)"
                 let message = Localization.ErrorSystem
                 let errorModel = GenericErrorModel(code: code, message: message)
-                log.error("Result Pinning validation failed for \(url)\n\n\(response.error.debugDescription)")
+                LoggerHelper.logger.error("Result Pinning validation failed for \(url)\n\n\(response.error.debugDescription)")
                 errorCallback(errorModel as! ErrorModel, response.data)
                 return
             }
             
             switch response.result {
             case .success(let value):
+                let result = value as? [String : AnyObject] ?? [:]
                 
-                    let json = JSON(value)
-                    
-                    callback(json.dictionaryObject as [String : AnyObject]?, nil)
+                callback(result, nil)
                 
                 break
                 
             case .failure:
-            
-            break
+                
+                break
                 
             }
-            
-            
-            
-           
         }
         
     }

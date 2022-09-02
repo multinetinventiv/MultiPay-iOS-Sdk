@@ -86,7 +86,7 @@ class OTPVC: BaseVC {
     var serviceName:String = ServiceConstants.ServiceName.registerUser
     
     deinit{
-        log.debug("")
+        LoggerHelper.logger.debug("")
         delegate = nil 
         timer?.invalidate()
     }
@@ -205,7 +205,7 @@ class OTPVC: BaseVC {
         }
         
         lblTimer.text = Localization.OTPSecondText.local.replace("%1$s", replacement: String(self.timeCount))
-        log.debug("time \(self.timeCount) - \(String(describing: self.lblTimer.text))")
+        LoggerHelper.logger.debug("time \(self.timeCount) - \(String(describing: self.lblTimer.text))")
         
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(showKeyboard), userInfo: nil, repeats: false)
@@ -234,7 +234,7 @@ class OTPVC: BaseVC {
         
         post(ServiceConstants.ServiceName.SdkOtpConfirm, isSdkService: true, parameters: parameters  as [String:AnyObject], displayError: false, isSecure: false , callback: { [weak self](data: [String:AnyObject]?, rawData) in
             if let strongSelf = self{
-                //log.debug("data : \(String(describing: data))")
+                //LoggerHelper.logger.debug("data : \(String(describing: data))")
                 
                 if let rawData = rawData{
                     do{
@@ -271,7 +271,7 @@ class OTPVC: BaseVC {
                 self.otpEndProcess(nil, otpResponseModel:nil)
             }
             
-            log.error("error : \(data.description)")
+            LoggerHelper.logger.error("error : \(data.description)")
             
             var jsonDict: [String:AnyObject] = [:]
 
@@ -354,13 +354,13 @@ extension OTPVC {
         post(resendServiceName!, parameters: postDict as [String:AnyObject], displayError: false, isSecure: false, callback: { [weak self](data: [String:AnyObject]?, rawData) in
             if let strongSelf = self
             {
-                log.debug("data : \(data!)")
+                LoggerHelper.logger.debug("data : \(data!)")
                 strongSelf.processResendService(postDict: postDict, data: data, rawData: rawData)
             }
             
         },errorCallback: {
             [weak self] (data, rawData) in
-            log.error("error : \(data.description)")
+            LoggerHelper.logger.error("error : \(data.description)")
             if let strongSelf = self{
                 if Multipay.offlineModeActive{
                     strongSelf.processResendService(postDict: postDict, data: nil, rawData: nil)

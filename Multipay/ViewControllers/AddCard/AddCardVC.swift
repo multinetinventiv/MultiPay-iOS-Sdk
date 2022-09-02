@@ -135,7 +135,7 @@ class AddCardVC: BaseVC {
         
         self.addCardOperations()
         
-        log.debug("Continue btn clicked in addCard")
+        LoggerHelper.logger.debug("Continue btn clicked in addCard")
     }
     
 }
@@ -162,7 +162,7 @@ extension AddCardVC {
                     
                     if let result = responseData[resultKey] as? [String: Bool], let cvvRequirement = result["IsCvvRequired"] {
                         
-                        log.debug("result >> \(result) ")
+                        LoggerHelper.logger.debug("result >> \(result) ")
                         completion(cvvRequirement)
                         
                     }
@@ -181,7 +181,7 @@ extension AddCardVC {
     
     fileprivate func createCardService(cvv: String? = nil) {
         
-        log.debug("createCardService is called")
+        LoggerHelper.logger.debug("createCardService is called")
         
         let cardNumber =  cardNumberTextView.textValue().removeWhitespace()
         
@@ -206,14 +206,14 @@ extension AddCardVC {
             parameter[authTokenKey] = Auth.authToken
         }
         
-        log.debug("Parameter >> \(parameter) ")
+        LoggerHelper.logger.debug("Parameter >> \(parameter) ")
         
         post(ServiceConstants.ServiceName.SdkAddWallet, parameters: parameter as [String : AnyObject], displayError: true, callback: { [weak self](data: [String:AnyObject]?, rawData) in
             if let strongSelf = self
             {
                 defer{
                     strongSelf.running = false
-                    log.debug("data : \(String(describing: data))")
+                    LoggerHelper.logger.debug("data : \(String(describing: data))")
                 }
                 
                 if let responseData  = data {

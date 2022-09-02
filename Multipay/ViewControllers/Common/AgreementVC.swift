@@ -155,7 +155,7 @@ class AgreementVC: BaseVC {
                 //appDelegate.launchApplication()
             self.navigationController?.popToRootViewController(animated: true)
             }, errorCallback: {(data: ErrorModel, rawData) in
-                log.debug("KVKK aggreement error \(data)")
+                LoggerHelper.logger.debug("KVKK aggreement error \(data)")
             }
         )
     }
@@ -164,7 +164,7 @@ class AgreementVC: BaseVC {
         post(ServiceConstants.ServiceName.MarkCurrentUserAggrementAsRead, parameters: ["" : "" as AnyObject] , displayError: false, displaySpinner: false, callback: { [weak self] (data:[String:AnyObject]?, rawData) in
                 if let strongSelf = self {
                     if let data = data {
-                        log.debug("data : \(data)")
+                        LoggerHelper.logger.debug("data : \(data)")
 
                         if  strongSelf.checkResultCodeAndShowError(data) == ServiceResultCodeType.exit {
                             return
@@ -180,7 +180,7 @@ class AgreementVC: BaseVC {
                     }
                 }
             }, errorCallback: {(data: ErrorModel, rawData) in
-                log.debug("User aggreement error \(data)")
+                LoggerHelper.logger.debug("User aggreement error \(data)")
             }
         )
     }

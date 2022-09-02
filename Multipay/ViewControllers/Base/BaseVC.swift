@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import SwiftMessages
-import PopupDialog
 
 typealias SuccessCallBack = (_ dictionary: [String:AnyObject]?, _ rawData: Data?) -> Void
 typealias ErrorCallBack = (_ errorModel: ErrorModel, _ rawData: Data?) -> Void
@@ -47,7 +45,6 @@ class BaseVC: UIViewController {
     
     var initialYPosition :CGFloat = 0.0
     
-    var spinner :SpinnerView?
     var alertView :UIAlertController?
     
     //var navigationBarView:NavigationBarView?
@@ -105,7 +102,7 @@ class BaseVC: UIViewController {
     }
     
     deinit{
-        log.debug("")
+        LoggerHelper.logger.debug("")
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -113,7 +110,7 @@ class BaseVC: UIViewController {
         
         CoreManager.Instance().viewControllerStack.clear()
         
-        log.debug("Will open dashboard or necessary vc")
+        LoggerHelper.logger.debug("Will open dashboard or necessary vc")
         
         let nav = self.navigationController as! MyNavigationController
         nav.openWalletFromOTP()
@@ -125,7 +122,7 @@ class BaseVC: UIViewController {
         
         CoreManager.Instance().viewControllerStack.clear()
         
-        log.debug("Will open dashboard or necessary vc")
+        LoggerHelper.logger.debug("Will open dashboard or necessary vc")
         
         let nav = self.navigationController as! MyNavigationController
         nav.openAddCardFromOTP()
@@ -175,7 +172,7 @@ extension BaseVC {
             registerKeyboardNotificarion(false)
         }
         if Multipay.offlineModeActive{
-            log.debug("Controller Disappear : \(self.className)")
+            LoggerHelper.logger.debug("Controller Disappear : \(self.className)")
         }
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -208,7 +205,7 @@ extension BaseVC {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        log.debug("!!!!! MEMORY WARNING !!!!!!!!")
+        LoggerHelper.logger.debug("!!!!! MEMORY WARNING !!!!!!!!")
     }
     
     @objc func goBack()
@@ -446,12 +443,12 @@ extension BaseVC{
         titleBackView.frame = CGRect(x: 0, y: 0, width: navController.navigationBar.frame.size.width, height: 40)
         titleBackView.addSubview(imageView)
         
-        imageView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.equalTo(bannerWidth)
-            make.height.equalTo(bannerHeight)
-        }
-        
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: titleBackView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: titleBackView.centerYAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: bannerWidth),
+            imageView.heightAnchor.constraint(equalToConstant: bannerHeight)
+        ])
         
         self.navigationItem.titleView = titleBackView
     }
@@ -463,7 +460,7 @@ extension BaseVC{
     func presentModal(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
         
         
-        if(viewControllerToPresent.isKind(of: UIImagePickerController.self) || viewControllerToPresent.isKind(of: UIAlertController.self) || viewControllerToPresent.isKind(of: PopupDialog.self) ) {
+        if(viewControllerToPresent.isKind(of: UIImagePickerController.self) || viewControllerToPresent.isKind(of: UIAlertController.self)) {
             super.present(viewControllerToPresent, animated: flag, completion: nil)
             return
         }
@@ -486,28 +483,21 @@ extension BaseVC{
 //MARK: - Service Ops
 extension BaseVC {
     
-    func showHUD(_ show:Bool,text:String = "",addMainWindow:Bool = true)  {
+    func showHUD(_ show: Bool) {
         DispatchQueue.main.async {
-            if(show)
-            {
-                if self.spinner != nil {
-                    return
-                }
-                self.spinner = SpinnerView(view: self.view, text: text,isInMainwindow:addMainWindow)
-                
-            }else {
-                self.spinner?.removeFromSuperview()
-                self.spinner = nil
+            if show {
+                LoadingIndicator.shared.showLoading()
+            } else {
+                LoadingIndicator.shared.hideLoading()
             }
         }
     }
     
-    func post(_ serviceName: String, isSdkService: Bool = true, parameters: [String: AnyObject]?, isCancelable:Bool = true, displayError: Bool = true, isSecure: Bool = false, displaySpinner: Bool = true, addMainWindow: Bool = true, retryCount:Int = 0, httpMethod: HTTPMethod = .post, callback: @escaping SuccessCallBack,errorCallback:@escaping ErrorCallBack) {
+    func post(_ serviceName: String, isSdkService: Bool = true, parameters: [String: AnyObject]?, isCancelable:Bool = true, displayError: Bool = true, isSecure: Bool = false, displaySpinner: Bool = true, retryCount:Int = 0, httpMethod: HTTPMethod = .post, callback: @escaping SuccessCallBack,errorCallback:@escaping ErrorCallBack) {
         
         //HUD Operations Start ---
-        let prod = ServiceUrl.isPROD() || ServiceUrl.isPILOT()
         if displaySpinner {
-            showHUD(true,text:prod ? "" : serviceName, addMainWindow:addMainWindow)
+            showHUD(true)
         }
         //HUD operations End ---
         
@@ -525,7 +515,7 @@ extension BaseVC {
                                                     guard let strongSelf = self else { return }
                                                     
                                                     if displaySpinner {
-                                                        strongSelf.showHUD(false,text:serviceName, addMainWindow:addMainWindow)
+                                                        strongSelf.showHUD(false)
                                                     }
                                                     
                                                     DispatchQueue.main.async(execute: {
@@ -543,7 +533,7 @@ extension BaseVC {
         { [weak self] (responseFail, rawData) in
             guard let strongSelf = self else { return }
             if displaySpinner {
-                strongSelf.showHUD(false,text:serviceName, addMainWindow:addMainWindow)
+                strongSelf.showHUD(false)
             }
             
             DispatchQueue.main.async(execute: {
@@ -811,7 +801,7 @@ extension BaseVC {
         post(ServiceConstants.ServiceName.Logout, parameters: parameters as [String : AnyObject] , displayError: false, displaySpinner:false,callback: { (data:[String:AnyObject]?, rawData) in
             //....
         },errorCallback: {(data: ErrorModel, rawData) in
-            log.error("error : \(data.description)")
+            LoggerHelper.logger.error("error : \(data.description)")
         })
         
         CoreManager.instance.clear()

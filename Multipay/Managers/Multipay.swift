@@ -66,7 +66,7 @@ public class Multipay {
     
     public class func callUnSelectWallet(delegate: MultipayDelegate, walletAppToken: String, walletToken: String, language: Language? = nil, referenceNumber: String?, obfuscationKey: String, offlineMode: Bool = false) {
         
-        log.debug("callUnSelectWallet is called")
+        LoggerHelper.logger.debug("callUnSelectWallet is called")
         
         Auth.obfuscationKey = obfuscationKey
         
@@ -115,7 +115,7 @@ public class Multipay {
                                                   })
         { (responseFail, rawData) in
             
-            log.error("error: \(responseFail)")
+            LoggerHelper.logger.error("error: \(responseFail)")
             
             DispatchQueue.main.async(execute: {
                 delegate.multipayUnselectCardFailed(resultCode: responseFail.code, resultMessage: responseFail.description)
@@ -125,7 +125,7 @@ public class Multipay {
     
     public class func getWallet(delegate:MultipayDelegate, walletAppToken: String, walletToken: String, language: Language? = nil, referenceNumber: String?, obfuscationKey: String, offlineMode: Bool = false) {
         
-        log.debug("callSingleWallet is called")
+        LoggerHelper.logger.debug("callSingleWallet is called")
         
         Auth.obfuscationKey = obfuscationKey
         
@@ -190,7 +190,7 @@ public class Multipay {
                                                   })
         { (responseFail, rawData) in
             
-            log.error("error: \(responseFail)")
+            LoggerHelper.logger.error("error: \(responseFail)")
             
             DispatchQueue.main.async(execute: {
                 delegate.walletTokenExpired(expiredWalletToken: parameters[walletTokenKey] as? String)
@@ -204,7 +204,7 @@ public class Multipay {
     public class func callConfirmPayment(delegate: MultipayDelegate, paymentAppToken: String, language: Language? = nil, requestId: String, walletToken: String, merchantReferenceNumber: String, terminalReferenceNumber: String, transferReferenceNumber: String, transactionDetails: [TransactionDetailModel], sign: String, obfuscationKey: String, offlineMode: Bool = false)
     {
         
-        log.debug("callConfirmPayment is called")
+        LoggerHelper.logger.debug("callConfirmPayment is called")
         
         Auth.obfuscationKey = obfuscationKey
         
@@ -274,7 +274,7 @@ public class Multipay {
                                                   })
         { (responseFail, rawData) in
             
-            log.error("error: \(responseFail)")
+            LoggerHelper.logger.error("error: \(responseFail)")
             
             DispatchQueue.main.async(execute: {
                 
@@ -307,7 +307,7 @@ public class Multipay {
     
     public class func rollbackPayment(delegate: MultipayDelegate, paymentAppToken: String, language: Language? = nil, requestId: String, sign: String, merchantReferenceNumber: String, terminalReferenceNumber: String, rollbackReferenceNumber: String, reason: ReferenceToRollbackModel.ReasonRollback, referenceNumberType: ReferenceToRollbackModel.ReferenceNumberType, referenceNumber: String, obfuscationKey: String, offlineMode: Bool = false) {
         
-        log.debug("callPaymentReversal is called")
+        LoggerHelper.logger.debug("callPaymentReversal is called")
         
         Auth.obfuscationKey = obfuscationKey
         
@@ -340,7 +340,7 @@ public class Multipay {
         
         let service = ServiceConstants.ServiceName.SdkRollbackPayment
         
-        log.debug("callPaymentReversal parameters: \(parameters)")
+        LoggerHelper.logger.debug("callPaymentReversal parameters: \(parameters)")
         
         ServiceInvokerHandler.sharedInstance.post(service,
                                                   isSdkService: true,
@@ -379,7 +379,7 @@ public class Multipay {
                                                   })
         {  (responseFail, rawData) in
             
-            log.error("callPaymentReversal error description: \(responseFail.description)")
+            LoggerHelper.logger.error("callPaymentReversal error description: \(responseFail.description)")
             
             DispatchQueue.main.async(execute: {
                 

@@ -150,16 +150,7 @@ Pod::Spec.new do |s|
 
   s.frameworks                     = 'Foundation', 'Security', 'UIKit'
 
-  s.dependency 'SnapKit', '~> 5.0.0'
   s.dependency 'SwiftMessages'
-  s.dependency 'KeychainAccess'
-  s.dependency 'SDWebImage'
-  s.dependency 'NVActivityIndicatorView'
-  s.dependency 'SwiftyJSON', '~> 4.0'
-  s.dependency 'XCGLogger', '~> 7.0.0'
-  s.dependency 'PopupDialog', '1.1.0'
-  
-  #s.dependency 'Alamofire', '~> 5.2'
 
   s.swift_version = "5.0"
 

@@ -1,7 +1,6 @@
 
 import UIKit
 import Foundation
-import SDWebImage
 
 extension NSLayoutConstraint
 {
@@ -320,15 +319,17 @@ extension UITextField {
 
 
 //MARK: - UIImageView
-
 extension UIImageView {
-    func changeColor(color :UIColor = .white) {
-        self.image = self.image!.withRenderingMode(.alwaysTemplate)
-        self.tintColor = color
-    }
-
-    func downloadImageFrom(urlString: String, placeholderImage: UIImage?) {
-        self.sd_setImage(with: URL(string: urlString), placeholderImage: placeholderImage)
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
     }
 }
 //MARK: - UIImage

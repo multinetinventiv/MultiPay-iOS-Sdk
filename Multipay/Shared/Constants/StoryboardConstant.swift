@@ -9,9 +9,6 @@
 import Foundation
 import UIKit
 
-import XCGLogger
-
-
 enum ScreenType {
     case loginScreen,otpScreen,registerScreen,resetPasswordScreen,changePasswordScreen,feedBackScreen, topUpOrdersVC
     case dashboardScreen,profileSettingsScreen,personelInfoScreen,notificationChannel, pinManagementVC, languageVC

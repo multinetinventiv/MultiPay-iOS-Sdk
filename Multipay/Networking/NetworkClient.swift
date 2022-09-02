@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 //public typealias NetworkClientErrorCallBack = (_ errorModel: GenericErrorModel, data: ) -> Void
 
@@ -154,8 +153,8 @@ struct NetworkClient {
             switch response.result {
             case .success(let value):
                 
-                //JSON
-                let json = JSON(value)
+                let result = value as? [String : AnyObject] ?? [:]
+               
                 let jsonData = response.data
                 
                 if  (Config.isDebug) {
@@ -166,16 +165,12 @@ struct NetworkClient {
                     print("\nService Name:")
                     print(serviceName)
                     
-//                    let pretty = try! JSONSerialization.data( withJSONObject: value,
-//                                                              options: .prettyPrinted)
-                    
                     print("\nService RESPONSE json:" + String(data: jsonData!, encoding: .utf8)!)
-                    //print(json)
                     
                     print("\n\n****************SERVICE RESPONSE END***************************\n\n")
                 }
                 
-                callback(json.dictionaryObject! as [String : AnyObject], jsonData)
+                callback(result, jsonData)
                 break
                 
             case .failure(let error):
