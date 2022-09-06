@@ -148,7 +148,7 @@ class LoginWithCodeSetPasswordVC: BaseVC {
             displayError: false,
             callback: {(data: [String: AnyObject]?, _) in
                 guard let data = data else {
-                    self.showMessage(.error, message: Localization.ErrorSystem.local)
+                    self.showMessage( Localization.ErrorSystem.local)
                     return
                 }
 
@@ -172,23 +172,23 @@ class LoginWithCodeSetPasswordVC: BaseVC {
                     }
                 }
             }, errorCallback: {(data: ErrorModel, rawData) in
-                self.showMessage(.error, message: data.description)
+                self.showMessage(data.description)
         })
     }
     
     fileprivate func isValid() -> Bool {
         if !passwordView.validate() {
-            showMessage(.error, message: passwordView.getErrorMessage())
+            showMessage(passwordView.getErrorMessage())
             return false
         }
 
         if !repasswordView.validate() {
-            showMessage(.error, message: repasswordView.getErrorMessage())
+            showMessage(repasswordView.getErrorMessage())
             return false
         }
 
         if passwordView.textValue() != repasswordView.textValue() {
-            showMessage(MessageType.error, message: Localization.ChangePasswordErrorPasswordsIsNotEqual.local)
+            showMessage(Localization.ChangePasswordErrorPasswordsIsNotEqual.local)
             return false
         }
 

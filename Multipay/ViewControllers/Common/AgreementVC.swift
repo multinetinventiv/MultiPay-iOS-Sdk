@@ -126,7 +126,7 @@ class AgreementVC: BaseVC {
             presentModalWillDismiss()
         } else if self.agreementViewType == AgreementViewType.kvkk {
             self.logout()
-            showMessage(.warning, message: Localization.AgreementKVKKError.local)
+            showMessage(Localization.AgreementKVKKError.local)
         }
 
         self.delegate?.disagreedUserAgreementClicked(type: agreementViewType)

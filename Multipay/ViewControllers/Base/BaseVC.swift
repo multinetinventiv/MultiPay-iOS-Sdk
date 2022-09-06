@@ -64,6 +64,16 @@ class BaseVC: UIViewController {
     
     lazy var requestList : [CustomRequest] = [CustomRequest]()
     
+    lazy var toastView: ToastView? = {
+        if  let window = UIApplication.shared.windows.first {
+            let toastView = ToastView(showIn: self.view)
+            
+            return toastView
+        }
+        
+        return nil
+    }()
+    
     private var mpStatusBarStyle: UIStatusBarStyle = .lightContent {
         didSet(newValue) {
             self.setNeedsStatusBarAppearanceUpdate()
@@ -247,14 +257,9 @@ extension BaseVC {
     }
     
     
-    func showMessage(_ messageType: MessageType, message: String, btnTitle: String? = nil, block: (() -> Void)? = nil) {
-        if block == nil {
-            MessageManager.showTopMessageView(messageType, message: message)
-        } else {
-            MessageManager.showMessageCustom(messageType, message: message, btnTitle: btnTitle, block: block)
-        }
+    func showMessage(_ message: String, buttonText: String? = nil, onButtonTap: (() -> Void)? = nil) {
+        toastView?.show(message: message, buttonText: buttonText, onButtonTap: onButtonTap)
     }
-    
     
     func checkResultCodeAndShowError(_ data: [String:AnyObject],showMessage:Bool = true) -> ServiceResultCodeType
     {
@@ -272,7 +277,7 @@ extension BaseVC {
                 
                 if (showMessage) {
                     if let resultMessage = data[resultMessageKey] as? String {
-                        self.showMessage(MessageType.error, message: resultMessage)
+                        self.showMessage(resultMessage)
                     }
                 }
                 return ServiceResultCodeType.exit
@@ -283,7 +288,7 @@ extension BaseVC {
                 
                 if (showMessage) {
                     if let resultMessage = data[resultMessageKey] as? String {
-                        self.showMessage(MessageType.error, message: resultMessage)
+                        self.showMessage(resultMessage)
                     }
                 }
                 return ServiceResultCodeType.exit
@@ -294,7 +299,7 @@ extension BaseVC {
                 
                 if(showMessage){
                     if let resultMessage = data[resultMessageKey] as? String {
-                        self.showMessage(MessageType.error, message: resultMessage)
+                        self.showMessage(resultMessage)
                     }
                 }
                 return ServiceResultCodeType.exit
@@ -318,7 +323,7 @@ extension BaseVC {
             //21500 ignore edildi.
             if errorCode >= 21450 && errorCode < 21500 {
                 if (showMessage) {
-                    self.showMessage(.error, message: Localization.ErrorSystem.local + " - " + String(errorCode))
+                    self.showMessage( Localization.ErrorSystem.local + " - " + String(errorCode))
                 }
                 return ServiceResultCodeType.exit
             }
@@ -326,20 +331,20 @@ extension BaseVC {
             
             //Token veya Type Hatası
             if errorCode == ServiceConstants.TOKEN_ERROR ||  errorCode == ServiceConstants.TYPE_ERROR {
-                self.showMessage(.error, message: Localization.ErrorSystem.local + " - " + String(errorCode))
+                self.showMessage( Localization.ErrorSystem.local + " - " + String(errorCode))
                 return ServiceResultCodeType.exit
             }
             
             //Bilinmeyen Hata
             if errorCode == ServiceConstants.UNKNOWN_ERROR || errorCode == ServiceConstants.NO_SERVICE_AUTHORIZATION{
                 if (showMessage) {
-                    self.showMessage(MessageType.error, message: Localization.ErrorSystem.local)
+                    self.showMessage(Localization.ErrorSystem.local)
                 }
                 return ServiceResultCodeType.exit
             }
             
             if (showMessage) {
-                self.showMessage(MessageType.error, message: Localization.ErrorSystem.local)
+                self.showMessage(Localization.ErrorSystem.local)
             }
             return ServiceResultCodeType.exit
             
@@ -564,7 +569,7 @@ extension BaseVC {
                         return
                     }
                     else {
-                        MessageManager.showMessageCustom(.error, message: message, btnTitle: (resultCode != 20201 && resultCode != 23503) ? Localization.Retry.local : nil) {
+                        self?.showMessage(message, buttonText: (resultCode != 20201 && resultCode != 23503) ? Localization.Retry.local : nil) {
                             strongSelf.post(serviceName, parameters: parameters, retryCount: retryCount + 1, callback: callback, errorCallback: errorCallback)
                             return
                         }

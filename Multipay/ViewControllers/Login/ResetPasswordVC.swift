@@ -190,7 +190,7 @@ extension ResetPasswordVC  {
         
         if (!inputTextView.validate())
         {
-            showMessage(MessageType.error, message: inputTextView.getErrorMessage())
+            showMessage(inputTextView.getErrorMessage())
             return false
         }
         
@@ -233,7 +233,7 @@ extension ResetPasswordVC  {
                         
                         if let result = data[resultKey],  let message = result["UserMessage"]  {
                             strongSelf.navigationController?.popViewController(animated: true)
-                            strongSelf.showMessage(MessageType.info, message: message as! String)
+                            strongSelf.showMessage( message as! String)
                             strongSelf.navigationController?.popViewController(animated: true)
                         }
                         

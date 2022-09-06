@@ -150,8 +150,6 @@ Pod::Spec.new do |s|
 
   s.frameworks                     = 'Foundation', 'Security', 'UIKit'
 
-  s.dependency 'SwiftMessages'
-
   s.swift_version = "5.0"
 
 end

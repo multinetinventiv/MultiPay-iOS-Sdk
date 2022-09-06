@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5604B9D425065DFF009F6E28 /* Codextended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5604B9D225065DFF009F6E28 /* Codextended.swift */; };
 		5604B9D525065DFF009F6E28 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5604B9D325065DFF009F6E28 /* Extension.swift */; };
-		5604B9D725065E12009F6E28 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5604B9D625065E12009F6E28 /* MessageManager.swift */; };
 		5604B9D925065E44009F6E28 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5604B9D825065E44009F6E28 /* Localization.swift */; };
 		5604B9DB25065E55009F6E28 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5604B9DA25065E55009F6E28 /* BaseVC.swift */; };
 		5604B9DE2506615B009F6E28 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5604B9DD2506615B009F6E28 /* BaseModel.swift */; };
@@ -62,6 +61,7 @@
 		56B7490A250629B7007510F1 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A9E2D025025DC000DBD21F /* Strings.swift */; };
 		9A05BD9228C2450000F0E69E /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A05BD9028C2450000F0E69E /* WalletTableViewCell.swift */; };
 		9A05BD9328C2450000F0E69E /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A05BD9128C2450000F0E69E /* WalletViewController.swift */; };
+		9A05BD9928C613CF00F0E69E /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A05BD9828C613CF00F0E69E /* ToastView.swift */; };
 		9A39494E28C1F0E1008159BE /* LoggerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A39494D28C1F0E1008159BE /* LoggerHelper.swift */; };
 		9A39495128C22A8C008159BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56B7F93725012D7E00F13C69 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -92,7 +92,6 @@
 /* Begin PBXFileReference section */
 		5604B9D225065DFF009F6E28 /* Codextended.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codextended.swift; sourceTree = "<group>"; };
 		5604B9D325065DFF009F6E28 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		5604B9D625065E12009F6E28 /* MessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		5604B9D825065E44009F6E28 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		5604B9DA25065E55009F6E28 /* BaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		5604B9DD2506615B009F6E28 /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
@@ -195,6 +194,7 @@
 		56B7F93725012D7E00F13C69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A05BD9028C2450000F0E69E /* WalletTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
 		9A05BD9128C2450000F0E69E /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		9A05BD9828C613CF00F0E69E /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		9A39494D28C1F0E1008159BE /* LoggerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -357,7 +357,7 @@
 		563DC67B25062C8300E77893 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				5604B9D625065E12009F6E28 /* MessageManager.swift */,
+				9A05BD9828C613CF00F0E69E /* ToastView.swift */,
 				569066182500C84300BB5604 /* CoreManager.swift */,
 				5687C0392508F8F00021D270 /* BundleManager.swift */,
 				568A8D942527011A0098224F /* Multipay.swift */,
@@ -752,13 +752,13 @@
 				566B73C0251B743200A20C75 /* RegisterVC.swift in Sources */,
 				568A63C1252B2292001C2930 /* UIColorHex.swift in Sources */,
 				566B7431251B7DC900A20C75 /* Setting.swift in Sources */,
-				5604B9D725065E12009F6E28 /* MessageManager.swift in Sources */,
 				9A05BD9228C2450000F0E69E /* WalletTableViewCell.swift in Sources */,
 				5624EBA625063A1A00C0C55E /* ErrorPresenter.swift in Sources */,
 				5604B9ED25066A13009F6E28 /* UserInfo.swift in Sources */,
 				5604B9F325067A43009F6E28 /* User.swift in Sources */,
 				5624EBAB25063A3200C0C55E /* Router.swift in Sources */,
 				5604B9DB25065E55009F6E28 /* BaseVC.swift in Sources */,
+				9A05BD9928C613CF00F0E69E /* ToastView.swift in Sources */,
 				569066192500C84300BB5604 /* CoreManager.swift in Sources */,
 				5604BA23250787E4009F6E28 /* StoryboardExtension.swift in Sources */,
 				5604B9D925065E44009F6E28 /* Localization.swift in Sources */,

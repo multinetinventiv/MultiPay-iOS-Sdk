@@ -55,7 +55,7 @@ class LoginWithCodeVC: BaseVC {
 
     func callLoginWithActivationCodeService() {
         if !self.validateActivationCode() {
-            self.showMessage(.error, message: Localization.LoginWithActivationEnterValidCode.local)
+            self.showMessage( Localization.LoginWithActivationEnterValidCode.local)
             return
         }
 
@@ -82,7 +82,7 @@ class LoginWithCodeVC: BaseVC {
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             }, errorCallback: {(error: ErrorModel, rawData) in
-                self.showMessage(.error, message: error.description)
+                self.showMessage( error.description)
         })
     }
 

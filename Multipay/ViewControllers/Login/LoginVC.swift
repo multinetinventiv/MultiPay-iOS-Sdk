@@ -201,13 +201,13 @@ class LoginVC: BaseVC {
         
         if (!emailPhoneView.validate())
         {
-            showMessage(MessageType.error, message: emailPhoneView.getErrorMessage())
+            showMessage(emailPhoneView.getErrorMessage())
             return false
         }
         
         if (!passwordView.validate())
         {
-            showMessage(MessageType.error, message: passwordView.getErrorMessage())
+            showMessage(passwordView.getErrorMessage())
             return false
         }
         

@@ -307,12 +307,11 @@ class OTPVC: BaseVC {
             }
         }
         
-        if let informMessage = message, informMessage.count > 0
-        {
-            showMessage(MessageType.info, message: message!, block: {
+        if let informMessage = message, informMessage.count > 0 {
+            showMessage(informMessage) {
                 self.navigate(otpResponseModel)
-            })
-        }else{
+            }
+        } else {
             self.navigate(otpResponseModel)
         }
     }
@@ -366,7 +365,7 @@ extension OTPVC {
                     strongSelf.processResendService(postDict: postDict, data: nil, rawData: nil)
                 }
                 else{
-                    strongSelf.showMessage(MessageType.error, message: data.description)}
+                    strongSelf.showMessage(data.description)}
             }
         })
     }

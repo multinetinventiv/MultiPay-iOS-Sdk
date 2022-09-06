@@ -292,7 +292,7 @@ class RegisterVC: BaseVC {
         if (!nameView.validate())
         {
             if shouldShowMessage {
-                showMessage(MessageType.error, message: nameView.getErrorMessage())
+                showMessage(nameView.getErrorMessage())
             }
             return false
         }
@@ -300,7 +300,7 @@ class RegisterVC: BaseVC {
         if (!lastNameView.validate())
         {
             if shouldShowMessage {
-            showMessage(MessageType.error, message: lastNameView.getErrorMessage())
+            showMessage(lastNameView.getErrorMessage())
             }
             return false
         }
@@ -308,7 +308,7 @@ class RegisterVC: BaseVC {
         if (!emailView.validate())
         {
             if shouldShowMessage {
-            showMessage(MessageType.error, message: emailView.getErrorMessage())
+            showMessage(emailView.getErrorMessage())
             }
             return false
         }
@@ -316,7 +316,7 @@ class RegisterVC: BaseVC {
         if (!phoneView.textValue().validatePhoneNumber())
         {
             if shouldShowMessage {
-                showMessage(MessageType.error, message: phoneView.getErrorMessage())
+                showMessage(phoneView.getErrorMessage())
             }
             return false
         }
@@ -324,14 +324,14 @@ class RegisterVC: BaseVC {
         if (!contractSwitch.isOn)
         {
             if shouldShowMessage {
-                showMessage(MessageType.error, message: Localization.ValidationContract.local)
+                showMessage(Localization.ValidationContract.local)
             }
             return false
         }
 
         if !kvkkSwitch.isOn {
             if shouldShowMessage {
-                showMessage(.error, message: Localization.ValidationKVKK.local)
+                showMessage( Localization.ValidationKVKK.local)
             }
             return false
         }

@@ -172,7 +172,7 @@ extension AddCardVC {
         }) { [weak self] (data: ErrorModel, rawData) in
             if let strongSelf = self
             {
-                self?.showMessage(MessageType.error, message: data.message ?? "")
+                self?.showMessage(data.message ?? "")
                 strongSelf.running = false
             }
         }
@@ -238,7 +238,7 @@ extension AddCardVC {
     
     fileprivate func endProcess(_ result:AnyObject? = nil){
         self.view.endEditing(true)
-        showMessage(MessageType.info, message: Localization.Success.local)
+        showMessage( Localization.Success.local)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -305,7 +305,7 @@ extension AddCardVC {
     func validateCardNumberField() -> Bool {
         
         if (!cardNumberTextView.validate()) || (cardNumberTextView.textValue().isEmpty) {
-            showMessage(MessageType.error, message: cardNumberTextView.getErrorMessage())
+            showMessage(cardNumberTextView.getErrorMessage())
             return false
         }
         
@@ -315,7 +315,7 @@ extension AddCardVC {
     func validateCVVField() -> Bool {
         
         if (!cvvTextView.validate()) || (cvvTextView.textValue().isEmpty) {
-            showMessage(MessageType.error, message: cvvTextView.getErrorMessage())
+            showMessage(cvvTextView.getErrorMessage())
             return false
         }
         
