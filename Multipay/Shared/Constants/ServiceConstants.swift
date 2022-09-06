@@ -342,16 +342,8 @@ public struct ServiceUrl {
     }
     
     
-    static func getToken() -> String {
-        
-        if let token = Auth.walletAppToken{
-            return token
-        }
-        else{
-            return ""
-        }
-        
-        
+    static func getWalletAppToken() -> String {
+        return Auth.walletAppToken as? String ?? ""
     }
     
 }

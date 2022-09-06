@@ -134,7 +134,7 @@ extension ViewController{
         
         let userPreset = UserPreset()
         
-        Multipay.start(vcToPresent: self.navigationController!.topViewController ?? self, walletAppToken: getWalletAppToken(environment: environment), referenceNumber: getReferenceNumber(environment: environment), delegate: self, language: .tr, environment: environment, offlineMode: offlineModeSwitch.isOn, walletToken: walletTokenSwitch.isOn ? (selectedWalletToken != nil) ? selectedWalletToken : getWalletToken(environment: environment) : nil, obfuscationKey: getObfuscationKey(environment: environment) ?? "", userPreset: userPreset)
+        Multipay.start(vcToPresent: self.navigationController!.topViewController ?? self, integrationWalletAppToken: getWalletAppToken(environment: environment), referenceNumber: getReferenceNumber(environment: environment), delegate: self, language: .tr, environment: environment, offlineMode: offlineModeSwitch.isOn, walletToken: walletTokenSwitch.isOn ? (selectedWalletToken != nil) ? selectedWalletToken : getWalletToken(environment: environment) : nil, integrationObfuscationKey: getObfuscationKey(environment: environment) ?? "", userPreset: userPreset)
     }
 }
 
@@ -217,7 +217,7 @@ extension ViewController{
         }
         
         if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
-            Multipay.getWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType!) ?? "", offlineMode: offlineModeSwitch.isOn)
+            Multipay.getWallet(delegate: self, integrationWalletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), integrationObfuscationKey: getObfuscationKey(environment: lastSelectedApiType!) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
     }
     
@@ -267,7 +267,7 @@ extension ViewController: MultipayDelegate {
             self.present(alert, animated: true, completion: nil)
             
             if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
-                Multipay.getWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
+                Multipay.getWallet(delegate: self, integrationWalletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), integrationObfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
             }
             
             self.reversalStackView.isHidden = true
@@ -304,7 +304,7 @@ extension ViewController: MultipayDelegate {
             }
             
             if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
-                Multipay.getWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
+                Multipay.getWallet(delegate: self, integrationWalletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), integrationObfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
             }
             
             self.reversalStackView.isHidden = false
@@ -326,7 +326,7 @@ extension ViewController: MultipayDelegate {
     func multipayPaymentDidFail(error: Error?) {
         
         if let selectedWalletToken = selectedWalletToken, selectedWalletToken.count > 0 {
-            Multipay.getWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
+            Multipay.getWallet(delegate: self, integrationWalletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: selectedWalletToken, language: .tr, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), integrationObfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
         
         self.reversalStackView.isHidden = false
@@ -570,7 +570,7 @@ extension ViewController{
             
             activityInd.startAnimating()
             
-            Multipay.callUnSelectWallet(delegate: self, walletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: walletToken, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
+            Multipay.callUnSelectWallet(delegate: self, integrationWalletAppToken: getWalletAppToken(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), walletToken: walletToken, referenceNumber: getReferenceNumber(environment: (lastSelectedApiType != nil) ? lastSelectedApiType! : .test), integrationObfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
     }
     
@@ -609,7 +609,7 @@ extension ViewController{
             
             self.lastConfirmPaymentRequestId = requestId
             
-            Multipay.callConfirmPayment(delegate: self, paymentAppToken: paymentAppToken, language: .tr, requestId: requestId, walletToken: walletToken, merchantReferenceNumber: merchantReferenceNumber, terminalReferenceNumber: terminalReferenceNumber, transferReferenceNumber: transferReferenceNumber, transactionDetails: transactionDetailModelArray, sign: sign, obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
+            Multipay.callConfirmPayment(delegate: self, integrationPaymentAppToken: paymentAppToken, language: .tr, requestId: requestId, walletToken: walletToken, merchantReferenceNumber: merchantReferenceNumber, terminalReferenceNumber: terminalReferenceNumber, transferReferenceNumber: transferReferenceNumber, transactionDetails: transactionDetailModelArray, sign: sign, integrationObfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
         }
     }
     
@@ -658,7 +658,7 @@ extension ViewController{
                 referenceNumber = lastTransferReferenceNumber
             }
             
-            Multipay.rollbackPayment(delegate: self, paymentAppToken: paymentAppToken, language: .tr, requestId: requestId, sign: sign, merchantReferenceNumber: merchantReferenceNumber, terminalReferenceNumber: terminalReferenceNumber, rollbackReferenceNumber: rollbackReferenceNumber, reason: reason, referenceNumberType: referenceNumberType, referenceNumber: referenceNumber, obfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
+            Multipay.rollbackPayment(delegate: self, integrationPaymentAppToken: paymentAppToken, language: .tr, requestId: requestId, sign: sign, merchantReferenceNumber: merchantReferenceNumber, terminalReferenceNumber: terminalReferenceNumber, rollbackReferenceNumber: rollbackReferenceNumber, reason: reason, referenceNumberType: referenceNumberType, referenceNumber: referenceNumber, integrationObfuscationKey: getObfuscationKey(environment: lastSelectedApiType ?? .test) ?? "", offlineMode: offlineModeSwitch.isOn)
             
         }
     }

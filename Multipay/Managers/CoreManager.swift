@@ -81,16 +81,16 @@ internal class CoreManager {
         return "Test"
     }
     
-    internal class func start(vcToPresent: UIViewController, appToken: String?, referenceNumber: String?, languageCode: String, environment: Environment = .production, walletToken: String? = nil, obfuscationKey: String, userPreset: UserPreset? = nil)
-    {
+    internal class func start(vcToPresent: UIViewController, walletAppToken: String?, referenceNumber: String?, languageCode: String, environment: Environment = .production, walletToken: String? = nil, obfuscationKey: String, userPreset: UserPreset? = nil) {
         
         CoreManager.shared.vcToPresent = vcToPresent
         
         Auth.obfuscationKey = obfuscationKey
         
-        if let token = appToken{
+        if let token = walletAppToken {
             Auth.walletAppToken = token
         }
+        
         Auth.referenceNumber = referenceNumber
         
         Auth.walletToken = walletToken
@@ -150,8 +150,10 @@ internal class CoreManager {
     public func getUser() {
         let url = ServiceUrl.getURL(ServiceConstants.ServiceName.GetUser)
         
-        let serviceParameter:[String:Any] = [languageCodeKey : CoreManager.getLocaleIdentifier(),
-                                             walletAppTokenKey : ServiceUrl.getToken() ]
+        let serviceParameter: [String : Any] = [
+            languageCodeKey : CoreManager.getLocaleIdentifier(),
+            walletAppTokenKey : ServiceUrl.getWalletAppToken()
+        ]
         
         let httpHeaders = HTTPHeaders(Auth.shared.getHeader())
         

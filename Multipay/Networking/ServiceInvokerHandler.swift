@@ -62,7 +62,7 @@ open class ServiceInvokerHandler {
         
         serviceParameters[languageCodeKey] = languageRegion as AnyObject
         
-        let token = ServiceUrl.getToken()
+        let token = ServiceUrl.getWalletAppToken()
         
         if sendAppTokenToRequests, token.count > 0{
             serviceParameters[walletAppTokenKey] = token as AnyObject

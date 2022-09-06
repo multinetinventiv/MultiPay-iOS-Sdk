@@ -30,9 +30,10 @@ class BaseModel: SessionDelegate {
         
         let url = ServiceUrl.getURL(serviceName)
         
-        var serviceParameter:[String:Any] = [languageCodeKey :  CoreManager.getLocaleIdentifier(),
-                                             walletAppTokenKey : ServiceUrl.getToken()  ]
-        
+        var serviceParameter: [String : Any] = [
+            languageCodeKey : CoreManager.getLocaleIdentifier(),
+            walletAppTokenKey : ServiceUrl.getWalletAppToken()
+        ]
         
         if let paramdictionary  = parameters {
             for (k, v) in paramdictionary {
@@ -44,7 +45,6 @@ class BaseModel: SessionDelegate {
         
         let httpHeaders = HTTPHeaders(Auth.shared.getHeader())
         
-        // manager?.request(.POST, url, parameters: serviceParameter, encoding: .JSON ,headers: ServiceInvoker.sharedInstance.getHeader()).responseJSON {response in
         manager.request(url, method: .post, parameters: serviceParameter, encoding: JSONEncoding.default, headers: httpHeaders).responseJSON { response in
             
             guard response.error == nil else {
@@ -74,6 +74,4 @@ class BaseModel: SessionDelegate {
         }
         
     }
-    
-    
 }

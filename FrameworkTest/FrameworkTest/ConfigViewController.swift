@@ -20,12 +20,11 @@ class ConfigViewController: UIViewController {
     @IBOutlet weak var paymentwalletAppTokenTxtField: UITextField!
     @IBOutlet weak var signTxtField: UITextField!
 
-    var lastSelectedApiType:Environment?{
-        get{
+    var lastSelectedApiType:Environment? {
+        get {
             let environment = userDefaults.object(forKey: "lastSelectedApiType") as? Int
             return Environment(rawValue: environment ?? 3)
-        }
-        set{
+        } set {
             userDefaults.set(newValue?.rawValue, forKey: "lastSelectedApiType")
         }
     }
@@ -53,39 +52,29 @@ class ConfigViewController: UIViewController {
             
             self.signTxtField.text = dict["sign"] as? String
         }
-        
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func saveClicked(_ sender: Any) {
         
         saveToPropertyList()
         
-        self.dismiss(animated: true) {
-        }
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func kapatClicked(_ sender: Any) {
-        
-        self.dismiss(animated: true) {
-            
-        }
-        
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
 extension ConfigViewController{
     
-    func getConfirmPaymentDict(environment:Environment) -> [String:AnyObject]?{
+    func getConfirmPaymentDict(environment:Environment) -> [String:AnyObject]? {
         
-        if let plistDict = getPlist(environment: environment){
-            
+        if let plistDict = getPlist(environment: environment) {
             let paymentConfirmDict = plistDict["ConfirmPayment"]
             
             return paymentConfirmDict as? [String : AnyObject]
-        }
-        else{
+        } else {
             return nil
         }
     }
@@ -122,7 +111,4 @@ extension ConfigViewController{
             
         tempDict?.write(toFile: returnValues.url.path, atomically: true)
     }
-    
-    
-    
 }
