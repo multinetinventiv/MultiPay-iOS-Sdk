@@ -5,6 +5,15 @@
 ### Changed
 
 ### Fixed
+- MultiPay SDK token isimlendirmelerinin güncellenmesi. [AZURE-44310](https://dev.azure.com/inventivtech/Panda/_workitems/edit/44310)
+- MultiPay SDK'da Gereksiz Dependency'lerin Kaldirilmasi. [AZURE-41738](https://dev.azure.com/inventivtech/Panda/_workitems/edit/41738)
+
+## [1.2.5]
+### Added
+
+### Changed
+
+### Fixed
 - MultiPay SDK XCode 13 Update Sonrası Hataların ve UI Bozulmaların Düzeltilmesi. [TFS-2270](https://dev.azure.com/inventivtech/Panda/_workitems/edit/2270)
 
 
